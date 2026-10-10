@@ -1,43 +1,64 @@
 // Cuentas, sincronización y ranking con Supabase.
-// Todo es opcional: sin configuración, sin conexión o sin sesión, la app funciona solo en local como siempre.
-// Respuestas y exámenes se guardan primero en una cola local y se suben cuando hay red.
+// Con cuentas configuradas (js/config.js), iniciar sesión es obligatorio. El progreso local se guarda por usuario
+// (tests.u.<id>.…) y las respuestas y exámenes pasan por una cola local que se sube cuando hay red.
 (function(){
 const CFG = window.TESTS_CONFIG || {};
 const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
 const LIB_SRI = 'sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok';
 const enabled = !!(CFG.supabaseUrl && CFG.supabaseAnonKey && !/TU-PROYECTO|TU-ANON-KEY/.test(CFG.supabaseUrl + CFG.supabaseAnonKey));
+const AUTH_KEY = 'tests.cloud.auth';    // donde supabase-js guarda la sesión
 
 const K = {
-  owner: 'tests.cloud.owner',     // cuenta a la que pertenece el progreso local de este dispositivo
-  me: 'tests.cloud.me',           // {id, email, name} para mostrar sin red
-  answers: 'tests.cloud.answers', // cola de respuestas pendientes de subir
-  exams: 'tests.cloud.exams',     // cola de exámenes pendientes de subir
-  resets: 'tests.cloud.resets',   // «Borrar mi progreso» pendientes
-  imp: 'tests.cloud.import',      // progreso local que se sube al entrar por primera vez
-  pend: 'tests.cloud.pending',    // registro a medias (perfil por crear)
-  status: 'tests.cloud.status',   // estado de subida de cada examen
-  rank: 'tests.cloud.rank',       // última copia del ranking
-  snap: 'tests.cloud.snap'        // posiciones en la última visita (avisos «te ha pasado»)
+  me: 'tests.cloud.me',             // {id, email, name} para abrir la app sin red
+  answers: 'tests.cloud.q.answers', // cola de respuestas: {id, u, s: test, q: id de pregunta, k, t}
+  exams: 'tests.cloud.q.exams',     // cola de exámenes
+  resets: 'tests.cloud.q.resets',   // «Borrar mi progreso» pendientes
+  imports: 'tests.cloud.q.imports', // progreso local que se suma a la cuenta
+  pend: 'tests.cloud.pending',      // registro a medias (perfil por crear)
+  status: 'tests.cloud.status',     // estado de subida de cada examen
+  rank: 'tests.cloud.rank',         // última copia del ranking
+  snap: 'tests.cloud.snap'          // posiciones en la última visita (avisos «te ha pasado»)
 };
+// Claves de la versión anterior (progreso por posición, sin usuario)
+const LEG = { stats: id => 'tests.stats.' + id, exam: id => 'tests.exam.' + id, owner: 'tests.cloud.owner',
+  answers: 'tests.cloud.answers', exams: 'tests.cloud.exams', resets: 'tests.cloud.resets', imp: 'tests.cloud.import' };
+const LEGACY_SUBJECTS = ['sif', 'ii', 'ii-pci'];
+
 const get = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } };
 const set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
 const del = k => { try { localStorage.removeItem(k); } catch(e){} };
+const has = k => { try { return localStorage.getItem(k) !== null; } catch(e){ return false; } };
 const uuid = () => crypto.randomUUID ? crypto.randomUUID()
   : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+const ukey = (u, k) => 'tests.u.' + u + '.' + k;
 
-const LEAVES = [];
-(window.SUBJECTS || []).forEach(t => t.parts ? t.parts.forEach(p => LEAVES.push(p)) : LEAVES.push(t));
-const subjOf = b => String(b).split(':')[0];
+// Árbol de datos: asignatura → (temas →) tests. Las asignaturas son las raíces (una clasificación cada una).
+const kidsOf = n => n.parts || n.tests || null;
+const leavesOf = n => kidsOf(n) ? kidsOf(n).flatMap(leavesOf) : [n];
+const ROOTS = window.SUBJECTS || [];
+const LEAVES = ROOTS.flatMap(leavesOf);
+const rootOf = {}; ROOTS.forEach(r => leavesOf(r).forEach(l => { rootOf[l.id] = r.id; }));
+const leaf = id => LEAVES.find(s => s.id === id);
 const MIN_N = 20, MIN_EXAMS = 3, LAST = 5;
 
 let sb = null, libPromise = null;
-let uid = null;                       // usuario con sesión activa
-let me = get(K.me, null);             // copia local para mostrar el nombre sin red
+let uid = null;                        // usuario con sesión activa en supabase-js
+let me = get(K.me, null);              // copia local: permite abrir la app sin red
+if (me && !has(AUTH_KEY)) { me = null; del(K.me); }
 let online = navigator.onLine;
-let profileOk = false, needsProfile = false, boardsDone = false;
+let profileOk = false, needsProfile = false, boardsDone = false, verified = false;
+let recovery = false;                  // se ha vuelto del enlace de «he olvidado mi contraseña»
+let ended = '';                        // motivo del último cierre de sesión no pedido por el usuario
+let signingOut = false;
 let lastError = null, rankCache = null;
 const listeners = [];
 const emit = what => listeners.forEach(f => { try { f(what || 'state'); } catch(e){ console.error(e); } });
+
+// ¿Vuelve del enlace del correo? (#access_token=…&type=recovery, o un error si el enlace ha caducado)
+const H = new URLSearchParams(location.hash.slice(1));
+let linkError = H.get('error_description') ? 'El enlace no es válido o ha caducado. Pide otro.' : '';
+let recoveryPending = H.get('type') === 'recovery' && !!H.get('access_token');
+if (linkError) history.replaceState(null, '', location.pathname + location.search);
 
 /* ---------- carga de supabase-js (desde la caché del service worker si no hay red) ---------- */
 function loadLib(){
@@ -59,7 +80,7 @@ async function init(){
   if (!lib) return false;
   if (!sb){
     sb = lib.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: 'tests.cloud.auth' }
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit', storageKey: AUTH_KEY }
     });
     // supabase recomienda no llamar a la API dentro de este callback: se difiere
     sb.auth.onAuthStateChange((ev, session) => setTimeout(() => onSession(ev, session), 0));
@@ -68,14 +89,32 @@ async function init(){
 }
 function onSession(ev, session){
   const id = session && session.user ? session.user.id : null;
-  if (!id && ev !== 'SIGNED_OUT' && !navigator.onLine) return;   // sin red: se mantiene lo que había
+  if (ev === 'PASSWORD_RECOVERY'){
+    recovery = true; recoveryPending = false;
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  if (!id){
+    if (ev !== 'SIGNED_OUT' && !navigator.onLine) return;       // sin red: se mantiene la sesión guardada
+    if (ev === 'INITIAL_SESSION' && recoveryPending) return;   // aún procesando el enlace del correo
+    if (uid || me){
+      if (!signingOut && ev === 'SIGNED_OUT') ended = 'Tu sesión ha caducado o se ha cerrado en otro dispositivo. Vuelve a entrar.';
+      endSession();
+    }
+    return;
+  }
   if (id !== uid){
-    uid = id; profileOk = false; needsProfile = false; boardsDone = false;
-    if (id){ me = Object.assign({}, me && me.id === id ? me : {}, {id, email: session.user.email}); set(K.me, me); }
-    else { me = null; del(K.me); }
+    uid = id; profileOk = false; needsProfile = false; boardsDone = false; verified = false;
+    me = Object.assign({}, me && me.id === id ? me : {}, { id, email: session.user.email }); set(K.me, me);
+    ended = ''; linkError = '';
+    adoptLocal(id);
     emit('auth');
   }
-  if (uid) sync();
+  if (!recovery) sync();
+}
+function endSession(){
+  uid = null; me = null; profileOk = false; needsProfile = false; rankCache = null; recovery = false;
+  del(K.me);
+  emit('auth');
 }
 
 /* ---------- errores en español ---------- */
@@ -93,8 +132,9 @@ function msg(e){
   if (/same_password|should be different/i.test(s)) return 'La nueva contraseña tiene que ser distinta de la actual.';
   if (/weak_password|password.*(at least|characters|short)/i.test(s)) return 'La contraseña debe tener al menos 6 caracteres.';
   if (/email_address_invalid|validate email|invalid.*email|email.*invalid/i.test(s)) return 'El email no es válido.';
-  if (/rate limit|too many|over_\w*_limit/i.test(s)) return 'Demasiados intentos. Espera un momento y vuelve a probar.';
+  if (/rate limit|too many|over_\w*_limit|for security purposes/i.test(s)) return 'Demasiados intentos. Espera un momento y vuelve a probar.';
   if (/signups? not allowed|signup_disabled/i.test(s)) return 'El registro de cuentas está desactivado.';
+  if (/session_not_found|refresh_token_not_found|auth session missing|jwt expired/i.test(s)) return 'Tu sesión ha caducado. Vuelve a entrar.';
   if (/name_taken/.test(s)) return 'Ese nombre ya existe. Elige otro.';
   if (/bad_name/.test(s)) return 'El nombre visible debe tener entre 3 y 20 caracteres.';
   if (/bad_code/.test(s)) return 'El código de grupo no es correcto.';
@@ -107,6 +147,7 @@ async function need(){
   if (!(await init())) throw fail(new Error('Failed to fetch'));
 }
 const rpc = async (fn, args) => { const { data, error } = await sb.rpc(fn, args); if (error) throw error; return data; };
+const redirectUrl = () => location.origin + location.pathname;
 
 /* ---------- cuenta ---------- */
 async function signIn(email, password){
@@ -125,7 +166,7 @@ async function signUp(email, password, name, code){
   try { r = await rpc('signup_check', { p_code: code, p_name: name }); } catch(e){ throw fail(e); }
   if (r !== 'ok') throw fail(new Error(r));
   set(K.pend, { email: email.trim().toLowerCase(), name, code });
-  const { data, error } = await sb.auth.signUp({ email: email.trim(), password, options: { data: { display_name: name } } });
+  const { data, error } = await sb.auth.signUp({ email: email.trim(), password, options: { data: { display_name: name }, emailRedirectTo: redirectUrl() } });
   if (error) throw fail(error);
   if (!data.session) return 'confirm';               // confirmación por email activada en Supabase
   onSession('SIGNED_IN', data.session);
@@ -162,10 +203,11 @@ async function checkProfile(){
   return false;
 }
 async function signOut(){
-  if (sb) { try { await sb.auth.signOut({ scope: 'local' }); } catch(e){} }
-  uid = null; me = null; profileOk = false; needsProfile = false; rankCache = null;
-  del(K.me); del(K.rank);
-  emit('auth');
+  signingOut = true;
+  try { if (sb) await sb.auth.signOut({ scope: 'local' }); } catch(e){}
+  try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+  signingOut = false; ended = '';
+  endSession();
 }
 async function rename(name){
   await need();
@@ -177,21 +219,107 @@ async function changePassword(password){
   const { error } = await sb.auth.updateUser({ password });
   if (error) throw fail(error);
 }
+async function sendReset(email){
+  await need();
+  const { error } = await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: redirectUrl() });
+  if (error) throw fail(error);
+}
+async function finishRecovery(password){
+  await changePassword(password);
+  recovery = false;
+  emit('auth');
+  sync();
+}
+// Comprueba en el servidor que la sesión sigue viva (caducada o cerrada en otro dispositivo → acceso)
+async function verifySession(){
+  if (verified || !sb || !uid) return;
+  const { error } = await sb.auth.getUser();
+  if (error && !isNet(error) && (error.status === 401 || error.status === 403 || /session|jwt|token/i.test(error.message || ''))){
+    ended = 'Tu sesión ha caducado o se ha cerrado en otro dispositivo. Vuelve a entrar.';
+    signingOut = true;
+    try { await sb.auth.signOut({ scope: 'local' }); } catch(e){}
+    try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+    signingOut = false;
+    endSession();
+    throw new Error('session_ended');
+  }
+  if (!error) verified = true;
+}
+
+/* ---------- progreso local por usuario y migración de la versión anterior ---------- */
+const testsOf = {};    // id de pregunta → tests donde está (una pregunta puede estar en dos)
+LEAVES.forEach(s => s.questions.forEach(q => { const id = window.TESTS_QID(q.q); (testsOf[id] = testsOf[id] || []).push(s.id); }));
+function mergeRec(a, b){
+  if (!a) return { n: b.n, ok: b.ok, last: b.last };
+  return { n: a.n + b.n, ok: a.ok + b.ok, last: a.last };     // se conserva la última respuesta que ya había
+}
+// Progreso por posición (versión anterior) → { test: { id de pregunta: {n, ok, last} } }
+function convertLegacy(bySubject){
+  const out = {}, map = window.LEGACY_QIDS || {};
+  Object.entries(bySubject).forEach(([sid, st]) => {
+    const ids = map[sid] || [];
+    Object.entries(st || {}).forEach(([idx, r]) => {
+      const id = ids[+idx]; if (!id || !r || !r.n) return;
+      (testsOf[id] || []).forEach(t => { const m = out[t] = out[t] || {}; m[id] = mergeRec(m[id], { n: +r.n, ok: +r.ok || 0, last: r.last ? 1 : 0 }); });
+    });
+  });
+  return out;
+}
+// Primera vez que esta cuenta entra en este dispositivo: se migra (una sola vez) lo que hubiera de la versión anterior
+function adoptLocal(u){
+  if (get(ukey(u, 'migrated'), false)) return;
+  const legOwner = get(LEG.owner, null);
+  if (!legOwner || legOwner === u){
+    const legacy = {}; LEGACY_SUBJECTS.forEach(id => { const st = get(LEG.stats(id), null); if (st && Object.keys(st).length) legacy[id] = st; });
+    const imports = get(K.imports, []);
+    if (!legOwner && Object.keys(legacy).length){
+      // progreso usado sin cuenta: se suma a la cuenta y se queda en este dispositivo para este usuario
+      const conv = convertLegacy(legacy);
+      Object.entries(conv).forEach(([t, m]) => {
+        const key = ukey(u, 'stats.' + t), cur = get(key, {});
+        Object.entries(m).forEach(([id, r]) => { cur[id] = mergeRec(cur[id], r); });
+        set(key, cur);
+      });
+      if (Object.keys(conv).length) imports.push({ u, id: uuid(), stats: conv });
+    }
+    // importación pendiente de la versión anterior
+    const li = get(LEG.imp, null);
+    if (li && li.u === u && li.stats){ const conv = convertLegacy(li.stats); if (Object.keys(conv).length) imports.push({ u, id: li.id, stats: conv }); }
+    set(K.imports, imports);
+    // colas de la versión anterior de este usuario
+    const qa = get(K.answers, []);
+    get(LEG.answers, []).filter(e => e.u === u).forEach(e => {
+      const id = ((window.LEGACY_QIDS || {})[e.s] || [])[e.q];
+      (testsOf[id] || []).forEach(t => qa.push({ id: uuid(), u, s: t, q: id, k: e.k, t: e.t }));
+    });
+    set(K.answers, qa);
+    const qe = get(K.exams, []); get(LEG.exams, []).filter(e => e.u === u).forEach(e => qe.push(e)); set(K.exams, qe);
+    const cfg = get(LEG.exam('sif'), null); if (cfg && !has(ukey(u, 'exam.sif'))) set(ukey(u, 'exam.sif'), cfg);
+    // se borran los datos «sin usuario» de la versión anterior
+    LEGACY_SUBJECTS.forEach(id => { del(LEG.stats(id)); del(LEG.exam(id)); });
+    [LEG.owner, LEG.imp, LEG.resets].forEach(del);
+    const restA = get(LEG.answers, []).filter(e => e.u !== u), restE = get(LEG.exams, []).filter(e => e.u !== u);
+    if (restA.length) set(LEG.answers, restA); else del(LEG.answers);
+    if (restE.length) set(LEG.exams, restE); else del(LEG.exams);
+  }
+  set(ukey(u, 'migrated'), true);
+}
 
 /* ---------- registro local (lo llama app.js) ---------- */
-const owner = () => uid || get(K.owner, null);
+const cur = () => uid || (me && me.id) || null;
+const key = k => ukey(cur() || '_', k);
 let timer = null;
 function schedule(ms){ clearTimeout(timer); timer = setTimeout(sync, ms); }
 
-function onAnswer(sid, qi, ok){
-  const u = enabled && owner(); if (!u) return;
+function onAnswer(testId, qId, ok){
+  const u = enabled && cur(); if (!u) return;
   const q = get(K.answers, []);
-  q.push({ id: uuid(), u, s: sid, q: qi, k: ok ? 1 : 0, t: new Date().toISOString() });
+  q.push({ id: uuid(), u, s: testId, q: qId, k: ok ? 1 : 0, t: new Date().toISOString() });
   set(K.answers, q);
   schedule(3000);
 }
 function onExam(s, X){
-  const u = enabled && owner(); if (!u) return null;
+  const u = enabled && cur(); if (!u) return null;
   const R = X.result;
   const rec = { u, client_id: uuid(), subject_id: s.id, preset_id: X.preset || null,
     taken_at: new Date(X.start).toISOString(), n_questions: X.list.length,
@@ -201,10 +329,10 @@ function onExam(s, X){
   schedule(0);
   return rec.client_id;
 }
-function onReset(sid){
-  const u = enabled && owner(); if (!u) return;
-  set(K.answers, get(K.answers, []).filter(e => !(e.u === u && e.s === sid)));
-  const r = get(K.resets, []); r.push({ u, s: sid }); set(K.resets, r);
+function onReset(testId){
+  const u = enabled && cur(); if (!u) return;
+  set(K.answers, get(K.answers, []).filter(e => !(e.u === u && e.s === testId)));
+  const r = get(K.resets, []); r.push({ u, s: testId }); set(K.resets, r);
   schedule(0);
 }
 function setStatus(id, st){
@@ -224,23 +352,25 @@ function counts(s, n, pen, preset){
 /* ---------- sincronización ---------- */
 let running = null, again = false;
 function sync(){
-  if (!enabled || !uid) return Promise.resolve();
+  if (!enabled || !uid || recovery) return Promise.resolve();
   if (running){ again = true; return running; }
-  running = (async () => { do { again = false; await syncOnce(); } while (again); })()
+  running = (async () => { do { again = false; await syncOnce(); } while (again && uid); })()
     .finally(() => { running = null; });
   return running;
 }
 async function syncOnce(){
   try {
+    await verifySession();
     if (!(await ensureProfile())) return;
     await registerBoards();
-    await adopt();
+    await pushImports();
     await pushResets();
     await pushAnswers();
     await pushExams();
-    await pullStats();
+    await pullProgress();
     online = true; lastError = null;
   } catch(e){
+    if (e && e.message === 'session_ended') return;
     if (isNet(e)) online = false;
     else { lastError = msg(e); console.warn('[tests] sincronización:', e); }
   }
@@ -250,33 +380,21 @@ async function registerBoards(){
   if (boardsDone) return;
   const list = [];
   LEAVES.forEach(s => {
-    list.push({ subject_id: s.id, preset_id: null, penalty: s.examPen || 0, min_questions: MIN_N });
-    (s.presets || []).forEach(p => list.push({ subject_id: s.id, preset_id: p.id, penalty: p.pen, min_questions: p.idx.length }));
+    list.push({ subject_id: s.id, preset_id: null, penalty: s.examPen || 0, min_questions: MIN_N, asignatura_id: rootOf[s.id] });
+    (s.presets || []).forEach(p => list.push({ subject_id: s.id, preset_id: p.id, penalty: p.pen, min_questions: p.idx.length, asignatura_id: rootOf[s.id] }));
   });
   await rpc('register_boards', { p: list });
   boardsDone = true;
 }
-function localStats(){
-  const out = {};
-  LEAVES.forEach(s => { const st = get('tests.stats.' + s.id, {}); if (Object.keys(st).length) out[s.id] = st; });
-  return out;
-}
-// Primera vez que esta cuenta entra en este dispositivo
-async function adopt(){
-  const o = get(K.owner, null);
-  if (o !== uid){
-    if (!o) set(K.imp, { u: uid, id: uuid(), stats: localStats() });   // progreso sin cuenta: se suma a la cuenta
-    set(K.owner, uid);                                                   // si era de otra cuenta, no se mezcla
-  }
-  const imp = get(K.imp, null);
-  if (imp && imp.u === uid){
-    if (Object.keys(imp.stats).length) await rpc('import_local_stats', { p_import_id: imp.id, p_stats: imp.stats });
-    del(K.imp);
+async function pushImports(){
+  for (const imp of get(K.imports, []).filter(x => x.u === uid)){
+    await rpc('import_progress', { p_import_id: imp.id, p_stats: imp.stats });
+    set(K.imports, get(K.imports, []).filter(x => x.id !== imp.id));
   }
 }
 async function pushResets(){
   for (const r of get(K.resets, []).filter(x => x.u === uid)){
-    await rpc('reset_subject_stats', { p_subject: r.s });
+    await rpc('reset_progress', { p_test: r.s });
     set(K.resets, get(K.resets, []).filter(x => !(x.u === r.u && x.s === r.s)));
   }
 }
@@ -284,7 +402,7 @@ async function pushAnswers(){
   for (;;){
     const batch = get(K.answers, []).filter(e => e.u === uid).slice(0, 500);
     if (!batch.length) return;
-    const rows = batch.map(e => ({ id: e.id, user_id: uid, subject_id: e.s, q_index: e.q, correct: !!e.k, answered_at: e.t }));
+    const rows = batch.map(e => ({ id: e.id, user_id: uid, subject_id: e.s, q_id: e.q, correct: !!e.k, answered_at: e.t }));
     const { error } = await sb.from('answer_events').upsert(rows, { onConflict: 'id', ignoreDuplicates: true });
     if (error) throw error;
     const sent = new Set(batch.map(e => e.id));
@@ -301,178 +419,145 @@ async function pushExams(){
   }
 }
 // La cuenta manda: el progreso local pasa a ser el de la nube (más lo que aún no se ha subido)
-async function pullStats(){
-  const rows = [];
+async function pullProgress(){
+  const u = uid, rows = [];
   for (let from = 0; ; from += 1000){
-    const { data, error } = await sb.from('question_stats').select('subject_id,q_index,n,n_correct,last_correct')
-      .order('subject_id').order('q_index').range(from, from + 999);
+    const { data, error } = await sb.from('question_progress').select('test_id,q_id,n,n_correct,last_correct')
+      .order('test_id').order('q_id').range(from, from + 999);
     if (error) throw error;
     rows.push(...data);
     if (data.length < 1000) break;
   }
-  if (get(K.owner, null) !== uid || get(K.resets, []).some(r => r.u === uid)) return;
+  if (u !== uid || get(K.resets, []).some(r => r.u === u) || get(K.imports, []).some(r => r.u === u)) return;
   const map = {};
-  rows.forEach(r => { (map[r.subject_id] = map[r.subject_id] || {})[r.q_index] = { n: r.n, ok: r.n_correct, last: r.last_correct ? 1 : 0 }; });
-  get(K.answers, []).filter(e => e.u === uid).forEach(e => {
+  rows.forEach(r => { (map[r.test_id] = map[r.test_id] || {})[r.q_id] = { n: r.n, ok: r.n_correct, last: r.last_correct ? 1 : 0 }; });
+  get(K.answers, []).filter(e => e.u === u).forEach(e => {
     const m = map[e.s] = map[e.s] || {}; const r = m[e.q] || (m[e.q] = { n: 0, ok: 0, last: 0 });
     r.n++; if (e.k) r.ok++; r.last = e.k ? 1 : 0;
   });
   let changed = false;
   LEAVES.forEach(s => {
-    const key = 'tests.stats.' + s.id, next = map[s.id] || {};
-    if (JSON.stringify(get(key, {})) !== JSON.stringify(next)){
+    const k = ukey(u, 'stats.' + s.id), next = map[s.id] || {};
+    if (JSON.stringify(get(k, {})) !== JSON.stringify(next)){
       changed = true;
-      if (Object.keys(next).length) set(key, next); else del(key);
+      if (Object.keys(next).length) set(k, next); else del(k);
     }
   });
   if (changed) emit('stats');
 }
 
-/* ---------- ranking ---------- */
-// Una clasificación por asignatura: las asignaturas con temas juntan los exámenes de todos sus temas.
-// Los exámenes reales (presets) tienen su propia clasificación: 'tema:examen'.
-const GROUPS = (window.SUBJECTS || []).map(t => ({ id: t.id, name: t.name, short: t.short, leaves: t.parts || [t] }));
-const groupOf = sid => GROUPS.find(g => g.leaves.some(s => s.id === sid)) || null;
-const groupsArg = () => Object.fromEntries(GROUPS.map(g => [g.id, g.leaves.map(s => s.id)]));
-
+/* ---------- ranking: una clasificación por asignatura ---------- */
 async function fetchRanking(){
   await need();
   if (!uid) throw new Error('Inicia sesión para ver el ranking.');
   let data;
-  try {
-    try { data = await rpc('ranking_data', { p_groups: groupsArg() }); }
-    catch(e){
-      // schema.sql antiguo (sin agrupar por asignatura): se usa la versión anterior de la función
-      if (isNet(e) || !/PGRST202|42883/.test(e.code || '')) throw e;
-      data = await rpc('ranking_data');
-    }
-  } catch(e){ online = !isNet(e) && online; throw fail(e); }
+  try { data = await rpc('ranking_data_v2'); } catch(e){ online = !isNet(e) && online; throw fail(e); }
   online = true;
-  data.fetched = Date.now();
+  data.fetched = Date.now(); data.v = 2;
   rankCache = data; set(K.rank, data);
   return data;
 }
 function cachedRanking(){
   if (!rankCache) rankCache = get(K.rank, null);
-  const id = uid || (me && me.id);
-  return rankCache && rankCache.me === id ? rankCache : null;
+  return rankCache && rankCache.v === 2 && rankCache.me === cur() ? rankCache : null;
 }
 const round = (v, d) => Math.round(v * 10 ** d) / 10 ** d;
-const isPreset = b => String(b).includes(':');
-
-// Media de los 5 últimos y nº de exámenes que cuentan, por usuario, en una clasificación
-function examStats(data, b){
-  const out = {};
-  if (isPreset(b)){
-    data.exams.filter(e => e.b === b).forEach(e => { out[e.u] = { avg: +e.avg, n: +e.n }; });
-  } else if (data.groups){
-    data.groups.filter(e => e.gr === b).forEach(e => { out[e.u] = { avg: +e.avg, n: +e.n }; });
-  } else {
-    // aproximación con el SQL antiguo: media de los temas ponderada por exámenes
-    const g = GROUPS.find(x => x.id === b); const ids = g ? g.leaves.map(s => s.id) : [];
-    data.exams.filter(e => ids.includes(e.b)).forEach(e => {
-      const o = out[e.u] = out[e.u] || { sum: 0, w: 0, n: 0 }; const w = Math.min(+e.n, LAST);
-      o.sum += +e.avg * w; o.w += w; o.n += +e.n;
-    });
-    Object.values(out).forEach(o => { o.avg = round(o.sum / o.w, 2); });
-  }
-  return out;
+// Preguntas distintas de una asignatura (una pregunta en dos tests cuenta una vez)
+function uniqueCount(a){
+  const r = ROOTS.find(x => x.id === a); const ids = new Set();
+  if (r) leavesOf(r).forEach(s => s.questions.forEach(q => ids.add(window.TESTS_QID(q.q))));
+  return ids.size;
 }
-
-// Filas de una clasificación. b: id de asignatura ('sif', 'inst') o 'tema:examen-real'
-// tab: 'exams' | 'mastery' | 'week'
-function board(data, b, tab){
+// Filas de una clasificación. a: id de asignatura; tab: 'exams' | 'mastery' | 'week'
+function board(data, a, tab){
   const names = {}; data.members.forEach(m => { names[m.id] = m.name; });
-  const mas = {}; data.mastery.forEach(e => { (mas[e.u] = mas[e.u] || {})[e.s] = +e.m; });
-  const wk = {};  data.week.forEach(e => { (wk[e.u] = wk[e.u] || {})[e.s] = +e.a; });
-  const g = isPreset(b) ? groupOf(subjOf(b)) : GROUPS.find(x => x.id === b);
-  const leaves = g ? g.leaves : [];
-  const ex = examStats(data, b);
+  const ex = {}; data.exams.filter(e => e.a === a).forEach(e => { ex[e.u] = { avg: +e.avg, n: +e.n }; });
+  const mas = {}; data.mastery.filter(e => e.a === a).forEach(e => { mas[e.u] = +e.m; });
+  const wk = {}; data.week.filter(e => e.a === a).forEach(e => { wk[e.u] = +e.c; });
+  const total = uniqueCount(a);
   const rows = Object.keys(names).map(u => {
     const e = ex[u];
     const r = { id: u, name: names[u], value: null, n: e ? e.n : 0, missing: 0, me: u === data.me };
-    if (tab === 'exams'){
-      if (r.n >= MIN_EXAMS) r.value = round(e.avg, 2); else r.missing = MIN_EXAMS - r.n;
-    } else if (tab === 'mastery'){
-      let m = 0, total = 0;
-      leaves.forEach(s => { total += s.questions.length; m += Math.min((mas[u] || {})[s.id] || 0, s.questions.length); });
-      r.value = total ? round(100 * m / total, 1) : 0;
-    } else {
-      r.value = leaves.reduce((a, s) => a + ((wk[u] || {})[s.id] || 0), 0);
-    }
+    if (tab === 'exams'){ if (r.n >= MIN_EXAMS) r.value = round(e.avg, 2); else r.missing = MIN_EXAMS - r.n; }
+    else if (tab === 'mastery') r.value = total ? round(100 * Math.min(mas[u] || 0, total) / total, 1) : 0;
+    else r.value = wk[u] || 0;
     return r;
   });
   const shown = rows.filter(r => tab === 'exams' ? r.value !== null : r.value > 0)
     .sort((x, y) => y.value - x.value || x.name.localeCompare(y.name, 'es'));
   shown.forEach(r => { r.pos = 1 + shown.filter(o => o.value > r.value).length; });
   const mine = shown.find(r => r.me) || rows.find(r => r.me) || null;
-  return { rows: shown, me: mine };
+  return { rows: shown, me: mine, total };
 }
-// Clasificación en la que cuenta un examen de este tema
-const boardFor = (sid, preset) => preset ? sid + ':' + preset : (groupOf(sid) || { id: sid }).id;
-// Posición que daría una nota recién hecha
-function wouldRank(data, b, grade, clientId){
-  const g = !isPreset(b) && GROUPS.find(x => x.id === b);
-  const inBoard = x => g ? !isPreset(x.b) && g.leaves.some(s => s.id === x.b) : x.b === b;
-  const mineAll = data.mine.filter(inBoard).sort((x, y) => String(y.t || '').localeCompare(String(x.t || '')));
-  const mine = mineAll.filter(x => x.c !== clientId).map(x => +x.g);
+// Posición que daría una nota recién hecha en la clasificación de su asignatura
+function wouldRank(data, a, grade, clientId){
+  const mineAll = data.mine.filter(x => x.a === a).sort((x, y) => String(y.t).localeCompare(String(x.t)));
+  const prev = mineAll.filter(x => x.c !== clientId).map(x => +x.g);
   const already = mineAll.some(x => x.c === clientId);
-  const ex = examStats(data, b);
-  const n = (ex[data.me] ? ex[data.me].n : 0) - (already ? 1 : 0) + 1;
+  const cur_ = data.exams.find(e => e.u === data.me && e.a === a);
+  const n = (cur_ ? +cur_.n : 0) - (already ? 1 : 0) + 1;
   if (n < MIN_EXAMS) return { missing: MIN_EXAMS - n };
-  const grades = [grade].concat(mine).slice(0, LAST);
-  const avg = round(grades.reduce((a, v) => a + v, 0) / grades.length, 2);
-  const others = Object.entries(ex).filter(([u, v]) => u !== data.me && v.n >= MIN_EXAMS).map(([, v]) => v.avg);
+  const g = [grade].concat(prev).slice(0, LAST);
+  const avg = round(g.reduce((s, v) => s + v, 0) / g.length, 2);
+  const others = data.exams.filter(e => e.a === a && e.u !== data.me && +e.n >= MIN_EXAMS).map(e => +e.avg);
   return { pos: 1 + others.filter(v => v > avg).length, avg };
-}
-function boardsList(){
-  const out = [];
-  GROUPS.forEach(g => { out.push(g.id); g.leaves.forEach(s => (s.presets || []).forEach(p => out.push(s.id + ':' + p.id))); });
-  return out;
 }
 // Avisos «Fulano te ha pasado en …» desde la última visita
 function overtakes(data){
-  const snap = get(K.snap, null), now = {}, notes = [];
-  boardsList().forEach(b => {
-    const pos = {}; board(data, b, 'exams').rows.forEach(r => { pos[r.id] = r.pos; });
-    now[b] = pos;
-    const before = snap && snap.u === data.me ? snap.b[b] : null;
+  const sk = ukey(data.me, 'snap'), snap = get(sk, null), now = {}, notes = [];
+  ROOTS.forEach(({ id: a }) => {
+    const pos = {}; board(data, a, 'exams').rows.forEach(r => { pos[r.id] = r.pos; });
+    now[a] = pos;
+    const before = snap ? snap[a] : null;
     const mine = pos[data.me], mineBefore = before ? before[data.me] : undefined;
     if (!before || mine == null || mineBefore == null) return;
     Object.keys(pos).forEach(u => {
       // estaba detrás de ti (o no aparecía) y ahora está delante
       if (u !== data.me && pos[u] < mine && (before[u] == null || before[u] >= mineBefore)){
         const m = data.members.find(x => x.id === u);
-        if (m) notes.push({ name: m.name, board: b });
+        if (m) notes.push({ name: m.name, board: a });
       }
     });
   });
-  set(K.snap, { u: data.me, b: now });
+  set(sk, now);
   return notes;
 }
 
 /* ---------- arranque ---------- */
 function pending(){
-  const u = owner();
+  const u = cur();
   return { answers: get(K.answers, []).filter(e => e.u === u).length, exams: get(K.exams, []).filter(e => e.u === u).length };
 }
 if (enabled){
-  window.addEventListener('online', () => { online = true; init().then(ok => { if (ok) sync(); emit('net'); }); });
+  window.addEventListener('online', () => {
+    online = true;
+    init().then(async ok => {
+      // si la app se abrió sin red con la sesión guardada, se recupera ahora (y se renueva el token)
+      if (ok && !uid && me){ const { data } = await sb.auth.getSession(); if (data && data.session) onSession('SIGNED_IN', data.session); }
+      if (ok){ verified = false; sync(); }
+      emit('net');
+    });
+  });
   window.addEventListener('offline', () => { online = false; emit('net'); });
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && uid) sync(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && uid){ verified = false; sync(); } });
   init().then(ok => { if (!ok) emit('net'); });
 }
 
 window.Cloud = {
-  enabled, LEAVES, GROUPS, MIN_N, MIN_EXAMS, groupOf, boardFor,
+  enabled, LEAVES, ROOTS, MIN_N, MIN_EXAMS,
   get user(){ return me; },                 // {id, email, name} o null
   get signedIn(){ return !!uid; },
   get needsProfile(){ return needsProfile; },
+  get recovery(){ return recovery; },
+  get recoveryPending(){ return recoveryPending; },
+  get ended(){ return ended; },
+  get linkError(){ return linkError; },
   get online(){ return online && navigator.onLine; },
   get lastError(){ return lastError; },
   on(f){ listeners.push(f); },
-  init, signIn, signUp, signOut, createProfile, rename, changePassword,
+  key, rootOf: id => rootOf[id], init,
+  signIn, signUp, signOut, createProfile, rename, changePassword, sendReset, finishRecovery,
   onAnswer, onExam, onReset, examStatus, counts, pending, sync,
-  fetchRanking, cachedRanking, board, wouldRank, overtakes, boardsList
+  fetchRanking, cachedRanking, board, wouldRank, overtakes, uniqueCount
 };
 })();

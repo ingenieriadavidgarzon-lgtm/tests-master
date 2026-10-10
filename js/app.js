@@ -16,23 +16,32 @@ let X = null;               // sesión de examen
 let timerId = null;
 const O = window.OnlineUI && window.OnlineUI.enabled ? window.OnlineUI : null;   // cuentas y ranking (js/online-ui.js)
 
-const LEAVES = [];
-SUBJECTS.forEach(t => t.parts ? t.parts.forEach(p => { p.parent = t; LEAVES.push(p); }) : LEAVES.push(t));
+// Árbol: asignatura → temas (parts) → tests (tests). Los tests (hojas) son los que tienen preguntas.
+const kidsOf = n => n.parts || n.tests || null;
+const leavesOf = n => kidsOf(n) ? kidsOf(n).flatMap(leavesOf) : [n];
+const LEAVES = [], NODES = [];
+(function walk(list, parent){ list.forEach(n => { if (parent) n.parent = parent; if (kidsOf(n)){ NODES.push(n); walk(kidsOf(n), n); } else LEAVES.push(n); }); })(SUBJECTS, null);
+const qid = window.TESTS_QID;   // id estable de cada pregunta (js/qid.js)
+LEAVES.forEach(s => s.questions.forEach(q => { q.id = qid(q.q); }));
 const subj = id => LEAVES.find(s => s.id === id);
-const group = id => SUBJECTS.find(s => s.id === id && s.parts);
+const group = id => NODES.find(n => n.id === id);
+const cheat = (s, k) => s[k] !== undefined ? s[k] : (s.parent ? cheat(s.parent, k) : undefined);   // la chuleta puede ser del tema
 const penLabel = v => v === 1/2 ? '−1/2' : v === 1/3 ? '−1/3' : v === 1/4 ? '−1/4' : 'Sin penalizar';
 const sumT = ts => ts.reduce((a,b) => ({total:a.total+b.total, mast:a.mast+b.mast, fail:a.fail+b.fail, unseen:a.unseen+b.unseen}));
 const blockOf = (s, q) => s.blocks.find(b => b.n === q.b) || {n:q.b, name:'Bloque '+q.b};
-const statKey = s => 'tests.stats.' + s.id;
+// Con cuentas, el progreso local se guarda por usuario: tests.u.<id de usuario>.stats.<test>, indexado por id de pregunta
+const userKey = k => O ? O.key(k) : 'tests.local.' + k;
+const statKey = s => userKey('stats.' + s.id);
 const getStats = s => store.get(statKey(s), {});
 function record(s, qi, ok){
-  const st = getStats(s); const r = st[qi] || {n:0, ok:0, last:0};
-  r.n++; if (ok) r.ok++; r.last = ok ? 1 : 0; st[qi] = r; store.set(statKey(s), st);
-  if (O) O.answered(s.id, qi, ok);
+  const id = s.questions[qi].id;
+  const st = getStats(s); const r = st[id] || {n:0, ok:0, last:0};
+  r.n++; if (ok) r.ok++; r.last = ok ? 1 : 0; st[id] = r; store.set(statKey(s), st);
+  if (O) O.answered(s.id, id, ok);
 }
 function tally(s, idxs){
   const st = getStats(s); let mast=0, fail=0, unseen=0;
-  idxs.forEach(i => { const r = st[i]; if (!r) unseen++; else if (r.last) mast++; else fail++; });
+  idxs.forEach(i => { const r = st[s.questions[i].id]; if (!r) unseen++; else if (r.last) mast++; else fail++; });
   return {total: idxs.length, mast, fail, unseen};
 }
 const allIdx = s => s.questions.map((_, i) => i);
@@ -56,7 +65,7 @@ function bar(t){
 /* ---------- vistas ---------- */
 function vHome(){
   const rows = SUBJECTS.map(s => {
-    const t = sumT((s.parts || [s]).map(p => tally(p, allIdx(p))));
+    const t = sumT(leavesOf(s).map(p => tally(p, allIdx(p))));
     return `<button class="subj" data-act="open" data-id="${s.id}">
       <span class="code">${esc(s.short)}</span>
       <span class="name">${esc(s.name)}</span>
@@ -70,29 +79,37 @@ function vHome(){
     <p class="soon">Más asignaturas en camino. Cada una tendrá su propio banco de preguntas.</p>`;
 }
 
+// Lista de hijos de una asignatura (temas) o de un tema (tests)
 function vParts(){
-  const g = group(V.tid);
-  const rows = g.parts.map(p => {
-    const t = tally(p, allIdx(p));
+  const g = group(V.tid); const kids = kidsOf(g);
+  const isTests = kids.every(k => !kidsOf(k));
+  const rows = kids.map(p => {
+    const leaves = leavesOf(p);
+    const t = sumT(leaves.map(l => tally(l, allIdx(l))));
+    const meta = kidsOf(p)
+      ? `${kidsOf(p).length} tests · ${t.total} preguntas`
+      : `${p.questions.length} preguntas${p.presets ? ' · incluye examen real' : ''}`;
     return `<button class="subj" data-act="open" data-id="${p.id}">
-      <span class="code">${esc(p.short)}</span>
+      <span class="code">${esc(isTests ? g.short : p.short)}</span>
       <span class="name">${esc(p.name)}</span>
-      <span class="meta">${p.questions.length} preguntas${p.presets ? ' · incluye examen real' : ''}</span>
+      <span class="meta">${meta}</span>
       <span class="meter">${bar(t)}<span>${Math.round(100*t.mast/t.total)} % dominadas</span></span>
     </button>`;
   }).join('');
-  return top(g.name, 'home') + `
-    <p class="eyebrow">${esc(g.short)} · ${g.parts.length} temas</p>
+  return top(g.name, 'up') + `
+    <p class="eyebrow">${g.parent ? esc(g.parent.name) + ' · ' : esc(g.short) + ' · '}${kids.length} ${isTests ? 'tests' : 'temas'}</p>
     <h2 class="big">${esc(g.name)}</h2>
-    <p class="lede">Elige el tema. Cada uno tiene su banco de preguntas, su modo práctica y su modo examen.</p>
+    <p class="lede">${isTests
+      ? 'Elige el test. Cada uno tiene su progreso, su modo práctica y su modo examen. La chuleta del tema está en los dos.'
+      : 'Elige el tema. Cada uno tiene sus tests, con su modo práctica y su modo examen.'}</p>
     <div class="stack">${rows}</div>`;
 }
-
 function vSubject(){
   const s = subj(V.sid); const st = getStats(s);
   const t = tally(s, allIdx(s));
   const nd = s.questions.filter(q => q.d).length;
-  return top(s.name, s.parent ? 'parts' : 'home') + `
+  const formulas = cheat(s, 'formulas'), traps = cheat(s, 'traps');
+  return top(s.parent ? s.parent.name + ' · ' + s.name : s.name, s.parent ? 'parts' : 'home') + `
     <p class="eyebrow">${s.parent ? esc(s.parent.name) + ' · ' : esc(s.short) + ' · '}${s.questions.length} preguntas</p>
     <h2 class="big">${esc(s.name)}</h2>
     <div class="modes">
@@ -104,8 +121,8 @@ function vSubject(){
     <div class="kpis"><div class="g"><b>${t.mast}</b><span>Dominadas</span></div><div class="r"><b>${t.fail}</b><span>Falladas</span></div><div><b>${t.unseen}</b><span>Sin ver</span></div></div>
     <div class="meter" style="margin-top:10px">${bar(t)}<span>${Math.round(100*t.mast/t.total)} % dominadas</span></div>
     <h3>Para estudiar</h3>
-    ${s.formulas ? `<details class="panel"><summary>Fórmulas clave</summary><div class="in"><dl class="formulas">${s.formulas.map(f=>`<dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd>`).join('')}</dl></div></details>` : ''}
-    ${s.traps ? `<details class="panel"><summary>${esc(s.trapsTitle || 'Trampas que se repiten')}</summary><div class="in"><ul>${s.traps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></details>` : ''}
+    ${formulas ? `<details class="panel"><summary>Fórmulas clave</summary><div class="in"><dl class="formulas">${formulas.map(f=>`<dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd>`).join('')}</dl></div></details>` : ''}
+    ${traps ? `<details class="panel"><summary>${esc(cheat(s, 'trapsTitle') || 'Trampas que se repiten')}</summary><div class="in"><ul>${traps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></details>` : ''}
     <details class="panel"><summary>Sobre las respuestas</summary><div class="in"><p style="margin-top:0">${esc(s.source)}</p>${nd?`<p class="unsure" style="margin-bottom:0">${nd} preguntas llevan la marca «Sin confirmar»: hay dos opciones defendibles. Pregúntalas en clase antes de fiarte.</p>`:''}</div></details>
     <p class="reset">${V.confirmReset ? `¿Borrar todo tu progreso en ${esc(s.short)}? <button data-act="doReset">Sí, borrar</button> · <button data-act="cancelReset" style="color:var(--muted)">Cancelar</button>` : `<button data-act="askReset">Borrar mi progreso</button>`}</p>`;
 }
@@ -113,9 +130,9 @@ function vSubject(){
 function practiceScopes(s){
   const st = getStats(s); const all = allIdx(s);
   const list = [
-    {id:'all', label:'Todo el banco', sub: s.parent ? 'Todas las preguntas del tema' : 'Todas las preguntas de la asignatura', idx: all},
-    {id:'fail', label:'Solo las que he fallado', sub:'Tu última respuesta fue incorrecta', idx: all.filter(i => st[i] && !st[i].last)},
-    {id:'new', label:'Las que no he visto', sub:'Todavía sin responder', idx: all.filter(i => !st[i])},
+    {id:'all', label:'Todo el banco', sub: s.parent ? 'Todas las preguntas del test' : 'Todas las preguntas de la asignatura', idx: all},
+    {id:'fail', label:'Solo las que he fallado', sub:'Tu última respuesta fue incorrecta', idx: all.filter(i => { const r = st[s.questions[i].id]; return r && !r.last; })},
+    {id:'new', label:'Las que no he visto', sub:'Todavía sin responder', idx: all.filter(i => !st[s.questions[i].id])},
     {id:'unsure', label:'Sin confirmar', sub:'Respuesta dudosa, para repasarlas aparte', idx: all.filter(i => s.questions[i].d)}
   ];
   return list.filter(x => x.id !== 'unsure' || x.idx.length);
@@ -279,6 +296,7 @@ function vResults(){
 
 function render(){
   clearInterval(timerId); timerId = null;
+  if (O){ const g = O.gate(V); if (g) V = g; }     // con cuentas: sin sesión solo se ve el acceso
   let h = '';
   if (V.name === 'home') h = vHome();
   else if (V.name === 'parts') h = vParts();
@@ -326,6 +344,7 @@ const A = {
   home(){ go({name:'home'}); },
   open(d){ const id = d.id || V.sid; if (group(id)) go({name:'parts', tid:id}); else go({name:'subject', sid:id}); },
   parts(){ const s = subj(V.sid); go({name:'parts', tid: V.tid || (s && s.parent && s.parent.id)}); },
+  up(){ const g = group(V.tid); if (g && g.parent) go({name:'parts', tid: g.parent.id}); else go({name:'home'}); },
   askReset(){ V.confirmReset = true; render(); },
   cancelReset(){ V.confirmReset = false; render(); },
   doReset(){ store.del(statKey(subj(V.sid))); if (O) O.reset(V.sid); V.confirmReset = false; render(); },
@@ -350,11 +369,11 @@ const A = {
   retryFails(){ startPractice(P.sid, P.failed, true); },
   examSetup(){
     const sid = V.sid || (X && X.sid); const s = subj(sid);
-    const cfg = Object.assign({n: s.examSize, pen: s.examPen || 0, t: s.examTime || 0}, store.get('tests.exam.'+sid, {}));
+    const cfg = Object.assign({n: s.examSize, pen: s.examPen || 0, t: s.examTime || 0}, store.get(userKey('exam.'+sid), {}));
     if (cfg.n > s.questions.length) cfg.n = s.examSize;
     go({name:'examSetup', sid, cfg});
   },
-  cfg(d){ V.cfg[d.k] = +d.v; store.set('tests.exam.'+V.sid, V.cfg); render(); },
+  cfg(d){ V.cfg[d.k] = +d.v; store.set(userKey('exam.'+V.sid), V.cfg); render(); },
   startExam(){
     const s = subj(V.sid); const cfg = Object.assign({}, V.cfg);
     const list = shuffle(allIdx(s)).slice(0, cfg.n);
@@ -404,6 +423,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-window.TestsApp = { go, render, top, penLabel, get V(){ return V; }, get X(){ return X; } };
+window.TestsApp = { go, render, top, penLabel, get V(){ return V; }, get X(){ return X; },
+  reset(){ clearInterval(timerId); timerId = null; P = null; X = null; V = {name:'home'}; } };
 render();
 })();

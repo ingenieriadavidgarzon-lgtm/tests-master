@@ -1,6 +1,6 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v3';
+const VERSION = 'tests-v4';
 const FONTS = 'tests-fonts';   // caché de Google Fonts y de supabase-js (versión fija), se conserva entre versiones
 
 const ASSETS = [
@@ -8,6 +8,8 @@ const ASSETS = [
   './index.html',
   './css/styles.css',
   './js/config.js',
+  './js/qid.js',
+  './js/legacy-map.js',
   './js/cloud.js',
   './js/online-ui.js',
   './js/app.js',

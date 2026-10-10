@@ -429,16 +429,10 @@ group by e.user_id, p.display_name, e.subject_id;
 revoke all on public.ranking_exams, public.ranking_mastery, public.ranking_week from anon;
 grant select on public.ranking_exams, public.ranking_mastery, public.ranking_week to authenticated;
 
--- Todo lo que necesita la pantalla de ranking en una sola llamada.
--- p_groups: qué temas forman cada asignatura, p. ej. {"sif": ["sif"], "inst": ["ii", "ii-pci"]}.
--- 'groups' trae, por asignatura, la media de los 5 últimos exámenes al azar que cuentan (de cualquiera
--- de sus temas) y cuántos hay. Los exámenes reales van aparte, en 'exams' (board 'tema:examen').
-drop function if exists public.ranking_data();
-create or replace function public.ranking_data(p_groups jsonb default null)
+-- Todo lo que necesita la pantalla de ranking en una sola llamada
+create or replace function public.ranking_data()
 returns jsonb language plpgsql stable security definer set search_path = ''
 as $$
-declare
-  grp jsonb := case when jsonb_typeof(p_groups) = 'object' then p_groups else '{}'::jsonb end;
 begin
   if not public.is_member() then raise exception 'not_member' using errcode = '42501'; end if;
   return jsonb_build_object(
@@ -446,21 +440,10 @@ begin
     'at', now(),
     'week_start', public.week_start(),
     'members', coalesce((select jsonb_agg(jsonb_build_object('id', id, 'name', display_name)) from public.profiles), '[]'),
-    'groups',  coalesce((select jsonb_agg(jsonb_build_object('u', user_id, 'gr', gr, 'avg', avg5, 'n', n))
-                         from (select x.user_id, x.gr,
-                                      round(avg(x.grade) filter (where x.rn <= 5), 2) as avg5, count(*)::int as n
-                               from (select e.user_id, g.key as gr, e.grade,
-                                            row_number() over (partition by e.user_id, g.key order by e.taken_at desc, e.id desc) as rn
-                                     from public.exam_results e
-                                     join jsonb_each(grp) g on jsonb_typeof(g.value) = 'array'
-                                                          and e.subject_id in (select jsonb_array_elements_text(g.value))
-                                     join public.profiles p on p.id = e.user_id
-                                     where e.ranked and e.preset_id is null) x
-                               group by x.user_id, x.gr) y), '[]'),
     'exams',   coalesce((select jsonb_agg(jsonb_build_object('u', user_id, 'b', board_id, 's', subject_id, 'avg', avg_last5, 'n', n_exams)) from public.ranking_exams), '[]'),
     'mastery', coalesce((select jsonb_agg(jsonb_build_object('u', user_id, 's', subject_id, 'm', mastered)) from public.ranking_mastery), '[]'),
     'week',    coalesce((select jsonb_agg(jsonb_build_object('u', user_id, 's', subject_id, 'a', answered)) from public.ranking_week), '[]'),
-    'mine',    coalesce((select jsonb_agg(jsonb_build_object('b', board_id, 'c', client_id, 'g', grade, 't', taken_at) order by taken_at desc)
+    'mine',    coalesce((select jsonb_agg(jsonb_build_object('b', board_id, 'c', client_id, 'g', grade) order by taken_at desc)
                          from (select board_id, client_id, grade, taken_at,
                                       row_number() over (partition by board_id order by taken_at desc, id desc) as rn
                                from public.exam_results where ranked and user_id = auth.uid()) m
@@ -477,10 +460,10 @@ grant  execute on function public.signup_check(text, text) to anon, authenticate
 
 revoke execute on function public.create_profile(text, text), public.set_display_name(text), public.register_boards(jsonb),
                            public.import_local_stats(uuid, jsonb), public.reset_subject_stats(text),
-                           public.ranking_data(jsonb) from public, anon;
+                           public.ranking_data() from public, anon;
 grant  execute on function public.create_profile(text, text), public.set_display_name(text), public.register_boards(jsonb),
                            public.import_local_stats(uuid, jsonb), public.reset_subject_stats(text),
-                           public.ranking_data(jsonb) to authenticated;
+                           public.ranking_data() to authenticated;
 
 revoke execute on function public.validate_exam_result(), public.answer_events_after()
   from public, anon, authenticated;
