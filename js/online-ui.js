@@ -14,15 +14,23 @@ const SEEN = 'tests.cloud.seen';
 const getJ = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } };
 const setJ = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
 
+const group = id => C.GROUPS.find(g => g.id === id);
+// Nombre de una clasificación: asignatura ('sif', 'inst') o examen real ('ii-pci:real-2026')
 function boardName(b, long){
-  if (b === 'general') return 'General';
-  const [sid, pid] = String(b).split(':'); const s = leaf(sid);
-  if (!s) return b;
-  const base = long || s.name.length <= 16 ? s.name : s.short;
-  const p = pid && (s.presets || []).find(x => x.id === pid);
-  return p ? (long ? s.name + ' · ' + p.name : s.short + ' · examen real') : base;
+  const [sid, pid] = String(b).split(':');
+  if (!pid){ const g = group(sid); return g ? g.name : b; }
+  const s = leaf(sid); const p = s && (s.presets || []).find(x => x.id === pid);
+  if (!p) return b;
+  return long ? s.short + ' · ' + p.name : 'el examen real de ' + s.short;
 }
+const rankingOf = b => String(b).includes(':') ? 'el ranking del examen real de ' + leaf(b.split(':')[0]).short : 'el ranking de ' + boardName(b);
 const penText = s => (s.examPen || 0) ? 'penalización ' + T().penLabel(s.examPen) : 'sin penalización';
+// Regla de penalización de una asignatura (con temas: la de cada tema)
+const groupPenText = g => g.leaves.length === 1 ? penText(g.leaves[0])
+  : g.leaves.map(s => s.short + ' ' + ((s.examPen || 0) ? T().penLabel(s.examPen) : 'sin penalizar')).join(', ');
+const presetsOf = g => g ? g.leaves.flatMap(s => (s.presets || []).map(p => ({ id: s.id + ':' + p.id, name: p.name }))) : [];
+const LASTB = 'tests.cloud.rboard';
+const defaultBoard = () => { const b = getJ(LASTB, null); return group(b) ? b : (C.GROUPS[0] || {}).id; };
 
 /* ---------- añadidos en pantallas existentes ---------- */
 let notes = [], notesAt = 0;
@@ -30,14 +38,15 @@ function homeBar(){
   if (!on) return '';
   const u = C.user;
   const who = u && u.name ? `<span class="av">${esc(u.name[0].toUpperCase())}</span>${esc(u.name)}` : (u ? 'Mi cuenta' : 'Entrar');
-  return `<div class="homebar"><button class="hb" data-act="ranking" data-id="general">Ranking</button><button class="hb" data-act="account">${who}</button></div>`;
+  return `<div class="homebar"><button class="hb" data-act="ranking">Ranking</button><button class="hb" data-act="account">${who}</button></div>`;
 }
 const notesHtml = () => notes.slice(-3).map(n =>
-  `<button class="note" data-act="ranking" data-id="${esc(n.board)}"><b>${esc(n.name)}</b> te ha pasado en ${n.board === 'general' ? 'la general' : esc(boardName(n.board))}.</button>`).join('');
+  `<button class="note" data-act="ranking" data-id="${esc(n.board)}"><b>${esc(n.name)}</b> te ha pasado en ${esc(boardName(n.board))}.</button>`).join('');
 function homeNotes(){ return on ? `<div class="notes" id="cloud-notes">${notesHtml()}</div>` : ''; }
 function subjectLink(s){
   if (!on) return '';
-  return `<button class="pick rankpick" data-act="ranking" data-id="${esc(s.id)}"><span class="l"><b>Ranking</b><small>Tu posición en ${esc(s.short)} frente a la clase</small></span><span class="n">Ver</span></button>`;
+  const g = C.groupOf(s.id);
+  return `<button class="pick rankpick" data-act="ranking" data-id="${esc(g ? g.id : s.id)}"><span class="l"><b>Ranking</b><small>${esc(g ? g.name : s.name)}: tu posición frente a la clase</small></span><span class="n">Ver</span></button>`;
 }
 function examHint(s, cfg){
   if (!on) return '';
@@ -58,7 +67,7 @@ function statusLine(st){
 function paintResults(){
   const el = document.getElementById('cloud-res'); const X = T().X;
   if (!el || !X || !X.result) return;
-  const s = leaf(X.sid), R = X.result, b = X.preset ? s.id + ':' + X.preset : s.id;
+  const s = leaf(X.sid), R = X.result, b = C.boardFor(s.id, X.preset);
   const lines = [];
   if (!X.cloudId){
     lines.push(`<p class="st">Inicia sesión para guardar tus exámenes y competir en el ranking. <button class="linkbtn" data-act="account">Entrar</button></p>`);
@@ -68,7 +77,7 @@ function paintResults(){
       if (data){
         const w = C.wouldRank(data, b, R.grade, X.cloudId);
         lines.push(w.missing
-          ? `<p class="pos">Te ${w.missing === 1 ? 'falta 1 examen' : 'faltan ' + w.missing + ' exámenes'} para entrar en el ranking de ${esc(boardName(b))}.</p>`
+          ? `<p class="pos">Te ${w.missing === 1 ? 'falta 1 examen' : 'faltan ' + w.missing + ' exámenes'} para entrar en ${esc(rankingOf(b))}.</p>`
           : `<p class="pos">Con esta nota entrarías ${w.pos}.º en ${esc(boardName(b))}.</p>`);
       }
     } else {
@@ -125,7 +134,7 @@ function vProfile(){
     <h2 class="big">${esc(u.name || '—')}</h2>
     <p class="lede">${esc(u.email || '')}<br>Tu email solo lo ves tú. En el ranking solo aparece tu nombre visible.</p>
     <p class="syncline" id="cloud-sync">${syncText()}</p>
-    <button class="pick rankpick" data-act="ranking" data-id="general"><span class="l"><b>Ranking</b><small>General y por asignatura</small></span><span class="n">Ver</span></button>
+    <button class="pick rankpick" data-act="ranking"><span class="l"><b>Ranking</b><small>Una clasificación por asignatura</small></span><span class="n">Ver</span></button>
     <h3>Cambiar nombre visible</h3>
     <form class="form" data-form="rename" novalidate>
       ${field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres.', u.name || '')}
@@ -144,12 +153,10 @@ function vProfile(){
 }
 
 const RULES = {
-  exams: b => b === 'general'
-    ? `Media de tus medias en cada asignatura o tema donde tienes al menos ${C.MIN_EXAMS} exámenes que cuentan.`
-    : b.includes(':')
-      ? `Solo el examen real completo. Media de tus ${5} últimos intentos; hacen falta ${C.MIN_EXAMS} para aparecer.`
-      : `Media de tus 5 últimos exámenes que cuentan (${C.MIN_N} preguntas o más y ${penText(leaf(b))}). Hacen falta ${C.MIN_EXAMS} para aparecer.`,
-  mastery: () => 'Porcentaje de preguntas dominadas: las que acertaste la última vez que te salieron.',
+  exams: b => b.includes(':')
+    ? `Solo el examen real completo. Media de tus 5 últimos intentos; hacen falta ${C.MIN_EXAMS} para aparecer.`
+    : `Media de tus 5 últimos exámenes que cuentan${group(b).leaves.length > 1 ? ', de cualquiera de sus temas' : ''} (${C.MIN_N} preguntas o más y ${groupPenText(group(b))}). Hacen falta ${C.MIN_EXAMS} para aparecer.`,
+  mastery: b => `Porcentaje de preguntas dominadas${group(b) && group(b).leaves.length > 1 ? ' entre todos los temas' : ''}: las que acertaste la última vez que te salieron.`,
   week: () => 'Preguntas respondidas desde el lunes a las 00:00 (hora de Madrid). Se reinicia cada semana.'
 };
 function valueHtml(tab, v){
@@ -182,20 +189,20 @@ function vRanking(V){
     <div class="spacer"></div><div class="dock"><button class="btn primary" data-act="account">Entrar o crear cuenta</button></div>`;
   if (C.needsProfile) return h + `<p class="lede">Completa tu registro para entrar en el ranking.</p><div class="dock"><button class="btn primary" data-act="account">Completar registro</button></div>`;
 
-  const sid = V.board === 'general' ? null : V.board;
-  const s = sid && leaf(sid);
-  if (V.tab !== 'exams' || !s || !s.presets) V.variant = null;
-  const b = V.variant ? sid + ':' + V.variant : V.board;
-  const chips = ['general'].concat(C.LEAVES.map(x => x.id))
-    .map(x => `<button class="chip" data-act="rboard" data-id="${esc(x)}" aria-pressed="${V.board === x}">${esc(boardName(x))}</button>`).join('');
+  if (!group(V.board)) V.board = defaultBoard();
+  const g = group(V.board), presets = presetsOf(g);
+  if (V.tab !== 'exams' || !presets.some(p => p.id === V.variant)) V.variant = null;
+  const b = V.variant || V.board;
+  const chips = C.GROUPS
+    .map(x => `<button class="chip" data-act="rboard" data-id="${esc(x.id)}" aria-pressed="${V.board === x.id}">${esc(x.name)}</button>`).join('');
   const tabs = [['exams', 'Exámenes'], ['mastery', 'Dominio'], ['week', 'Esta semana']]
     .map(([k, l]) => `<button data-act="rtab" data-id="${k}" aria-pressed="${V.tab === k}">${l}</button>`).join('');
   h += `<div class="chips rsel">${chips}</div>
-    <p class="eyebrow">${s && s.parent ? esc(s.parent.name) : 'Clasificación de la clase'}</p>
-    <h2 class="big">${esc(boardName(V.board, true))}</h2>
+    <p class="eyebrow">${g.leaves.length > 1 ? esc(g.leaves.map(s => s.name).join(' + ')) : 'Clasificación de la clase'}</p>
+    <h2 class="big">${esc(g.name)}</h2>
     <div class="seg">${tabs}</div>`;
-  if (V.tab === 'exams' && s && s.presets){
-    h += `<div class="chips" style="margin-top:10px"><button class="chip" data-act="rvar" data-id="" aria-pressed="${!V.variant}">Al azar</button>${s.presets.map(p =>
+  if (V.tab === 'exams' && presets.length){
+    h += `<div class="chips" style="margin-top:10px"><button class="chip" data-act="rvar" data-id="" aria-pressed="${!V.variant}">Exámenes al azar</button>${presets.map(p =>
       `<button class="chip" data-act="rvar" data-id="${esc(p.id)}" aria-pressed="${V.variant === p.id}">${esc(p.name)}</button>`).join('')}</div>`;
   }
   h += `<p class="hint">${RULES[V.tab](b)}</p>`;
@@ -271,12 +278,13 @@ const backOf = V => ['ranking', 'account', 'profile'].includes(V.name) ? (V.back
 const A = {
   ranking(d){
     const t = T(), V = t.V;
-    let board = d.id || 'general', variant = null;
-    if (board.includes(':')){ [board, variant] = board.split(':'); }
+    let board = d.id || defaultBoard(), variant = null;
+    if (board.includes(':')){ variant = board; board = (C.groupOf(board.split(':')[0]) || {}).id; }
+    if (group(board)) setJ(LASTB, board);
     t.go({name: 'ranking', board, tab: 'exams', variant, back: backOf(V), prev: getJ(SEEN, {})});
   },
   rankBack(){ const t = T(); t.go(t.V.back || {name: 'home'}); },
-  rboard(d){ const V = T().V; V.board = d.id; V.variant = null; T().render(); },
+  rboard(d){ const V = T().V; V.board = d.id; V.variant = null; setJ(LASTB, d.id); T().render(); },
   rtab(d){ const V = T().V; V.tab = d.id; T().render(); },
   rvar(d){ const V = T().V; V.variant = d.id || null; T().render(); },
   rretry(){ const V = T().V; V.fetched = false; V.fetching = false; T().render(); },

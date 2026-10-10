@@ -27,7 +27,6 @@ const uuid = () => crypto.randomUUID ? crypto.randomUUID()
 
 const LEAVES = [];
 (window.SUBJECTS || []).forEach(t => t.parts ? t.parts.forEach(p => LEAVES.push(p)) : LEAVES.push(t));
-const leafIds = LEAVES.map(s => s.id);
 const subjOf = b => String(b).split(':')[0];
 const MIN_N = 20, MIN_EXAMS = 3, LAST = 5;
 
@@ -330,11 +329,24 @@ async function pullStats(){
 }
 
 /* ---------- ranking ---------- */
+// Una clasificación por asignatura: las asignaturas con temas juntan los exámenes de todos sus temas.
+// Los exámenes reales (presets) tienen su propia clasificación: 'tema:examen'.
+const GROUPS = (window.SUBJECTS || []).map(t => ({ id: t.id, name: t.name, short: t.short, leaves: t.parts || [t] }));
+const groupOf = sid => GROUPS.find(g => g.leaves.some(s => s.id === sid)) || null;
+const groupsArg = () => Object.fromEntries(GROUPS.map(g => [g.id, g.leaves.map(s => s.id)]));
+
 async function fetchRanking(){
   await need();
   if (!uid) throw new Error('Inicia sesión para ver el ranking.');
   let data;
-  try { data = await rpc('ranking_data'); } catch(e){ online = !isNet(e) && online; throw fail(e); }
+  try {
+    try { data = await rpc('ranking_data', { p_groups: groupsArg() }); }
+    catch(e){
+      // schema.sql antiguo (sin agrupar por asignatura): se usa la versión anterior de la función
+      if (isNet(e) || !/PGRST202|42883/.test(e.code || '')) throw e;
+      data = await rpc('ranking_data');
+    }
+  } catch(e){ online = !isNet(e) && online; throw fail(e); }
   online = true;
   data.fetched = Date.now();
   rankCache = data; set(K.rank, data);
@@ -346,31 +358,41 @@ function cachedRanking(){
   return rankCache && rankCache.me === id ? rankCache : null;
 }
 const round = (v, d) => Math.round(v * 10 ** d) / 10 ** d;
+const isPreset = b => String(b).includes(':');
 
-// Filas de una clasificación. board: 'general', id de asignatura/tema, o 'tema:examen-real'
+// Media de los 5 últimos y nº de exámenes que cuentan, por usuario, en una clasificación
+function examStats(data, b){
+  const out = {};
+  if (isPreset(b)){
+    data.exams.filter(e => e.b === b).forEach(e => { out[e.u] = { avg: +e.avg, n: +e.n }; });
+  } else if (data.groups){
+    data.groups.filter(e => e.gr === b).forEach(e => { out[e.u] = { avg: +e.avg, n: +e.n }; });
+  } else {
+    // aproximación con el SQL antiguo: media de los temas ponderada por exámenes
+    const g = GROUPS.find(x => x.id === b); const ids = g ? g.leaves.map(s => s.id) : [];
+    data.exams.filter(e => ids.includes(e.b)).forEach(e => {
+      const o = out[e.u] = out[e.u] || { sum: 0, w: 0, n: 0 }; const w = Math.min(+e.n, LAST);
+      o.sum += +e.avg * w; o.w += w; o.n += +e.n;
+    });
+    Object.values(out).forEach(o => { o.avg = round(o.sum / o.w, 2); });
+  }
+  return out;
+}
+
+// Filas de una clasificación. b: id de asignatura ('sif', 'inst') o 'tema:examen-real'
 // tab: 'exams' | 'mastery' | 'week'
 function board(data, b, tab){
   const names = {}; data.members.forEach(m => { names[m.id] = m.name; });
-  const ex = {};    data.exams.forEach(e => { (ex[e.u] = ex[e.u] || {})[e.b] = { avg: +e.avg, n: +e.n }; });
-  const mas = {};   data.mastery.forEach(e => { (mas[e.u] = mas[e.u] || {})[e.s] = +e.m; });
-  const wk = {};    data.week.forEach(e => { (wk[e.u] = wk[e.u] || {})[e.s] = +e.a; });
-  const sid = b === 'general' ? null : subjOf(b);
-  const leaves = sid ? LEAVES.filter(s => s.id === sid) : LEAVES;
-  const examCount = u => Object.entries(ex[u] || {}).filter(([k]) => sid ? subjOf(k) === sid : leafIds.includes(subjOf(k))).reduce((a, [, v]) => a + v.n, 0);
+  const mas = {}; data.mastery.forEach(e => { (mas[e.u] = mas[e.u] || {})[e.s] = +e.m; });
+  const wk = {};  data.week.forEach(e => { (wk[e.u] = wk[e.u] || {})[e.s] = +e.a; });
+  const g = isPreset(b) ? groupOf(subjOf(b)) : GROUPS.find(x => x.id === b);
+  const leaves = g ? g.leaves : [];
+  const ex = examStats(data, b);
   const rows = Object.keys(names).map(u => {
-    const r = { id: u, name: names[u], value: null, n: examCount(u), missing: 0, me: u === data.me };
+    const e = ex[u];
+    const r = { id: u, name: names[u], value: null, n: e ? e.n : 0, missing: 0, me: u === data.me };
     if (tab === 'exams'){
-      const e = ex[u] || {};
-      if (b === 'general'){
-        const subs = leafIds.map(id => e[id]).filter(Boolean);
-        const ok = subs.filter(v => v.n >= MIN_EXAMS);
-        r.n = subs.reduce((a, v) => a + v.n, 0);
-        if (ok.length) r.value = round(ok.reduce((a, v) => a + v.avg, 0) / ok.length, 2);
-        else r.missing = MIN_EXAMS - Math.max(0, ...subs.map(v => v.n));
-      } else {
-        const v = e[b]; r.n = v ? v.n : 0;
-        if (r.n >= MIN_EXAMS) r.value = round(v.avg, 2); else r.missing = MIN_EXAMS - r.n;
-      }
+      if (r.n >= MIN_EXAMS) r.value = round(e.avg, 2); else r.missing = MIN_EXAMS - r.n;
     } else if (tab === 'mastery'){
       let m = 0, total = 0;
       leaves.forEach(s => { total += s.questions.length; m += Math.min((mas[u] || {})[s.id] || 0, s.questions.length); });
@@ -386,27 +408,32 @@ function board(data, b, tab){
   const mine = shown.find(r => r.me) || rows.find(r => r.me) || null;
   return { rows: shown, me: mine };
 }
+// Clasificación en la que cuenta un examen de este tema
+const boardFor = (sid, preset) => preset ? sid + ':' + preset : (groupOf(sid) || { id: sid }).id;
 // Posición que daría una nota recién hecha
 function wouldRank(data, b, grade, clientId){
-  const mine = data.mine.filter(x => x.b === b && x.c !== clientId).map(x => +x.g);
-  const already = data.mine.some(x => x.b === b && x.c === clientId);
-  const cur = data.exams.find(e => e.u === data.me && e.b === b);
-  const n = (cur ? +cur.n : 0) - (already ? 1 : 0) + 1;
+  const g = !isPreset(b) && GROUPS.find(x => x.id === b);
+  const inBoard = x => g ? !isPreset(x.b) && g.leaves.some(s => s.id === x.b) : x.b === b;
+  const mineAll = data.mine.filter(inBoard).sort((x, y) => String(y.t || '').localeCompare(String(x.t || '')));
+  const mine = mineAll.filter(x => x.c !== clientId).map(x => +x.g);
+  const already = mineAll.some(x => x.c === clientId);
+  const ex = examStats(data, b);
+  const n = (ex[data.me] ? ex[data.me].n : 0) - (already ? 1 : 0) + 1;
   if (n < MIN_EXAMS) return { missing: MIN_EXAMS - n };
-  const g = [grade].concat(mine).slice(0, LAST);
-  const avg = round(g.reduce((a, v) => a + v, 0) / g.length, 2);
-  const others = data.exams.filter(e => e.b === b && e.u !== data.me && +e.n >= MIN_EXAMS).map(e => +e.avg);
+  const grades = [grade].concat(mine).slice(0, LAST);
+  const avg = round(grades.reduce((a, v) => a + v, 0) / grades.length, 2);
+  const others = Object.entries(ex).filter(([u, v]) => u !== data.me && v.n >= MIN_EXAMS).map(([, v]) => v.avg);
   return { pos: 1 + others.filter(v => v > avg).length, avg };
 }
 function boardsList(){
   const out = [];
-  LEAVES.forEach(s => { out.push(s.id); (s.presets || []).forEach(p => out.push(s.id + ':' + p.id)); });
+  GROUPS.forEach(g => { out.push(g.id); g.leaves.forEach(s => (s.presets || []).forEach(p => out.push(s.id + ':' + p.id))); });
   return out;
 }
-// Avisos «Fulano te ha pasado en PCI» desde la última visita
+// Avisos «Fulano te ha pasado en …» desde la última visita
 function overtakes(data){
   const snap = get(K.snap, null), now = {}, notes = [];
-  ['general'].concat(boardsList()).forEach(b => {
+  boardsList().forEach(b => {
     const pos = {}; board(data, b, 'exams').rows.forEach(r => { pos[r.id] = r.pos; });
     now[b] = pos;
     const before = snap && snap.u === data.me ? snap.b[b] : null;
@@ -437,7 +464,7 @@ if (enabled){
 }
 
 window.Cloud = {
-  enabled, LEAVES, MIN_N, MIN_EXAMS,
+  enabled, LEAVES, GROUPS, MIN_N, MIN_EXAMS, groupOf, boardFor,
   get user(){ return me; },                 // {id, email, name} o null
   get signedIn(){ return !!uid; },
   get needsProfile(){ return needsProfile; },
