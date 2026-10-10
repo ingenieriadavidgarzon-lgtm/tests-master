@@ -6067,6 +6067,1169 @@ SUBJECTS.push({
      ]
     }
    ]
+  },
+  {
+   "id": "com",
+   "name": "Comunicaciones",
+   "short": "COM",
+   "formulas": [
+    [
+     "Alcance (span) de un instrumento",
+     "Alcance = límite superior − límite inferior"
+    ],
+    [
+     "Error de medida",
+     "Error = valor indicado − valor real"
+    ]
+   ],
+   "trapsTitle": "Cifras clave",
+   "traps": [
+    "Normativa: ICT y RITI por el RD 346/2011; domótica por el REBT (RD 842/2002), ITC-BT-51; muy baja tensión por la ITC-BT-36 (hasta 50 V c.a. o 75 V c.c.); cableado genérico UNE-EN 50173 y 50174.",
+    "Recorrido: arquetas (tubos de PVC de 90 mm) → RITI → repartidor principal → red troncal → repartidores secundarios o satélite → red horizontal → toma de usuario (PAR).",
+    "Red horizontal: 90 m de cable fijo + 5 m de latiguillos = 100 m de canal. Topología radial si el edificio cabe en una esfera de 100 m; canalizaciones con el doble de espacio del necesario.",
+    "Categorías: 5e (clase D, 100 MHz), 6 (E, 250 MHz), 6A (EA, 500 MHz), 7 (F, 600 MHz), 7A (FA, 1.000 MHz). Lo habitual: cat. 6A, 4 pares, U/FTP y LSZH.",
+    "Apantallamiento: UTP sin pantalla; FTP con lámina o trenza sobre el conjunto; STP con pantalla en cada par.",
+    "Fibra: monomodo 8–10 µm (1.310–1.550 nm, larga distancia); multimodo 50 o 62,5 µm (unos 550 m a 10 Gb/s); troncal con multimodo OM4. Locales de repartidores RF-90 y 20–22 ºC.",
+    "Control: RITE exige automatización en no residenciales con más de 290 kW; UNE-EN 15232-1. Puntos analógicos 4-20 mA o 0-10 V; digitales ON/OFF. Lazo abierto: la acción no depende de la variable controlada.",
+    "Protocolos: BACnet (abierto, ASHRAE, peer to peer); LonWorks (Echelon, con licencia); KNX (europeo, descentralizado); Modbus (Modicon 1979, maestro-esclavo); M-Bus (contadores, EN 13757).",
+    "Instalaciones especiales: red común separada en VLAN con salida por un cortafuegos. PoE (802.3af) 15,4 W y PoE+ (802.3at) 30 W por puerto; vídeo IP interoperable con ONVIF; hora por NTP, stratum 1, hora oficial del ROA.",
+    "Videovigilancia: imágenes un mes como máximo (Instrucción 1/2006 de la AEPD, según las diapositivas; hoy el RGPD y la LO 3/2018 mantienen el mes).",
+    "ITC-BT-51: funciones de gestión de la energía, control de receptores, emergencia y seguridad; excluidas telecomunicaciones, alarmas y contraincendios. Tipos: corrientes portadoras (3–148,5 kHz, UNE-EN 50065), señales radiadas (CNAFOT) y cables específicos (aislamiento equivalente al de BT).",
+    "Verificación domótica: seguridad y compatibilidad electromagnética (Directiva 2014/30/UE); manual de instalador (E/S de nodos, alarmas, normas) y manual de usuario (declaración de entrega, posventa, parámetros). MBTS sin tierra; MBTP con tierra."
+   ],
+   "tests": [
+    {
+     "id": "com-temario",
+     "name": "Temario",
+     "short": "COM · Temario",
+     "examSize": 20,
+     "examPen": 0.5,
+     "examTime": 20,
+     "source": "Test del resto del temario de Comunicaciones (Unidad 3, temas 1 a 3: infraestructura y cableado, sistemas de control y protocolos, instalaciones especiales): 71 preguntas tipo test. Las respuestas son las de las soluciones comentadas del documento. Discrepancias del temario: algunos títulos de diapositivas están copiados de otra asignatura («instalaciones eléctricas de baja tensión» en el tema 1, «Sistemas HVAC» en el tema 3), pero el contenido es de comunicaciones; el tema 1 cita la «ISO/IEC 11081», cuando la norma de cableado genérico es la ISO/IEC 11801; para wifi, el tema 1 habla de 802.11b/g y el tema 3 amplía a 802.11a/b/g/n/ac; en el tema 4, «hora digital» es una errata por hogar digital (definición que la diapositiva atribuye al RD 346/2011); los requisitos particulares por tipo de sistema aparecen bajo el título «ITC-BT-36», pero son de la ITC-BT-51 (la ITC-BT-36 solo se aplica a la muy baja tensión); y en videovigilancia las diapositivas siguen la LOPD 15/1999 y la Instrucción 1/2006 de la AEPD, que es lo que se pregunta, aunque hoy rigen el RGPD y la Ley Orgánica 3/2018. Las preguntas afectadas llevan la marca «Sin confirmar».",
+     "questions": [
+      {
+       "q": "La instalación de comunicaciones de un inmueble:",
+       "o": [
+        "Se define siempre después de la obra, por el departamento de informática",
+        "Es una instalación industrial más y se define en el proyecto de ejecución",
+        "Solo es obligatoria en edificios de viviendas"
+       ],
+       "c": 1,
+       "e": "La instalación de comunicaciones es una instalación más del edificio, como la eléctrica, la de climatización o la de incendios, y por eso se especifica en el proyecto de ejecución, no después de la obra (tema 1, apartado 1.1)."
+      },
+      {
+       "q": "El cableado y los componentes pasivos que dan medio de transmisión a todo el inmueble son un sistema de servicio:",
+       "o": [
+        "Opcional",
+        "Finalista",
+        "Instrumental (sirve para implantar otros sistemas)"
+       ],
+       "c": 2,
+       "e": "Los sistemas instrumentales son los que sirven de soporte para implantar otros: el cableado, los componentes pasivos y la infraestructura informática. Los finalistas son los que dan un servicio concreto, como la telefonía, el control de accesos o la videovigilancia (tema 1, apartado 1.1)."
+      },
+      {
+       "q": "¿Cuál de estos es un sistema de servicio finalista de la instalación de comunicaciones?",
+       "o": [
+        "El sistema de videovigilancia",
+        "El cableado de cobre y fibra",
+        "La infraestructura informática de control"
+       ],
+       "c": 0,
+       "e": "La videovigilancia da un servicio concreto al usuario, así que es un sistema finalista. El cableado de cobre y fibra y la infraestructura informática de control son instrumentales: sirven de soporte a los demás (tema 1, apartado 1.1)."
+      },
+      {
+       "q": "En un inmueble pequeño, el cableado se hace en topología radial desde un único cuarto si el edificio cabe en una esfera de radio:",
+       "o": [
+        "50 m",
+        "100 m",
+        "200 m"
+       ],
+       "c": 1,
+       "e": "100 m es la distancia máxima que se puede atender con cobre y certificar. Si todo el edificio cabe en una esfera de ese radio, basta con una topología radial desde un único cuarto (tema 1, apartado 1.2)."
+      },
+      {
+       "q": "En un edificio grande, para no alejarse más de 100 m de las tomas, se colocan:",
+       "o": [
+        "Más RITI",
+        "Repartidores satélite (RS)",
+        "Cajas de empalme en cada planta"
+       ],
+       "c": 1,
+       "e": "En edificios grandes se sectoriza con repartidores satélite (RS), para que ninguna toma quede a más de 100 m de su repartidor (tema 1, apartado 1.2)."
+      },
+      {
+       "q": "El RITI es:",
+       "o": [
+        "El rack donde se colocan los servidores del CPD",
+        "El repartidor interior de cada planta",
+        "El Recinto de Instalaciones de Telecomunicación Inferior, donde se enlaza con las redes de los operadores"
+       ],
+       "c": 2,
+       "e": "El RITI (Recinto de Instalaciones de Telecomunicación Inferior) es el recinto, en la parte baja del edificio, donde la red interior enlaza con las redes de los operadores (tema 1, apartado 3.1)."
+      },
+      {
+       "q": "El RITI está regulado por el Reglamento de Infraestructuras Comunes de Telecomunicaciones, aprobado por:",
+       "o": [
+        "RD 346/2011",
+        "RD 842/2002",
+        "RD 513/2017"
+       ],
+       "c": 0,
+       "e": "El Reglamento de Infraestructuras Comunes de Telecomunicaciones (ICT), que regula el RITI, se aprobó por el RD 346/2011. El RD 842/2002 es el REBT y el RD 513/2017, el RIPCI (tema 1, apartado 3.1)."
+      },
+      {
+       "q": "Desde las arquetas exteriores hasta el RITI normalmente se prevén tubos enterrados de PVC de:",
+       "o": [
+        "40 mm",
+        "63 mm",
+        "90 mm"
+       ],
+       "c": 2,
+       "e": "Desde las arquetas exteriores hasta el RITI se suelen prever tubos enterrados de PVC de 90 mm, por los que entran las redes de los operadores (tema 1, apartado 3.1)."
+      },
+      {
+       "q": "Los sistemas de información con los que se opera y gestiona el edificio se centralizan en:",
+       "o": [
+        "El centro de datos o repartidor principal",
+        "Cada repartidor satélite por separado",
+        "El cuadro general de baja tensión"
+       ],
+       "c": 0,
+       "e": "Los sistemas de información que operan y gestionan el edificio se centralizan en el centro de datos o repartidor principal, desde donde parte la red troncal (tema 1, apartado 3.2)."
+      },
+      {
+       "q": "La red troncal une:",
+       "o": [
+        "Los repartidores secundarios con las tomas de usuario",
+        "El repartidor principal con los repartidores secundarios",
+        "El RITI con las arquetas de la calle"
+       ],
+       "c": 1,
+       "e": "La red troncal une el repartidor principal con los repartidores secundarios. La red horizontal va después desde los secundarios hasta las tomas de usuario (PAR) (tema 1, apartado 3.4)."
+      },
+      {
+       "q": "El cableado troncal y el horizontal se hacen de una sola tirada, sin empalmes ni dispositivos intermedios.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Tanto el cableado troncal como el horizontal se tienden de una sola tirada, sin empalmes ni dispositivos intermedios, para no degradar la señal ni añadir puntos de fallo (tema 1, apartados 3.4 y 3.5)."
+      },
+      {
+       "q": "En la red horizontal, la longitud del cable fijo no debe superar:",
+       "o": [
+        "5 m",
+        "90 m",
+        "100 m"
+       ],
+       "c": 1,
+       "e": "Según la UNE-EN 50173, el cable fijo de la red horizontal no debe pasar de 90 m. Con los latiguillos (hasta 5 m) el canal completo llega como máximo a 100 m (tema 1, apartado 3.5)."
+      },
+      {
+       "q": "La longitud total del canal en la red horizontal está limitada a:",
+       "o": [
+        "90 m",
+        "100 m",
+        "150 m"
+       ],
+       "c": 1,
+       "e": "El canal completo de la red horizontal, sumando el cable fijo (90 m) y los latiguillos, se limita a 100 m (tema 1, apartado 3.5)."
+      },
+      {
+       "q": "Los latiguillos de parcheo o puentes no deben superar:",
+       "o": [
+        "5 m",
+        "10 m",
+        "20 m"
+       ],
+       "c": 0,
+       "e": "Los latiguillos de parcheo o puentes se limitan a 5 m, para que con los 90 m de cable fijo el canal no supere los 100 m (tema 1, apartado 3.5)."
+      },
+      {
+       "q": "Según la UNE-EN 50174-1, el espacio útil de las canalizaciones debería ser el doble de lo necesario para los cables iniciales.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "La UNE-EN 50174-1 (punto 4.8.2) recomienda que las canalizaciones tengan el doble del espacio necesario para los cables iniciales, para poder ampliar la instalación (tema 1, apartado 3.5)."
+      },
+      {
+       "q": "El cable de cobre habitual en la red horizontal es:",
+       "o": [
+        "Coaxial de 75 Ω",
+        "Categoría 3 de 2 pares",
+        "Categoría 6A de 4 pares trenzados"
+       ],
+       "c": 2,
+       "e": "En la red horizontal se usa habitualmente cable de categoría 6A de 4 pares trenzados, LSZH y U/FTP (tema 1, apartado 3.5)."
+      },
+      {
+       "q": "La categoría 6A de cable corresponde a la clase de canal:",
+       "o": [
+        "Clase EA",
+        "Clase E",
+        "Clase D"
+       ],
+       "c": 0,
+       "e": "Cada categoría de cable corresponde a una clase de canal: 5e–D, 6–E, 6A–EA, 7–F y 7A–FA (tabla del tema 1)."
+      },
+      {
+       "q": "La categoría 6 trabaja en un ancho de banda de hasta:",
+       "o": [
+        "100 MHz",
+        "250 MHz",
+        "500 MHz"
+       ],
+       "c": 1,
+       "e": "La categoría 6 trabaja hasta 250 MHz. La 5e llega a 100 MHz, la 6A a 500 MHz, la 7 a 600 MHz y la 7A a 1.000 MHz (tabla del tema 1)."
+      },
+      {
+       "q": "El cable UTP:",
+       "o": [
+        "Tiene una lámina metálica que protege todo el conjunto",
+        "No tiene capa de protección frente a interferencias",
+        "Tiene cada par apantallado"
+       ],
+       "c": 1,
+       "e": "UTP significa par trenzado sin apantallar: no tiene ninguna capa de protección frente a interferencias. El FTP lleva una lámina o trenza metálica sobre el conjunto y el STP, una pantalla en cada par (tema 1, apartado 3.6)."
+      },
+      {
+       "q": "El cable que lleva apantallado cada par por separado se denomina:",
+       "o": [
+        "UTP",
+        "FTP",
+        "STP"
+       ],
+       "c": 2,
+       "e": "El STP lleva una pantalla en cada par. El UTP no tiene pantalla y el FTP la tiene solo sobre el conjunto de pares (tema 1, apartado 3.6)."
+      },
+      {
+       "q": "La fibra óptica monomodo:",
+       "o": [
+        "Tiene núcleo de 8–10 µm y es la mejor opción para largas distancias",
+        "Tiene núcleo de 50 o 62,5 µm y se usa solo en distancias cortas",
+        "Transmite varios modos de luz a la vez"
+       ],
+       "c": 0,
+       "e": "La fibra monomodo tiene un núcleo muy fino, de 8 a 10 µm, por el que solo viaja un modo de luz (a 1.310–1.550 nm). Al tener menos atenuación, es la mejor opción para largas distancias (tema 1, apartado 3.7)."
+      },
+      {
+       "q": "La fibra multimodo tiene un núcleo de:",
+       "o": [
+        "8 a 10 µm",
+        "50 o 62,5 µm",
+        "125 o 250 µm"
+       ],
+       "c": 1,
+       "e": "La fibra multimodo tiene un núcleo de 50 o 62,5 µm, por el que viajan varios modos de luz. La monomodo tiene de 8 a 10 µm (tema 1, apartado 3.7)."
+      },
+      {
+       "q": "La distancia máxima de transmisión de la fibra multimodo a 10 Gb/s es de unos:",
+       "o": [
+        "100 m",
+        "550 m",
+        "5 km"
+       ],
+       "c": 1,
+       "e": "A 10 Gb/s, la fibra multimodo llega a unos 550 m. Para distancias mayores se usa monomodo (tema 1, apartado 3.7)."
+      },
+      {
+       "q": "En la red troncal se suele usar fibra:",
+       "o": [
+        "Monomodo 9/125 OS2",
+        "Multimodo 50/125 OM4",
+        "De plástico"
+       ],
+       "c": 1,
+       "e": "Dentro del edificio, las distancias de la red troncal son cortas, así que se suele usar fibra multimodo 50/125 OM4, con paneles LC dúplex (tema 1, apartados 3.3 y 3.4)."
+      },
+      {
+       "q": "Los puntos wifi del edificio no necesitan alimentación eléctrica propia porque se alimentan por el cable de red (PoE).",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Los puntos de acceso wifi se alimentan por el propio cable de red mediante PoE, así que no necesitan toma eléctrica. Antes de instalarlos se hace un estudio de cobertura (tema 1, apartado 3.5, comunicación inalámbrica)."
+      },
+      {
+       "q": "Los locales de los repartidores secundarios deben tener un cerramiento resistente al fuego:",
+       "o": [
+        "RF-60",
+        "RF-120",
+        "RF-90"
+       ],
+       "c": 2,
+       "e": "Los locales de los repartidores secundarios deben tener un cerramiento RF-90 y una temperatura que no supere los 20–22 ºC (tema 1, apartado 3.3)."
+      },
+      {
+       "q": "Las normas de cableado genérico que cita el temario son:",
+       "o": [
+        "UNE-EN 50173 y UNE-EN 50174",
+        "UNE-EN 12845 y UNE 23500",
+        "UNE-EN 806 y UNE-EN 12056"
+       ],
+       "c": 0,
+       "e": "Las normas de cableado genérico del temario son la UNE-EN 50173 (diseño) y la UNE-EN 50174 (instalación). La UNE-EN 12845 y la UNE 23500 son de protección contra incendios, y la UNE-EN 806 y la UNE-EN 12056, de fontanería (tema 1, apartado 2.1)."
+      },
+      {
+       "q": "Los sistemas de gestión técnica de un edificio se denominan:",
+       "o": [
+        "BMS o GTC",
+        "SAI o UPS",
+        "RITI o RITS"
+       ],
+       "c": 0,
+       "e": "Los sistemas de gestión técnica se llaman BMS (Building Management System) o GTC (Gestión Técnica Centralizada). SAI/UPS son alimentaciones ininterrumpidas y RITI/RITS, recintos de telecomunicación (tema 2)."
+      },
+      {
+       "q": "La diferencia entre domótica e inmótica es que:",
+       "o": [
+        "La inmótica es de ámbito doméstico y la domótica de edificios",
+        "La domótica es de ámbito doméstico y la inmótica abarca edificios o sistemas de mayor envergadura",
+        "Son lo mismo con distinto nombre comercial"
+       ],
+       "c": 1,
+       "e": "La domótica es la automatización en el ámbito doméstico (viviendas), y la inmótica, la aplicada a edificios o sistemas de mayor envergadura (tema 2, apartado 1.1, y tema 4)."
+      },
+      {
+       "q": "Las instalaciones domóticas se rigen en el REBT por la:",
+       "o": [
+        "ITC-BT-36",
+        "ITC-BT-28",
+        "ITC-BT-51"
+       ],
+       "c": 2,
+       "e": "Dentro del REBT, la ITC-BT-51 regula los sistemas de automatización, gestión técnica de la energía y seguridad de viviendas y edificios, es decir, la domótica. La ITC-BT-36 es de muy baja tensión y la ITC-BT-28, de locales de pública concurrencia (tema 2, apartado 1.2, y tema 4)."
+      },
+      {
+       "q": "Según el RITE (IT 1.2.4.3.5), los edificios no residenciales deben tener sistemas de automatización y control cuando su potencia útil de calefacción o refrigeración supera:",
+       "o": [
+        "70 kW",
+        "290 kW",
+        "1000 kW"
+       ],
+       "c": 1,
+       "e": "La IT 1.2.4.3.5 del RITE exige sistemas de automatización y control en edificios no residenciales con más de 290 kW de potencia útil de calefacción o refrigeración, cuando sea técnica y económicamente viable (tema 2, apartado 1.4)."
+      },
+      {
+       "q": "La norma que recoge la automatización y el control con impacto en la eficiencia energética es la:",
+       "o": [
+        "UNE-EN 15232-1",
+        "UNE-EN 50173",
+        "UNE-EN 13757"
+       ],
+       "c": 0,
+       "e": "La UNE-EN 15232-1 trata el impacto de la automatización y el control de edificios en la eficiencia energética. La UNE-EN 50173 es de cableado y la UNE-EN 13757, de lectura de contadores (M-Bus) (tema 2, apartado 1.4)."
+      },
+      {
+       "q": "Un lazo de control es:",
+       "o": [
+        "El proceso que mantiene una variable igual a un valor de consigna actuando sobre los equipos",
+        "El cable que une el controlador con la sonda",
+        "La lista de alarmas del sistema"
+       ],
+       "c": 0,
+       "e": "Un lazo de control es el proceso que mide una variable, la compara con el valor de consigna y actúa sobre los equipos para mantenerla en ese valor (tema 2, apartado 2.3)."
+      },
+      {
+       "q": "Fijar la temperatura de impulsión de las calderas en función de la temperatura exterior (y no de la de las viviendas) es un control en:",
+       "o": [
+        "Lazo cerrado",
+        "Lazo abierto",
+        "Cascada"
+       ],
+       "c": 1,
+       "e": "Es un lazo abierto porque la acción (la temperatura de impulsión) no depende de la variable que se quiere controlar (la temperatura de las viviendas), sino de otra (la temperatura exterior) (tema 2, apartado 2.3)."
+      },
+      {
+       "q": "Medir la temperatura de la habitación de un hotel y abrir o cerrar la válvula del fancoil en función de ella es un control en lazo cerrado (realimentado).",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Se mide la misma variable que se quiere controlar (la temperatura de la habitación) y se actúa en función de ella (la válvula del fancoil). Eso es un lazo cerrado o realimentado (tema 2, apartado 2.3)."
+      },
+      {
+       "q": "Un punto de control analógico:",
+       "o": [
+        "No se puede conectar a un BMS",
+        "Solo tiene dos posiciones (ON/OFF)",
+        "Admite múltiples valores, con señales tipo 4-20 mA o 0-10 V"
+       ],
+       "c": 2,
+       "e": "Un punto analógico admite muchos valores, como una temperatura o un porcentaje de apertura, y usa señales tipo 4-20 mA, 0-10 V, 2-10 V o 135 Ω. El que solo tiene dos posiciones es el digital (tema 2, apartado 2.4)."
+      },
+      {
+       "q": "La señal de una puerta «abierta/cerrada» es un punto:",
+       "o": [
+        "Digital",
+        "Analógico",
+        "Proporcional"
+       ],
+       "c": 0,
+       "e": "Abierta o cerrada son solo dos posiciones, así que es un punto digital (ON/OFF) (tema 2, apartado 2.4)."
+      },
+      {
+       "q": "La temperatura real medida en una habitación es, para el sistema de control, una:",
+       "o": [
+        "Salida",
+        "Entrada",
+        "Consigna fija"
+       ],
+       "c": 1,
+       "e": "Las entradas son la información que recibe el sistema de control, como una temperatura medida. Las salidas son las órdenes que da a los equipos (tema 2, apartado 2.4)."
+      },
+      {
+       "q": "Los sensores y actuadores sobre los que trabaja el sistema de control se llaman:",
+       "o": [
+        "Pasarelas",
+        "Material de cabecera",
+        "Material de campo"
+       ],
+       "c": 2,
+       "e": "Los sensores y actuadores, que están junto a los equipos que se controlan, forman el material de campo (tema 2, apartado 2.5)."
+      },
+      {
+       "q": "Si un termómetro tiene un rango de 0 a 20 ºC, su alcance (span) es:",
+       "o": [
+        "0 ºC",
+        "10 ºC",
+        "20 ºC"
+       ],
+       "c": 2,
+       "e": "El alcance o span es la diferencia entre el límite superior y el inferior del rango de medida (tema 2, apartado 2.5).",
+       "k": [
+        "Alcance = límite superior − límite inferior",
+        "Alcance = 20 − 0 = 20 ºC"
+       ]
+      },
+      {
+       "q": "La diferencia entre el valor que indica el instrumento y el valor real de la variable es el:",
+       "o": [
+        "Error",
+        "Alcance",
+        "Rango"
+       ],
+       "c": 0,
+       "e": "El error es la diferencia entre lo que indica el instrumento y el valor real de la variable. El rango y el alcance describen los límites de medida (tema 2, apartado 2.5)."
+      },
+      {
+       "q": "La zona muerta es el margen de variación de la variable en el que el instrumento no registra ningún cambio.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "La zona muerta es el margen de variación de la variable en el que el instrumento no registra ningún cambio (tema 2, apartado 2.5)."
+      },
+      {
+       "q": "El dispositivo que convierte energía eléctrica o neumática en una acción mecánica es el:",
+       "o": [
+        "Presostato",
+        "Actuador",
+        "Termómetro"
+       ],
+       "c": 1,
+       "e": "El actuador convierte una energía eléctrica o neumática en una acción mecánica, como mover una válvula o una compuerta (tema 2, apartado 2.5)."
+      },
+      {
+       "q": "El presostato:",
+       "o": [
+        "Detecta si hay caudal mediante una paleta",
+        "Mide la temperatura del agua",
+        "Actúa como interruptor cuando la presión sube o baja de un valor fijado"
+       ],
+       "c": 2,
+       "e": "El presostato es un interruptor que cambia de estado cuando la presión sube o baja de un valor fijado. El que detecta caudal con una paleta es el interruptor de flujo (tema 2, apartado 2.5)."
+      },
+      {
+       "q": "El modo de control más simple y barato, con solo dos posiciones (ON/OFF), es el:",
+       "o": [
+        "Todo/nada",
+        "PI",
+        "PID"
+       ],
+       "c": 0,
+       "e": "El control todo/nada solo tiene dos posiciones (encendido y apagado), por eso es el más simple y barato (tema 2, apartado 2.6)."
+      },
+      {
+       "q": "El control que añade la acción derivada al PI, dando más corrección cuanto más rápido cambia la variable, es el:",
+       "o": [
+        "Proporcional",
+        "PID",
+        "Flotante"
+       ],
+       "c": 1,
+       "e": "El PID suma a la acción proporcional y la integral una acción derivada, que corrige más cuanto más rápido cambia la variable (tema 2, apartado 2.6)."
+      },
+      {
+       "q": "Un protocolo de comunicaciones es:",
+       "o": [
+        "El manual de uso del BMS",
+        "El listado de puntos del proyecto",
+        "El conjunto de reglas para que los elementos de control se comuniquen entre sí"
+       ],
+       "c": 2,
+       "e": "Un protocolo de comunicaciones es el conjunto de reglas que permite que los elementos de control intercambien información entre sí (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "BACnet es un protocolo:",
+       "o": [
+        "Abierto, sin licencia y desarrollado por ASHRAE",
+        "Propietario de Echelon con licencia",
+        "Exclusivo para contadores de agua"
+       ],
+       "c": 0,
+       "e": "BACnet es un protocolo abierto y sin licencia, desarrollado por ASHRAE. Es peer to peer y funciona sobre IP y MS/TP (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "El protocolo que requiere licencia inicial y se basa en un protocolo de Echelon Corporation es:",
+       "o": [
+        "BACnet",
+        "LonWorks",
+        "Modbus"
+       ],
+       "c": 1,
+       "e": "LonWorks se basa en un protocolo de Echelon Corporation y requiere una licencia inicial. BACnet y Modbus son abiertos (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "KNX es un protocolo europeo que funciona sin controlador central (control descentralizado).",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "KNX es un estándar europeo de control descentralizado: cada dispositivo tiene su propia inteligencia y no hace falta un controlador central (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "Modbus es un protocolo en serie, publicado por Modicon en 1979, de tipo:",
+       "o": [
+        "Inalámbrico",
+        "Peer to peer",
+        "Maestro-esclavo"
+       ],
+       "c": 2,
+       "e": "Modbus es un protocolo serie publicado por Modicon en 1979 que funciona como maestro-esclavo: el maestro pregunta y los esclavos responden (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "El protocolo europeo pensado para la lectura remota de contadores es:",
+       "o": [
+        "M-Bus (EN 13757)",
+        "KNX",
+        "BACnet"
+       ],
+       "c": 0,
+       "e": "Es el protocolo europeo pensado para leer a distancia contadores de agua, gas, calor o electricidad, definido en la norma EN 13757. KNX y BACnet son protocolos de control de edificios (tema 2, apartado 2.7)."
+      },
+      {
+       "q": "Las «instalaciones especiales» son las que:",
+       "o": [
+        "Tienen un reglamento de seguridad industrial propio",
+        "No están reguladas por reglamentos de seguridad industrial y funcionan con señales débiles",
+        "Solo existen en hospitales"
+       ],
+       "c": 1,
+       "e": "Las instalaciones especiales son las que no tienen un reglamento de seguridad industrial propio y funcionan con señales débiles, como la videovigilancia, los accesos o la difusión horaria (tema 3, presentación)."
+      },
+      {
+       "q": "Para separar el tráfico de los distintos sistemas sobre una única red común se usan:",
+       "o": [
+        "Cables de distinto color",
+        "Una red física independiente para cada sistema",
+        "VLAN (redes locales virtuales)"
+       ],
+       "c": 2,
+       "e": "Sobre una única red común, el tráfico de cada sistema se separa con VLAN (redes locales virtuales), y la salida al exterior se hace por un único punto con cortafuegos (tema 3, apartado 1.2)."
+      },
+      {
+       "q": "Las redes de cableado de las instalaciones especiales:",
+       "o": [
+        "Comparten la misma canalización",
+        "Deben ir siempre en canalizaciones separadas",
+        "No necesitan canalización"
+       ],
+       "c": 0,
+       "e": "Como todas trabajan con señales débiles sobre la red común, las redes de las instalaciones especiales comparten la misma canalización (tema 3, apartado 1.2)."
+      },
+      {
+       "q": "Lo habitual hoy en videovigilancia es usar cámaras:",
+       "o": [
+        "Analógicas con cable coaxial",
+        "IP",
+        "Sin grabación"
+       ],
+       "c": 1,
+       "e": "Hoy lo habitual en videovigilancia es el CCTV IP: cámaras IP conectadas a la red de datos, en lugar de cámaras analógicas con cable coaxial (tema 3, apartado 2.1)."
+      },
+      {
+       "q": "Según la Instrucción 1/2006 de la AEPD, las imágenes de videovigilancia se pueden conservar como máximo:",
+       "o": [
+        "Una semana",
+        "Un año",
+        "Un mes"
+       ],
+       "c": 2,
+       "e": "Según las diapositivas, que siguen la LOPD 15/1999 y la Instrucción 1/2006 de la AEPD, las imágenes se pueden conservar como máximo un mes; en la práctica se suelen guardar una semana. Es lo que se pregunta. Esa normativa ya no es la vigente: ahora rigen el RGPD (Reglamento (UE) 2016/679) y la Ley Orgánica 3/2018, que mantienen el plazo máximo de un mes (tema 3, apartado 2.1).",
+       "d": true
+      },
+      {
+       "q": "El estándar de la industria de vídeo IP que permite interoperar cámaras de distintos fabricantes es:",
+       "o": [
+        "ONVIF",
+        "BACnet",
+        "COFDM"
+       ],
+       "c": 0,
+       "e": "ONVIF es el estándar de la industria de vídeo IP que permite que cámaras y grabadores de distintos fabricantes funcionen juntos. BACnet es un protocolo de control y COFDM, la modulación de la TDT (tema 3, apartado 2.1)."
+      },
+      {
+       "q": "PoE (IEEE 802.3af) da hasta 15,4 W por puerto y PoE+ (IEEE 802.3at) hasta:",
+       "o": [
+        "20 W",
+        "30 W",
+        "60 W"
+       ],
+       "c": 1,
+       "e": "PoE (IEEE 802.3af) da hasta 15,4 W por puerto, y PoE+ (IEEE 802.3at), hasta 30 W, suficiente para cámaras motorizadas o con calefactor (tema 3, apartado 2.1)."
+      },
+      {
+       "q": "La ventaja principal de la alimentación PoE es que:",
+       "o": [
+        "No necesita switch",
+        "Un solo cable lleva datos y alimentación",
+        "Permite cables de más de 300 m"
+       ],
+       "c": 1,
+       "e": "Con PoE un solo cable de red lleva los datos y la alimentación, así que no hace falta una toma eléctrica junto a cada cámara o punto wifi (tema 3, apartado 2.1)."
+      },
+      {
+       "q": "La cámara semiesférica, la más habitual en interiores por integración estética, es la:",
+       "o": [
+        "Tipo ojo de pez",
+        "Tipo bullet",
+        "Tipo domo"
+       ],
+       "c": 2,
+       "e": "La cámara domo es semiesférica y se integra bien en techos interiores. La bullet se usa como elemento disuasorio y la de ojo de pez, para vistas panorámicas de 180 a 360º (tema 3, apartado 2.1)."
+      },
+      {
+       "q": "En control de accesos se suelen usar tarjetas:",
+       "o": [
+        "RFID (identificación por radiofrecuencia)",
+        "Magnéticas de banda",
+        "Perforadas"
+       ],
+       "c": 0,
+       "e": "En control de accesos se usan tarjetas RFID (identificación por radiofrecuencia), que se leen sin contacto (tema 3, apartado 2.2)."
+      },
+      {
+       "q": "Un sistema RFID consta de etiqueta (transpondedor), lector (transceptor) y middleware.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Un sistema RFID tiene una etiqueta o transpondedor, un lector o transceptor y un middleware que gestiona la información leída (tema 3, apartado 2.2)."
+      },
+      {
+       "q": "El sistema de difusión horaria sincroniza todos los equipos de la red mediante el protocolo:",
+       "o": [
+        "Modbus",
+        "NTP o SNTP",
+        "ONVIF"
+       ],
+       "c": 1,
+       "e": "La difusión horaria sincroniza todos los equipos de la red mediante el protocolo NTP o SNTP, a partir de un servidor de tiempo sincronizado por GPS (tema 3, apartado 2.3)."
+      },
+      {
+       "q": "En España la hora oficial la fija:",
+       "o": [
+        "Red Eléctrica de España",
+        "El Instituto Geográfico Nacional",
+        "El Real Observatorio de la Armada (ROA)"
+       ],
+       "c": 2,
+       "e": "En España, la hora oficial la establece el Real Observatorio de la Armada (ROA), en San Fernando (tema 3, apartado 2.3)."
+      },
+      {
+       "q": "Al servidor de tiempo se le suele exigir precisión «stratum 1», que es:",
+       "o": [
+        "El mayor nivel jerárquico de NTP",
+        "El nivel más bajo de NTP",
+        "Un tipo de antena GPS"
+       ],
+       "c": 0,
+       "e": "En NTP, el stratum indica la distancia a la fuente de referencia. Stratum 1 es el mayor nivel jerárquico, el de los servidores conectados directamente a una referencia como el GPS (tema 3, apartado 2.3)."
+      },
+      {
+       "q": "La telefonía IP transmite las llamadas en paquetes de datos, mientras que la telefonía tradicional (RTPC) usa una línea dedicada por llamada.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "La telefonía IP divide la voz en paquetes de datos que viajan por la red, mientras que la telefonía tradicional (RTPC) reserva una línea dedicada para cada llamada (tema 3, apartado 2.4)."
+      },
+      {
+       "q": "Una ventaja de la telefonía IP frente a la tradicional es que:",
+       "o": [
+        "No necesita cableado",
+        "Permite varias llamadas simultáneas con un mismo número contratado",
+        "No consume ancho de banda"
+       ],
+       "c": 1,
+       "e": "Como la voz viaja en paquetes, con un mismo número contratado se pueden mantener varias llamadas a la vez. La telefonía IP sí usa cableado y ancho de banda (tema 3, apartado 2.4)."
+      },
+      {
+       "q": "El sistema de llamada paciente-enfermera permite:",
+       "o": [
+        "Grabar vídeo del paciente",
+        "Controlar la climatización de la habitación",
+        "Que el paciente pida atención al control de enfermería, con trazabilidad"
+       ],
+       "c": 2,
+       "e": "El sistema de llamada paciente-enfermera permite que el paciente avise al control de enfermería, y deja registro de cada llamada y de su atención (trazabilidad) (tema 3, apartado 2.5)."
+      },
+      {
+       "q": "Para captar TV por satélite (Astra e Hispasat) hacen falta:",
+       "o": [
+        "Dos antenas parabólicas",
+        "Una antena de TDT",
+        "Una sola parábola para los dos"
+       ],
+       "c": 0,
+       "e": "Astra e Hispasat están en posiciones orbitales distintas, así que hace falta una antena parabólica orientada a cada satélite (tema 3, apartado 2.6)."
+      },
+      {
+       "q": "En la cabecera de TV, los contenidos se pueden difundir con la codificación de la TDT, que es:",
+       "o": [
+        "PoE",
+        "COFDM",
+        "ONVIF"
+       ],
+       "c": 1,
+       "e": "La TDT usa la modulación COFDM. Si la cabecera difunde los contenidos con ella, cualquier televisor los sintoniza con su descodificador TDT, sin equipos externos (tema 3, apartado 2.6)."
+      }
+     ]
+    },
+    {
+     "id": "com-verif",
+     "name": "Verificación",
+     "short": "COM · Verificación",
+     "examSize": 20,
+     "examPen": 0.5,
+     "examTime": 20,
+     "source": "Banco de verificación de Comunicaciones (tema 4: verificación de instalaciones domóticas según la ITC-BT-51 y la ITC-BT-36): 41 preguntas tipo test. Las respuestas son las de las soluciones comentadas del documento. Discrepancias del temario: algunos títulos de diapositivas están copiados de otra asignatura («instalaciones eléctricas de baja tensión» en el tema 1, «Sistemas HVAC» en el tema 3), pero el contenido es de comunicaciones; el tema 1 cita la «ISO/IEC 11081», cuando la norma de cableado genérico es la ISO/IEC 11801; para wifi, el tema 1 habla de 802.11b/g y el tema 3 amplía a 802.11a/b/g/n/ac; en el tema 4, «hora digital» es una errata por hogar digital (definición que la diapositiva atribuye al RD 346/2011); los requisitos particulares por tipo de sistema aparecen bajo el título «ITC-BT-36», pero son de la ITC-BT-51 (la ITC-BT-36 solo se aplica a la muy baja tensión); y en videovigilancia las diapositivas siguen la LOPD 15/1999 y la Instrucción 1/2006 de la AEPD, que es lo que se pregunta, aunque hoy rigen el RGPD y la Ley Orgánica 3/2018. Las preguntas afectadas llevan la marca «Sin confirmar».",
+     "questions": [
+      {
+       "q": "Las instalaciones domóticas se verifican según el REBT, en concreto con la:",
+       "o": [
+        "ITC-BT-19",
+        "ITC-BT-25",
+        "ITC-BT-51 y su guía técnica"
+       ],
+       "c": 2,
+       "e": "Dentro del REBT, las instalaciones domóticas se regulan, y por tanto se verifican, con la ITC-BT-51 y su guía técnica. La ITC-BT-19 trata las instalaciones interiores en general y la ITC-BT-25, el número de circuitos en viviendas (tema 4, apartado 1)."
+      },
+      {
+       "q": "La ITC-BT-51 se titula «Instalaciones de sistemas de automatización, gestión técnica de la energía y seguridad para viviendas y edificios».",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Ese es el título exacto de la ITC-BT-51, y de él sale la definición de sistema domótico que usa el tema 4."
+      },
+      {
+       "q": "El REBT se aprobó mediante el:",
+       "o": [
+        "RD 842/2002",
+        "RD 346/2011",
+        "RD 1027/2007"
+       ],
+       "c": 0,
+       "e": "El REBT se aprobó por el RD 842/2002. El RD 346/2011 es el reglamento de ICT y el RD 1027/2007, el RITE (tema 4, bibliografía)."
+      },
+      {
+       "q": "¿Cuál de estas funciones es propia de un sistema domótico?",
+       "o": [
+        "Gestión de la energía",
+        "Red de telefonía",
+        "Sistema contraincendios"
+       ],
+       "c": 0,
+       "e": "Según la ITC-BT-51, las funciones domóticas son la gestión de la energía, el control de receptores y las de emergencia y seguridad. La telefonía y los sistemas contraincendios quedan fuera (tema 4)."
+      },
+      {
+       "q": "Según la ITC-BT-51, NO se consideran sistemas domóticos:",
+       "o": [
+        "Los sistemas de gestión de la energía",
+        "Las redes de telecomunicaciones, los sistemas de alarma y los contraincendios",
+        "El control centralizado o remoto de receptores"
+       ],
+       "c": 1,
+       "e": "La ITC-BT-51 excluye expresamente las redes de telecomunicaciones, los sistemas de alarma y los contraincendios, que tienen su propia regulación. La gestión de la energía y el control de receptores sí son domótica (tema 4)."
+      },
+      {
+       "q": "Un sistema de detección y extinción de incendios entra dentro de la ITC-BT-51.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Los sistemas de detección y extinción de incendios están excluidos expresamente de la ITC-BT-51: se rigen por la normativa de protección contra incendios (tema 4)."
+      },
+      {
+       "q": "El control de receptores de forma centralizada o remota es una función domótica.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Controlar receptores (luces, persianas, electrodomésticos) de forma centralizada o a distancia es una de las funciones domóticas que enumera la ITC-BT-51 (tema 4)."
+      },
+      {
+       "q": "La inmótica es:",
+       "o": [
+        "Un tipo de red de telecomunicaciones",
+        "La domótica aplicada solo a la iluminación",
+        "La domótica aplicada a edificios"
+       ],
+       "c": 2,
+       "e": "La inmótica es la domótica aplicada a edificios no residenciales, como oficinas, hoteles u hospitales (tema 4)."
+      },
+      {
+       "q": "El hogar digital es el lugar donde, mediante la convergencia de infraestructuras, equipamientos y servicios, se atienden las necesidades de sus habitantes (confort, seguridad, ahorro energético, comunicación, etc.).",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Es la definición de hogar digital que da el tema 4. La diapositiva la titula «hora digital», que es una errata: el contenido se refiere al hogar digital, que es el término que se usa aquí.",
+       "d": true
+      },
+      {
+       "q": "Según el tema, la definición de hogar digital procede del:",
+       "o": [
+        "RD 346/2011",
+        "RD 842/2002",
+        "CTE DB HE"
+       ],
+       "c": 0,
+       "e": "Se usa lo que dice la diapositiva del tema 4, que atribuye esta definición de hogar digital al RD 346/2011 (reglamento de ICT). Esa diapositiva tiene además la errata «hora digital», así que conviene contrastar la fuente en los apuntes. El RD 842/2002 es el REBT.",
+       "d": true
+      },
+      {
+       "q": "El elemento que integra las redes domésticas y las conecta con el exterior a través del acceso de banda ancha es la:",
+       "o": [
+        "Toma de usuario",
+        "Pasarela residencial",
+        "Caja general de protección"
+       ],
+       "c": 1,
+       "e": "La pasarela residencial integra las redes de la vivienda (domótica, telefonía, TV, informática) y las conecta con el exterior a través del acceso de banda ancha, adaptando protocolos si hace falta (tema 4)."
+      },
+      {
+       "q": "La domótica contribuye al hogar digital sobre todo en:",
+       "o": [
+        "Sustituir la instalación eléctrica",
+        "Reducir el número de enchufes",
+        "Ahorro energético e integración medioambiental"
+       ],
+       "c": 2,
+       "e": "Según el resumen del tema 4, la gran aportación de la domótica al hogar digital es el ahorro energético y la integración medioambiental."
+      },
+      {
+       "q": "Cada unidad del sistema capaz de recibir y procesar información, comunicándose con otras, es un:",
+       "o": [
+        "Nodo",
+        "Actuador",
+        "Dispositivo de entrada"
+       ],
+       "c": 0,
+       "e": "Un nodo es cada unidad del sistema que recibe y procesa información y se comunica con las demás (tema 4, terminología)."
+      },
+      {
+       "q": "Una electroválvula de corte de agua o el motor de una persiana son ejemplos de:",
+       "o": [
+        "Dispositivos de entrada",
+        "Actuadores",
+        "Pasarelas"
+       ],
+       "c": 1,
+       "e": "Un actuador es el elemento que controla algo de la instalación, como una electroválvula que corta el agua, el motor de una persiana o una sirena (tema 4)."
+      },
+      {
+       "q": "Un sensor, un mando a distancia o un teclado que envía información al nodo es un:",
+       "o": [
+        "Actuador",
+        "PAU",
+        "Dispositivo de entrada"
+       ],
+       "c": 2,
+       "e": "Los dispositivos de entrada, como sensores, mandos a distancia o teclados, envían información al nodo. Los actuadores hacen lo contrario: ejecutan sus órdenes (tema 4)."
+      },
+      {
+       "q": "La pasarela residencial conecta las redes de la vivienda (domótica, telefonía, TV, TI) con una red pública de datos como Internet, adaptando protocolos si hace falta.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "La pasarela residencial conecta las redes de la vivienda con una red pública de datos como Internet, adaptando los protocolos cuando hace falta. La red domótica puede estar conectada a ella o no (tema 4)."
+      },
+      {
+       "q": "El PAU (punto de acceso al usuario) es:",
+       "o": [
+        "El elemento donde empieza la red interior de telecomunicación del usuario",
+        "El nodo central del sistema domótico",
+        "El cuadro de mando y protección de la vivienda"
+       ],
+       "c": 0,
+       "e": "El PAU (punto de acceso al usuario) es donde empieza la red interior de telecomunicación del usuario. Separa la parte común de la privada y delimita las responsabilidades en caso de avería (tema 4)."
+      },
+      {
+       "q": "El PAU se ubica:",
+       "o": [
+        "En el RITI",
+        "En el interior del domicilio del usuario",
+        "En la fachada del edificio"
+       ],
+       "c": 1,
+       "e": "El PAU está dentro del domicilio del usuario, donde empieza su red interior. El RITI está en la parte baja del edificio (tema 4)."
+      },
+      {
+       "q": "Un sistema en el que todos los componentes se unen a un nodo central con las funciones de control y mando es:",
+       "o": [
+        "Radiado",
+        "Descentralizado",
+        "Centralizado"
+       ],
+       "c": 2,
+       "e": "En un sistema centralizado, todos los componentes se unen a un nodo central que tiene las funciones de control y mando (tema 4, configuraciones)."
+      },
+      {
+       "q": "En un sistema descentralizado, todos los componentes comparten la misma línea de comunicación y cada uno tiene funciones de control y mando.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "En un sistema descentralizado no hay nodo central: todos los componentes comparten la misma línea de comunicación y cada uno tiene funciones de control y mando (tema 4, configuraciones)."
+      },
+      {
+       "q": "¿Cuántos tipos de sistemas domóticos distingue el tema según cómo transmiten las señales?",
+       "o": [
+        "2",
+        "3",
+        "4"
+       ],
+       "c": 1,
+       "e": "El tema 4 distingue tres tipos según cómo se transmiten las señales: por la instalación eléctrica de baja tensión (corrientes portadoras), por cables específicos y por señales radiadas."
+      },
+      {
+       "q": "Los sistemas de corrientes portadoras transmiten la señal:",
+       "o": [
+        "Por la propia instalación eléctrica de baja tensión",
+        "Por fibra óptica",
+        "Por infrarrojos"
+       ],
+       "c": 0,
+       "e": "Los sistemas de corrientes portadoras inyectan la señal en la propia instalación eléctrica de baja tensión, así que no necesitan cableado nuevo (tema 4)."
+      },
+      {
+       "q": "Un sistema domótico con cable de pares trenzados, coaxial o fibra óptica es un sistema de:",
+       "o": [
+        "Corrientes portadoras",
+        "Cables específicos",
+        "Señales radiadas"
+       ],
+       "c": 1,
+       "e": "Los sistemas de cables específicos tienden su propio cableado de señal: par trenzado, coaxial o fibra óptica (tema 4)."
+      },
+      {
+       "q": "Infrarrojos, radiofrecuencia y ultrasonidos son ejemplos de sistemas de:",
+       "o": [
+        "Corrientes portadoras",
+        "Cables específicos",
+        "Señales radiadas"
+       ],
+       "c": 2,
+       "e": "Los infrarrojos, la radiofrecuencia y los ultrasonidos transmiten la señal sin cables, por el aire: son sistemas de señales radiadas (tema 4)."
+      },
+      {
+       "q": "Nodos, actuadores y dispositivos de entrada deben cumplir, una vez instalados, los requisitos de:",
+       "o": [
+        "Seguridad y compatibilidad electromagnética",
+        "Reacción al fuego únicamente",
+        "Eficiencia energética de clase A"
+       ],
+       "c": 0,
+       "e": "Entre los requisitos generales de la ITC-BT-51, nodos, actuadores y dispositivos de entrada deben cumplir, una vez instalados, los requisitos de seguridad y de compatibilidad electromagnética (tema 4)."
+      },
+      {
+       "q": "La directiva de compatibilidad electromagnética que cita el tema es la:",
+       "o": [
+        "Directiva 2014/35/UE",
+        "Directiva 2014/30/UE",
+        "Directiva 2010/31/UE"
+       ],
+       "c": 1,
+       "e": "La directiva de compatibilidad electromagnética es la 2014/30/UE. La 2014/35/UE es la de baja tensión y la 2010/31/UE, la de eficiencia energética de los edificios (tema 4)."
+      },
+      {
+       "q": "Si el sistema domótico se alimenta en muy baja tensión, la instalación debe seguir además la:",
+       "o": [
+        "ITC-BT-40",
+        "ITC-BT-28",
+        "ITC-BT-36"
+       ],
+       "c": 2,
+       "e": "Si el sistema domótico funciona en muy baja tensión, esa parte debe cumplir además la ITC-BT-36, que regula las instalaciones a muy baja tensión (tema 4)."
+      },
+      {
+       "q": "La instalación domótica se documenta con:",
+       "o": [
+        "Manual de instalador y manual de usuario",
+        "Solo el boletín eléctrico",
+        "Solo el certificado del fabricante"
+       ],
+       "c": 0,
+       "e": "La ITC-BT-51 exige documentar la instalación con un manual de instalador y un manual de usuario (tema 4)."
+      },
+      {
+       "q": "La declaración de entrega firmada por el instalador, con dirección y teléfono de la empresa y del servicio post-venta, forma parte del:",
+       "o": [
+        "Manual de instalador",
+        "Manual de usuario",
+        "Proyecto de ICT"
+       ],
+       "c": 1,
+       "e": "La declaración de entrega firmada por el instalador, con los datos de contacto de la empresa y del servicio posventa, se incluye en el manual de usuario, que es el que se queda el usuario (tema 4)."
+      },
+      {
+       "q": "La asignación de entradas y salidas de cada nodo y la programación de los niveles de aviso y alarma van en el:",
+       "o": [
+        "Manual de usuario",
+        "Certificado de la directiva CEM",
+        "Manual de instalador"
+       ],
+       "c": 2,
+       "e": "La asignación de entradas y salidas de cada nodo y la programación de los avisos y alarmas son información técnica, así que van en el manual de instalador (tema 4)."
+      },
+      {
+       "q": "El manual de usuario incluye los datos para que el usuario final pueda cambiar los parámetros preestablecidos por el fabricante o el instalador.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "El manual de usuario debe incluir los datos necesarios para que el usuario final pueda cambiar los parámetros que dejó preestablecidos el fabricante o el instalador (tema 4)."
+      },
+      {
+       "q": "La relación de normas con las que se declara el cumplimiento de la instalación va en el manual de instalador.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "En el manual de instalador va la relación de normas con las que se declara que la instalación cumple (tema 4)."
+      },
+      {
+       "q": "La ITC-BT-36 se aplica a instalaciones cuya tensión nominal no supera:",
+       "o": [
+        "50 V en c.a. o 75 V en c.c.",
+        "75 V en c.a. o 120 V en c.c.",
+        "230 V en c.a."
+       ],
+       "c": 0,
+       "e": "La ITC-BT-36 se aplica a instalaciones de muy baja tensión, con tensión nominal de hasta 50 V en corriente alterna o 75 V en corriente continua (tema 4)."
+      },
+      {
+       "q": "La muy baja tensión de seguridad (MBTS) se caracteriza porque sus circuitos:",
+       "o": [
+        "No están conectados a tierra",
+        "Están conectados a tierra por razones funcionales",
+        "Van a 230 V"
+       ],
+       "c": 0,
+       "e": "En la muy baja tensión de seguridad (MBTS), los circuitos no se conectan a tierra. En la de protección (MBTP), sí (tema 4, ITC-BT-36)."
+      },
+      {
+       "q": "En la muy baja tensión de protección (MBTP), los circuitos y/o las masas están conectados a tierra o a un conductor de protección.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "En la MBTP, los circuitos y/o las masas se conectan a tierra o a un conductor de protección, por razones funcionales. Es la diferencia con la MBTS, que no se conecta a tierra (tema 4, ITC-BT-36)."
+      },
+      {
+       "q": "La separación entre los circuitos MBTS/MBTP y los demás se consigue:",
+       "o": [
+        "Pintando los cables de otro color",
+        "Con separación física o con una cubierta no metálica además del aislamiento principal",
+        "Con una bandeja metálica común sin más"
+       ],
+       "c": 1,
+       "e": "Los circuitos MBTS y MBTP se separan de los demás con separación física o con una cubierta no metálica además del aislamiento principal. El color o una bandeja común no bastan (tema 4, ITC-BT-36)."
+      },
+      {
+       "q": "Los conectores de MBTS y MBTP no deben poder entrar en bases de toma de corriente alimentadas por otras tensiones.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "La ITC-BT-36 exige que los conectores de MBTS y MBTP no encajen en bases de enchufe de otras tensiones, para que nadie los conecte por error a 230 V (tema 4)."
+      },
+      {
+       "q": "Los nodos que inyectan señales en la instalación de BT (corrientes portadoras) trabajan en la banda de:",
+       "o": [
+        "3 kHz a 148,5 kHz",
+        "50 Hz a 3 kHz",
+        "2,4 GHz a 5 GHz"
+       ],
+       "c": 0,
+       "e": "Los nodos de corrientes portadoras trabajan en la banda de 3 kHz a 148,5 kHz, por encima de los 50 Hz de la red. Es un requisito particular de la ITC-BT-51 para este tipo de sistema, aunque la diapositiva lo pone bajo el título «ITC-BT-36» (tema 4)."
+      },
+      {
+       "q": "Los sistemas de corrientes portadoras deben cumplir, en compatibilidad electromagnética, la norma:",
+       "o": [
+        "UNE-EN 50065",
+        "UNE-EN 50173",
+        "UNE-EN 15232-1"
+       ],
+       "c": 0,
+       "e": "En compatibilidad electromagnética, los sistemas de corrientes portadoras deben cumplir la UNE-EN 50065. Es un requisito particular de la ITC-BT-51, aunque la diapositiva lo pone bajo el título «ITC-BT-36». La UNE-EN 50173 es de cableado y la UNE-EN 15232-1, de eficiencia energética (tema 4)."
+      },
+      {
+       "q": "Los emisores de radiofrecuencia de un sistema domótico deben cumplir el:",
+       "o": [
+        "CTE DB HE",
+        "Reglamento de ICT",
+        "Cuadro Nacional de Atribución de Frecuencias (CNAFOT)"
+       ],
+       "c": 2,
+       "e": "Los emisores de radiofrecuencia deben respetar el Cuadro Nacional de Atribución de Frecuencias (CNAFOT), que reparte el espectro radioeléctrico. Es el requisito particular de la ITC-BT-51 para los sistemas de señales radiadas, aunque la diapositiva lo pone bajo el título «ITC-BT-36» (tema 4)."
+      },
+      {
+       "q": "Si el cable de señal domótica va por la misma canalización que un circuito de baja tensión, su aislamiento debe ser:",
+       "o": [
+        "Equivalente al de los cables de baja tensión",
+        "La mitad que el de baja tensión",
+        "Cualquiera, porque es señal débil"
+       ],
+       "c": 0,
+       "e": "Si comparten canalización con circuitos de baja tensión, los cables de señal deben tener un aislamiento equivalente al de esos cables, en uno o en varios aislamientos. Es el requisito particular de la ITC-BT-51 para cables específicos, aunque la diapositiva lo pone bajo el título «ITC-BT-36» (tema 4)."
+      }
+     ]
+    }
+   ]
   }
  ]
 });

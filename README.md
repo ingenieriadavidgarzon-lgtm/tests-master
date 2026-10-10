@@ -18,7 +18,7 @@ js/config.js             URL y anon key de Supabase
 js/cloud.js              Sesión, cola sin conexión, sincronización, migración y ranking
 js/online-ui.js          Pantallas de acceso, perfil y ranking
 data/sif.js              Sistemas Integrados de Fabricación (un test)
-data/inst.js             Instalaciones Industriales: Climatización, PCI y Fontanería, con dos tests cada uno
+data/inst.js             Instalaciones Industriales: Climatización, PCI, Fontanería y Comunicaciones, con dos tests cada uno
 supabase/schema.sql      SQL base de Supabase (tablas, RLS, funciones y vistas)
 supabase/migrations/     Migraciones posteriores, en orden de fecha
 manifest.webmanifest     Datos de instalación de la PWA
@@ -41,14 +41,19 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 ├── Protección contra incendios
 │   ├── Temario         pci-temario    88 preguntas (las 20 primeras son el examen real del 21-02-2026)
 │   └── Verificación    pci-verif      87 preguntas
-└── Fontanería y saneamiento
-    ├── Temario         font-temario  118 preguntas (las 20 primeras son el examen real del 21-02-2026)
-    └── Verificación    font-verif     94 preguntas
+├── Fontanería y saneamiento
+│   ├── Temario         font-temario  118 preguntas (las 20 primeras son el examen real del 21-02-2026)
+│   └── Verificación    font-verif     94 preguntas
+└── Comunicaciones                                 (sin examen real)
+    ├── Temario         com-temario    71 preguntas
+    └── Verificación    com-verif      41 preguntas
 ```
 
-Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI y de Fontanería usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
+Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI, Fontanería y Comunicaciones usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
 
-En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo. Una pregunta puede estar en dos tests: comparte id y su progreso cuenta en cada test.
+En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo.
+
+En Comunicaciones pasa lo mismo con sus discrepancias: títulos de diapositivas copiados de otra asignatura, ISO/IEC 11081 por 11801, wifi 802.11b/g frente a a/b/g/n/ac, la errata «hora digital», los requisitos particulares de la ITC-BT-51 puestos bajo la ITC-BT-36 y la videovigilancia según la LOPD 15/1999 y la Instrucción 1/2006 de la AEPD. Las respuestas siguen lo que dicen las diapositivas. Una pregunta puede estar en dos tests: comparte id y su progreso cuenta en cada test.
 
 ### Añadir un test a un tema
 
@@ -190,8 +195,8 @@ Para un grupo de clase, lo razonable es la opción 1 si el contenido es sensible
 
 ### Reglas del ranking
 
-- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los seis tests (Temario y Verificación de Climatización, PCI y Fontanería). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
-- **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI y Fontanería: −1/2). Los **exámenes reales** de PCI y de Fontanería también cuentan para Instalaciones. La pantalla de configuración del examen indica si cuenta.
+- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los ocho tests (Temario y Verificación de Climatización, PCI, Fontanería y Comunicaciones). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
+- **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI, Fontanería y Comunicaciones: −1/2). Los **exámenes reales** de PCI y de Fontanería también cuentan para Instalaciones. La pantalla de configuración del examen indica si cuenta.
 - El servidor vuelve a calcular la nota y **rechaza** resultados imposibles: nota fuera de 0–10, aciertos + fallos + en blanco distinto del número de preguntas, nota que no corresponde a aciertos y fallos, o duración menor de 1 minuto.
 - **Exámenes:** media de tus 5 últimos exámenes que cuentan dentro de la asignatura; hacen falta 3 para aparecer.
 - **Dominio:** porcentaje de preguntas dominadas (última respuesta correcta) sobre el total de preguntas distintas de la asignatura. Una pregunta que está en dos tests cuenta una vez.
