@@ -107,6 +107,7 @@ function onSession(ev, session){
     me = Object.assign({}, me && me.id === id ? me : {}, { id, email: session.user.email }); set(K.me, me);
     ended = ''; linkError = '';
     adoptLocal(id);
+    applyKeyFixes(id);
     emit('auth');
   }
   if (!recovery) sync();
@@ -246,6 +247,26 @@ async function verifySession(){
   if (!error) verified = true;
 }
 
+/* ---------- correcciones de la clave ---------- */
+// Preguntas cuya respuesta correcta ha cambiado: el progreso que tenían se calculó con la clave antigua,
+// así que vuelven a «sin ver». Se aplica una vez por usuario y dispositivo; en Supabase lo hace la
+// migración supabase/migrations/20261011_sif_clave_profesor.sql.
+const KEY_FIXES = [
+  { id: '2026-10-11-sif', test: 'sif', at: '2026-10-11T00:00:00Z', qids: ['0ypjz2j', '1l52f0a', '09t1jhm', '0ll8jxm'] }
+];
+const fixedOut = (test, qid) => KEY_FIXES.some(f => f.test === test && f.qids.includes(qid));
+function applyKeyFixes(u){
+  KEY_FIXES.forEach(f => {
+    const flag = ukey(u, 'fix.' + f.id);
+    if (get(flag, false)) return;
+    const k = ukey(u, 'stats.' + f.test), st = get(k, null);
+    if (st){ f.qids.forEach(q => { delete st[q]; }); set(k, st); }
+    // respuestas aún sin subir que se dieron con la clave antigua
+    set(K.answers, get(K.answers, []).filter(e => !(e.u === u && e.s === f.test && f.qids.includes(e.q) && e.t < f.at)));
+    set(flag, true);
+  });
+}
+
 /* ---------- progreso local por usuario y migración de la versión anterior ---------- */
 const testsOf = {};    // id de pregunta → tests donde está (una pregunta puede estar en dos)
 LEAVES.forEach(s => s.questions.forEach(q => { const id = window.TESTS_QID(q.q); (testsOf[id] = testsOf[id] || []).push(s.id); }));
@@ -260,7 +281,7 @@ function convertLegacy(bySubject){
     const ids = map[sid] || [];
     Object.entries(st || {}).forEach(([idx, r]) => {
       const id = ids[+idx]; if (!id || !r || !r.n) return;
-      (testsOf[id] || []).forEach(t => { const m = out[t] = out[t] || {}; m[id] = mergeRec(m[id], { n: +r.n, ok: +r.ok || 0, last: r.last ? 1 : 0 }); });
+      (testsOf[id] || []).filter(t => !fixedOut(t, id)).forEach(t => { const m = out[t] = out[t] || {}; m[id] = mergeRec(m[id], { n: +r.n, ok: +r.ok || 0, last: r.last ? 1 : 0 }); });
     });
   });
   return out;
@@ -528,6 +549,7 @@ function pending(){
   const u = cur();
   return { answers: get(K.answers, []).filter(e => e.u === u).length, exams: get(K.exams, []).filter(e => e.u === u).length };
 }
+if (enabled && me) applyKeyFixes(me.id);     // también al abrir sin conexión con la sesión guardada
 if (enabled){
   window.addEventListener('online', () => {
     online = true;
