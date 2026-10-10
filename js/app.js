@@ -14,6 +14,7 @@ let V = {name:'home'};      // vista actual
 let P = null;               // sesión de práctica
 let X = null;               // sesión de examen
 let timerId = null;
+const O = window.OnlineUI && window.OnlineUI.enabled ? window.OnlineUI : null;   // cuentas y ranking (js/online-ui.js)
 
 const LEAVES = [];
 SUBJECTS.forEach(t => t.parts ? t.parts.forEach(p => { p.parent = t; LEAVES.push(p); }) : LEAVES.push(t));
@@ -27,6 +28,7 @@ const getStats = s => store.get(statKey(s), {});
 function record(s, qi, ok){
   const st = getStats(s); const r = st[qi] || {n:0, ok:0, last:0};
   r.n++; if (ok) r.ok++; r.last = ok ? 1 : 0; st[qi] = r; store.set(statKey(s), st);
+  if (O) O.answered(s.id, qi, ok);
 }
 function tally(s, idxs){
   const st = getStats(s); let mast=0, fail=0, unseen=0;
@@ -62,9 +64,9 @@ function vHome(){
       <span class="meter">${bar(t)}<span>${Math.round(100*t.mast/t.total)} % dominadas</span></span>
     </button>`;
   }).join('');
-  return `<header class="hero"><p class="eyebrow">Máster en Ingeniería Industrial</p><h2 class="big">Tests del Máster</h2>
+  return `${O ? O.homeBar() : ''}<header class="hero"><p class="eyebrow">Máster en Ingeniería Industrial</p><h2 class="big">Tests del Máster</h2>
     <p class="lede">Elige una asignatura para practicar sus preguntas o hacer un examen de prueba.</p></header>
-    <div class="stack">${rows}</div>
+    ${O ? O.homeNotes() : ''}<div class="stack">${rows}</div>
     <p class="soon">Más asignaturas en camino. Cada una tendrá su propio banco de preguntas.</p>`;
 }
 
@@ -97,6 +99,7 @@ function vSubject(){
       <button class="mode primary" data-act="practiceSetup"><b>Modo práctica</b><span>Corriges cada pregunta al momento. Si fallas, te explica por qué.</span></button>
       <button class="mode" data-act="examSetup"><b>Modo examen</b><span>${s.examSize} preguntas al azar, sin ver respuestas hasta entregar. Nota sobre 10.</span></button>
     </div>
+    ${O ? O.subjectLink(s) : ''}
     <h3>Tu progreso</h3>
     <div class="kpis"><div class="g"><b>${t.mast}</b><span>Dominadas</span></div><div class="r"><b>${t.fail}</b><span>Falladas</span></div><div><b>${t.unseen}</b><span>Sin ver</span></div></div>
     <div class="meter" style="margin-top:10px">${bar(t)}<span>${Math.round(100*t.mast/t.total)} % dominadas</span></div>
@@ -196,12 +199,13 @@ function vExamSetup(){
   const per = 10 / cfg.n;
   return top('Modo examen', 'open') + `
     <p class="lede">Preguntas al azar de todo el banco. No ves si aciertas hasta entregar; entonces tienes la nota y la corrección con explicaciones.</p>
-    ${s.presets ? `<h3 style="margin-top:6px">Examen real</h3><div class="stack">${s.presets.map(p => `<button class="pick" data-act="startPreset" data-id="${p.id}"><span class="l"><b>${esc(p.name)}</b><small>${p.idx.length} preguntas en el orden del examen · ${p.t} min · fallo ${penLabel(p.pen)}</small></span><span class="n">Empezar</span></button>`).join('')}</div><h3>O un examen al azar</h3>` : ''}
+    ${s.presets ? `<h3 style="margin-top:6px">Examen real</h3><div class="stack">${s.presets.map(p => `<button class="pick" data-act="startPreset" data-id="${p.id}"><span class="l"><b>${esc(p.name)}</b><small>${p.idx.length} preguntas en el orden del examen · ${p.t} min · fallo ${penLabel(p.pen)}${O ? O.presetHint() : ''}</small></span><span class="n">Empezar</span></button>`).join('')}</div><h3>O un examen al azar</h3>` : ''}
     <h3${s.presets ? '' : ' style="margin-top:6px"'}>Número de preguntas</h3>
     ${seg('n', sizes, v => v===N ? `Todas (${v})` : v)}
     <h3>Penalización por fallo</h3>
     ${seg('pen', [0, 1/2, 1/3, 1/4], penLabel)}
     <p class="hint">Cada acierto vale ${fmt(per,3)} puntos${cfg.pen ? `; cada fallo resta ${fmt(per*cfg.pen,3)}. En blanco no resta` : '. Los fallos no restan'}.</p>
+    ${O ? O.examHint(s, cfg) : ''}
     <h3>Tiempo</h3>
     ${seg('t', [0, 20, 30, 45], v => v===0 ? 'Sin límite' : v+' min')}
     <div class="spacer"></div>
@@ -262,6 +266,7 @@ function vResults(){
     <p class="eyebrow">${esc(s.short)} · ${X.list.length} preguntas${X.cfg.pen ? ' · fallo resta ' + penLabel(X.cfg.pen).slice(1) : ''}${R.timeout ? ' · tiempo agotado' : ''}</p>
     <div class="score"><span class="num">${fmt(R.grade)}</span><span class="of">/ 10</span><span class="pill ${pass?'ok':'ko'}">${pass?'Aprobado':'Suspenso'}</span></div>
     <div class="kpis four"><div class="g"><b>${R.ok}</b><span>Aciertos</span></div><div class="r"><b>${R.ko}</b><span>Fallos</span></div><div><b>${R.bl}</b><span>En blanco</span></div><div><b>${mmss(R.secs)}</b><span>Tiempo</span></div></div>
+    ${O ? O.resultsSlot() : ''}
     <h3>Corrección</h3>
     <div class="chips">${chip('all','Todas')}${chip('ko',`Falladas (${R.ko})`)}${chip('bl',`En blanco (${R.bl})`)}${chip('ok',`Acertadas (${R.ok})`)}</div>
     <div class="stack">${rev}</div>
@@ -283,7 +288,9 @@ function render(){
   else if (V.name === 'examSetup') h = vExamSetup();
   else if (V.name === 'exam'){ h = vExam(); timerId = setInterval(tick, 1000); }
   else if (V.name === 'results') h = vResults();
+  else if (O) h = O.view(V.name, V) || '';
   app.innerHTML = h;
+  if (O) O.after(V);
 }
 function tick(){
   if (!X || V.name !== 'exam') return;
@@ -311,6 +318,7 @@ function finishExam(timeout=false){
   X.result = {ok, ko, bl, grade: Math.round(grade*100)/100, secs: Math.floor((Date.now()-X.start)/1000), timeout};
   if (X.limit) X.result.secs = Math.min(X.result.secs, X.limit);
   X.panel = null;
+  if (O) X.cloudId = O.examDone(s, X);
   go({name:'results', sid: X.sid, rf: 'all'});
 }
 
@@ -320,7 +328,7 @@ const A = {
   parts(){ const s = subj(V.sid); go({name:'parts', tid: V.tid || (s && s.parent && s.parent.id)}); },
   askReset(){ V.confirmReset = true; render(); },
   cancelReset(){ V.confirmReset = false; render(); },
-  doReset(){ store.del(statKey(subj(V.sid))); V.confirmReset = false; render(); },
+  doReset(){ store.del(statKey(subj(V.sid))); if (O) O.reset(V.sid); V.confirmReset = false; render(); },
   practiceSetup(){ go({name:'practiceSetup', sid: V.sid || (P && P.sid) || (X && X.sid), scope: V.scope, noShuffle: V.noShuffle}); },
   scope(d){ V.scope = d.id; render(); },
   shuf(d, el){ V.noShuffle = !el.checked; },
@@ -356,7 +364,7 @@ const A = {
   startPreset(d){
     const s = subj(V.sid); const p = s.presets.find(x => x.id === d.id); const cfg = {n: p.idx.length, pen: p.pen, t: p.t};
     const list = p.idx.slice();
-    X = {sid: s.id, cfg, list, orders: list.map(qi => optOrder(s.questions[qi])), ans: list.map(() => null), i:0, start: Date.now(), limit: cfg.t*60, panel:null};
+    X = {sid: s.id, preset: p.id, cfg, list, orders: list.map(qi => optOrder(s.questions[qi])), ans: list.map(() => null), i:0, start: Date.now(), limit: cfg.t*60, panel:null};
     go({name:'exam', sid: s.id});
   },
   xAnswer(d){ const o = +d.o; X.ans[X.i] = X.ans[X.i] === o ? null : o; render(); },
@@ -379,7 +387,7 @@ const A = {
 app.addEventListener('click', e => {
   const t = e.target.closest('[data-act]'); if (!t || t.disabled) return;
   if (t.tagName === 'INPUT') return;
-  const fn = A[t.dataset.act]; if (fn) fn(t.dataset, t);
+  const fn = A[t.dataset.act] || (O && O.act[t.dataset.act]); if (fn) fn(t.dataset, t);
 });
 app.addEventListener('change', e => {
   const t = e.target.closest('[data-act]'); if (t && t.tagName === 'INPUT'){ const fn = A[t.dataset.act]; if (fn) fn(t.dataset, t); }
@@ -396,5 +404,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
+window.TestsApp = { go, render, top, penLabel, get V(){ return V; }, get X(){ return X; } };
 render();
 })();

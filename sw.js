@@ -1,12 +1,15 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v1';
-const FONTS = 'tests-fonts';   // caché de Google Fonts, se conserva entre versiones
+const VERSION = 'tests-v2';
+const FONTS = 'tests-fonts';   // caché de Google Fonts y de supabase-js (versión fija), se conserva entre versiones
 
 const ASSETS = [
   './',
   './index.html',
   './css/styles.css',
+  './js/config.js',
+  './js/cloud.js',
+  './js/online-ui.js',
   './js/app.js',
   './data/sif.js',
   './data/inst.js',
@@ -39,8 +42,10 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Google Fonts: se guardan en caché la primera vez que se usan
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
+  // Google Fonts y supabase-js (CDN con versión fija): se guardan en caché la primera vez que se usan.
+  // Las llamadas a Supabase (*.supabase.co) no se tocan: van siempre a la red y nunca se cachean.
+  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com' ||
+      (url.hostname === 'cdn.jsdelivr.net' && url.pathname.startsWith('/npm/@supabase/supabase-js@'))) {
     event.respondWith(
       caches.open(FONTS).then(cache =>
         cache.match(req).then(hit => {
