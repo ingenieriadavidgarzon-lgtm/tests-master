@@ -18,7 +18,7 @@ js/config.js             URL y anon key de Supabase
 js/cloud.js              Sesión, cola sin conexión, sincronización, migración y ranking
 js/online-ui.js          Pantallas de acceso, perfil y ranking
 data/sif.js              Sistemas Integrados de Fabricación (un test)
-data/inst.js             Instalaciones Industriales: Climatización y PCI, con dos tests cada uno
+data/inst.js             Instalaciones Industriales: Climatización, PCI y Fontanería, con dos tests cada uno
 supabase/schema.sql      SQL base de Supabase (tablas, RLS, funciones y vistas)
 supabase/migrations/     Migraciones posteriores, en orden de fecha
 manifest.webmanifest     Datos de instalación de la PWA
@@ -38,12 +38,17 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 ├── Climatización                                  (tema: lleva tests y la chuleta)
 │   ├── Temario         clim-temario   78 preguntas
 │   └── Verificación    clim-verif    101 preguntas
-└── Protección contra incendios
-    ├── Temario         pci-temario    88 preguntas (las 20 primeras son el examen real del 21-02-2026)
-    └── Verificación    pci-verif      87 preguntas
+├── Protección contra incendios
+│   ├── Temario         pci-temario    88 preguntas (las 20 primeras son el examen real del 21-02-2026)
+│   └── Verificación    pci-verif      87 preguntas
+└── Fontanería y saneamiento
+    ├── Temario         font-temario  118 preguntas (las 20 primeras son el examen real del 21-02-2026)
+    └── Verificación    font-verif     94 preguntas
 ```
 
-Dentro de un test las preguntas van todas juntas, sin bloques. Una pregunta puede estar en dos tests: comparte id y su progreso cuenta en cada test.
+Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI y de Fontanería usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
+
+En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo. Una pregunta puede estar en dos tests: comparte id y su progreso cuenta en cada test.
 
 ### Añadir un test a un tema
 
@@ -185,8 +190,8 @@ Para un grupo de clase, lo razonable es la opción 1 si el contenido es sensible
 
 ### Reglas del ranking
 
-- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los cuatro tests (Climatización Temario y Verificación, PCI Temario y Verificación).
-- **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI: −1/2). El **examen real** de PCI también cuenta para Instalaciones. La pantalla de configuración del examen indica si cuenta.
+- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los seis tests (Temario y Verificación de Climatización, PCI y Fontanería). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
+- **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI y Fontanería: −1/2). Los **exámenes reales** de PCI y de Fontanería también cuentan para Instalaciones. La pantalla de configuración del examen indica si cuenta.
 - El servidor vuelve a calcular la nota y **rechaza** resultados imposibles: nota fuera de 0–10, aciertos + fallos + en blanco distinto del número de preguntas, nota que no corresponde a aciertos y fallos, o duración menor de 1 minuto.
 - **Exámenes:** media de tus 5 últimos exámenes que cuentan dentro de la asignatura; hacen falta 3 para aparecer.
 - **Dominio:** porcentaje de preguntas dominadas (última respuesta correcta) sobre el total de preguntas distintas de la asignatura. Una pregunta que está en dos tests cuenta una vez.
