@@ -1,6 +1,6 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v10';
+const VERSION = 'tests-v11';
 
 const ASSETS = [
   './',

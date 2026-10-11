@@ -6451,6 +6451,573 @@ SUBJECTS.push({
        "e": "El mantenimiento del saneamiento incluye comprobar periódicamente la estanqueidad de la red y si hay olores, que indicarían fugas o cierres hidráulicos secos (HS 5, apartado 7)."
       }
      ]
+    },
+    {
+     "id": "font-legionela",
+     "name": "Legionela",
+     "short": "FONT · Legionela",
+     "examSize": 20,
+     "examPen": 0.5,
+     "examTime": 20,
+     "source": "Banco de legionela de Fontanería y saneamiento (unidad 5, tema 6, RD 487/2022): 55 preguntas tipo test basadas en las diapositivas del tema 6 y en el test de 30 preguntas de clase. Las respuestas y explicaciones son las de las soluciones comentadas del documento; «Test de clase, pregunta N» indica de qué pregunta del test de clase sale. Diferencias: la purga del fondo de los acumuladores es semanal según la diapositiva del tema 6, que es lo que usa el banco, aunque el test de clase decía «mensual» (la pregunta lleva la marca «Sin confirmar»). El retorno de ACS a partir de 15 m es un dato del HS 4, no del RD 487/2022; se incluye porque sale en el test de clase.",
+     "formulas": null,
+     "trapsTitle": "Cifras clave",
+     "traps": [
+      "Multiplicación: entre 20 y 50 ºC; temperatura óptima, 35–37 ºC.",
+      "Vía de contagio: inhalación de aerosoles contaminados.",
+      "Agua fría: por debajo de 20 ºC; si el depósito supera 25 ºC, evaluar el riesgo.",
+      "ACS: acumulador ≥ 60 ºC (doble tanque ≥ 70 ºC); terminales y retorno ≥ 50 ºC; sin acumulación, ≥ 60 ºC a la salida.",
+      "Desinfección térmica: acumulador a 70 ºC al menos 2 h; grifos y duchas, por sectores, a 60 ºC al menos 5 min.",
+      "Desinfección química: empezar con el agua por debajo de 30 ºC; pH y desinfectante al menos cada hora.",
+      "Limpieza y desinfección general: una vez al año (≤ 12 meses) y tras parada de más de 1 mes, primera puesta en marcha o reforma.",
+      "Diario: temperatura de acumuladores y retorno. Semanal: purga del fondo de acumuladores y abrir terminales poco usados. Mensual: terminales (muestra rotatoria), temperatura en grifos y sedimentos por drenajes.",
+      "Trimestral: acumuladores (revisión, limpieza y desinfección) y muestreo. Registros del PPCL: 5 años.",
+      "Tramos sin circulación ni más de 50 ºC: ≤ 5 m o 3 litros. Boca de registro Ø ≥ 400 mm en acumuladores ≥ 750 l."
+     ],
+     "questions": [
+      {
+       "q": "La legionelosis la causa:",
+       "o": [
+        "Un virus",
+        "Una bacteria",
+        "Un hongo"
+       ],
+       "c": 1,
+       "e": "La legionela es una bacteria ambiental. (Test de clase, pregunta 1)"
+      },
+      {
+       "q": "La legionela se multiplica entre:",
+       "o": [
+        "0 y 10 ºC",
+        "20 y 50 ºC",
+        "60 y 80 ºC"
+       ],
+       "c": 1,
+       "e": "Es el intervalo de multiplicación que da el tema 6 (generalidades); dentro de él, el óptimo está en 35–37 ºC. (Test de clase, pregunta 3)"
+      },
+      {
+       "q": "La temperatura óptima de crecimiento de la legionela es:",
+       "o": [
+        "20–25 ºC",
+        "35–37 ºC",
+        "60–70 ºC"
+       ],
+       "c": 1,
+       "e": "Dentro del intervalo en que se multiplica (20–50 ºC), su temperatura óptima de crecimiento es 35–37 ºC (tema 6, generalidades y resumen). (Test de clase, pregunta 2)"
+      },
+      {
+       "q": "La principal vía de contagio es:",
+       "o": [
+        "Beber agua contaminada",
+        "El contacto con la piel",
+        "La inhalación de aerosoles contaminados"
+       ],
+       "c": 2,
+       "e": "Los aerosoles quedan en el aire con la bacteria y se inhalan. (Test de clase, pregunta 14)"
+      },
+      {
+       "q": "El medio natural de la legionela son las aguas superficiales (lagos, ríos, estanques) y también el agua de mar.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "El tema 6 (generalidades) sitúa su medio natural en las aguas superficiales, incluida el agua de mar."
+      },
+      {
+       "q": "¿Qué combinación favorece la proliferación de legionela?",
+       "o": [
+        "Estancamiento, sedimentos y temperatura favorable",
+        "Circulación constante y control térmico",
+        "Renovación frecuente y limpieza"
+       ],
+       "c": 0,
+       "e": "También la favorecen la biocapa, las incrustaciones y la corrosión. La circulación, el control térmico y la limpieza hacen lo contrario. (Test de clase, pregunta 16)"
+      },
+      {
+       "q": "La biocapa (biofilm) es:",
+       "o": [
+        "Una capa de pintura protectora",
+        "Una capa de microorganismos y nutrientes adherida a las superficies",
+        "Un aislante térmico exterior"
+       ],
+       "c": 1,
+       "e": "Se forma con el estancamiento y la suciedad, y alimenta a la bacteria. (Test de clase, pregunta 17)"
+      },
+      {
+       "q": "¿Cuál de estas instalaciones tiene especial riesgo por producir aerosoles?",
+       "o": [
+        "Depósito de combustible cerrado",
+        "Cuadro eléctrico",
+        "Torre de refrigeración"
+       ],
+       "c": 2,
+       "e": "Produce aerosoles, como los condensadores evaporativos y las instalaciones de agua fría y de ACS. (Test de clase, pregunta 15)"
+      },
+      {
+       "q": "Los sistemas de agua contra incendios no suponen riesgo de legionela porque su agua no se usa para beber.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "El tema 6 los incluye entre las instalaciones con riesgo potencial: tienen agua estancada que puede aerosolizarse. Que el agua no se beba no elimina el riesgo."
+      },
+      {
+       "q": "El riesgo mayor aparece cuando en la instalación hay un mecanismo productor de aerosoles.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Los aerosoles dispersan la bacteria en el aire, y el contagio se produce al inhalarlos."
+      },
+      {
+       "apt": "fonta-5.3",
+       "q": "La norma vigente sobre legionela es el:",
+       "o": [
+        "RD 865/2003",
+        "RD 487/2022",
+        "RD 513/2017"
+       ],
+       "c": 1,
+       "e": "Está en vigor desde el 2 de enero de 2023. El RD 865/2003 es la norma anterior y el RD 513/2017 es el RIPCI. (Test de clase, pregunta 8)"
+      },
+      {
+       "q": "El RD 487/2022 entró en vigor el:",
+       "o": [
+        "1 de enero de 2022",
+        "21 de junio de 2022",
+        "2 de enero de 2023"
+       ],
+       "c": 2,
+       "e": "Se publicó el 22 de junio de 2022 y entró en vigor el 2 de enero de 2023."
+      },
+      {
+       "q": "¿Cuál fue la primera norma española sobre legionela?",
+       "o": [
+        "RD 909/2001",
+        "RD 865/2003",
+        "RD 487/2022"
+       ],
+       "c": 0,
+       "e": "Después vinieron el RD 865/2003 y, ahora, el RD 487/2022."
+      },
+      {
+       "q": "La responsabilidad principal del cumplimiento corresponde a:",
+       "o": [
+        "El titular de la instalación",
+        "La empresa de mantenimiento contratada",
+        "El fabricante de los equipos"
+       ],
+       "c": 0,
+       "e": "Lo es aunque contrate a empresas especializadas para el mantenimiento. (Test de clase, pregunta 9)"
+      },
+      {
+       "q": "Quedan excluidas del RD las instalaciones de edificios de uso exclusivo de vivienda, siempre que no afecten al ambiente exterior.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Es la exclusión que recoge el tema 6 en el ámbito de aplicación: las viviendas quedan fuera solo si sus instalaciones no afectan al ambiente exterior. (Test de clase, pregunta 29)"
+      },
+      {
+       "q": "PPCL significa:",
+       "o": [
+        "Programa de Presión y Caudal de Línea",
+        "Plan de Prevención y Control de Legionela",
+        "Plan de Protección Contra Llamas"
+       ],
+       "c": 1,
+       "e": "Son las siglas del plan básico de prevención que exige el RD 487/2022. (Test de clase, pregunta 10)"
+      },
+      {
+       "q": "PSL significa:",
+       "o": [
+        "Programa de Saneamiento de Locales",
+        "Plan de Seguridad Laboral",
+        "Plan Sanitario frente a Legionela"
+       ],
+       "c": 2,
+       "e": "Es el plan basado en la evaluación del riesgo, alternativo al PPCL. (Test de clase, pregunta 11)"
+      },
+      {
+       "q": "El PSL se basa en:",
+       "o": [
+        "La evaluación del riesgo, según recomendaciones de la OMS",
+        "La potencia de los equipos",
+        "La altura del edificio"
+       ],
+       "c": 0,
+       "e": "Identifica los peligros, los prioriza y fija puntos críticos y medidas correctoras. (Test de clase, pregunta 13)"
+      },
+      {
+       "q": "¿Cuál de estos NO es uno de los programas del PPCL?",
+       "o": [
+        "Programa de muestreo y análisis",
+        "Programa de eficiencia energética",
+        "Programa de formación del personal"
+       ],
+       "c": 1,
+       "e": "Los programas del PPCL son mantenimiento y revisión, tratamiento, muestreo y análisis, y formación del personal."
+      },
+      {
+       "q": "El titular que opta por un PSL puede abandonar el PPCL desde el primer día.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Mientras el PSL no esté diseñado, planificado y validado, el titular debe mantener el PPCL."
+      },
+      {
+       "q": "En centros sanitarios, socio-sanitarios y penitenciarios (edificios prioritarios) el titular debe basarse preferiblemente en:",
+       "o": [
+        "Un PPCL",
+        "Ninguno: basta el certificado del instalador",
+        "Un PSL"
+       ],
+       "c": 2,
+       "e": "En los edificios prioritarios el tema 6 (PSL, continuación) prefiere el plan basado en la evaluación del riesgo y la evaluación continua."
+      },
+      {
+       "q": "Los registros del PPCL se conservan durante al menos:",
+       "o": [
+        "1 año",
+        "2 años",
+        "5 años"
+       ],
+       "c": 2,
+       "e": "Se guardan en la propia instalación, a disposición de la autoridad sanitaria. (Test de clase, pregunta 30)"
+      },
+      {
+       "q": "El PPCL debe revisarse tras reformas sustanciales o cuando haya una contaminación microbiana.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "También hay que revisarlo si se detectan desviaciones importantes."
+      },
+      {
+       "q": "¿Cuál NO es uno de los cuatro principios preventivos del RD?",
+       "o": [
+        "Aumentar la presión de la red",
+        "Controlar la temperatura del agua y desinfectarla",
+        "Minimizar la emisión de aerosoles"
+       ],
+       "c": 0,
+       "e": "Los cuatro principios son eliminar la suciedad y los estancamientos, controlar la temperatura y desinfectar, minimizar los aerosoles y aplicar medidas correctoras."
+      },
+      {
+       "q": "En el circuito de agua fría se procura una temperatura inferior a:",
+       "o": [
+        "20 ºC",
+        "25 ºC",
+        "30 ºC"
+       ],
+       "c": 0,
+       "e": "Donde el clima lo permita, con las tuberías alejadas o aisladas de las de agua caliente."
+      },
+      {
+       "q": "El agua almacenada en los acumuladores de ACS debe estar a una temperatura homogénea y mínima de:",
+       "o": [
+        "50 ºC",
+        "55 ºC",
+        "60 ºC"
+       ],
+       "c": 2,
+       "e": "Es el mínimo en los acumuladores; en los interacumuladores de doble tanque son 70 ºC. (Test de clase, pregunta 4)"
+      },
+      {
+       "q": "En los interacumuladores de doble tanque la temperatura mínima es:",
+       "o": [
+        "60 ºC",
+        "65 ºC",
+        "70 ºC"
+       ],
+       "c": 2,
+       "e": "El tema 6 (requisitos de ACS) pide en los interacumuladores de doble tanque más temperatura que los 60 ºC del resto de acumuladores."
+      },
+      {
+       "apt": "fonta-1.4",
+       "q": "En los puntos terminales y en el retorno de ACS el agua debe estar:",
+       "o": [
+        "Por encima de 40 ºC",
+        "Por encima de 50 ºC",
+        "Exactamente a 70 ºC"
+       ],
+       "c": 1,
+       "e": "Con la red equilibrada por temperatura. (Test de clase, pregunta 7)"
+      },
+      {
+       "q": "Los sistemas de calentamiento sin acumulación garantizarán a la salida al menos:",
+       "o": [
+        "50 ºC",
+        "60 ºC",
+        "70 ºC"
+       ],
+       "c": 1,
+       "e": "Se exige tanto en instalaciones con retorno como sin él."
+      },
+      {
+       "q": "Los acumuladores con boca de registro obligatoria de Ø ≥ 400 mm son los de:",
+       "o": [
+        "≥ 250 l",
+        "≥ 500 l",
+        "≥ 750 l"
+       ],
+       "c": 2,
+       "e": "Los acumuladores menores y los interacumuladores también deben tener accesos adecuados para su limpieza."
+      },
+      {
+       "q": "Los tramos en los que no se asegure circulación y más de 50 ºC no pueden superar:",
+       "o": [
+        "5 m o 3 litros",
+        "10 m o 5 litros",
+        "15 m o 10 litros"
+       ],
+       "c": 0,
+       "e": "Así se evitan zonas de estancamiento. (Test de clase, pregunta 18)"
+      },
+      {
+       "q": "La llave de purga de los acumuladores va en la zona más baja del depósito, por debajo de la salida del agua.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Así se puede vaciar el depósito por completo y tomar muestras."
+      },
+      {
+       "q": "El agua de retorno puede volver directamente al circuito de distribución sin desinfección térmica previa.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "El agua de retorno no debe volver a la distribución sin desinfección térmica previa."
+      },
+      {
+       "q": "La instalación de ACS debe permitir que el agua alcance, para desinfección térmica:",
+       "o": [
+        "60 ºC",
+        "65 ºC",
+        "70 ºC"
+       ],
+       "c": 2,
+       "e": "El tema 6 (requisitos de ACS) exige que la instalación pueda llegar a esa temperatura para la desinfección térmica, que mantiene el acumulador a 70 ºC durante al menos 2 horas."
+      },
+      {
+       "q": "En los puntos terminales, sobre todo en duchas, se eligen preferentemente difusores de:",
+       "o": [
+        "Alto caudal",
+        "Chorro a presión",
+        "Baja aerosolización"
+       ],
+       "c": 2,
+       "e": "Minimizan la formación de aerosoles, que son la vía de contagio."
+      },
+      {
+       "apt": "fonta-1.4",
+       "q": "Según el HS 4, la red de retorno de ACS es obligatoria cuando la ida al punto de consumo más alejado mide:",
+       "o": [
+        "5 m o más",
+        "10 m o más",
+        "15 m o más"
+       ],
+       "c": 2,
+       "e": "Ojo: es un dato del HS 4 (temas 1 y 5), no del RD 487/2022. Se incluye porque sale en el test de clase y encaja con la legionela: el retorno mantiene la circulación y la temperatura del agua. (Test de clase, preguntas 19 y 20)"
+      },
+      {
+       "q": "Los depósitos de agua fría deben tener medida de temperatura, válvula de purga en el punto más bajo y toma de muestras.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Si están al aire libre, además deben estar aislados y protegidos."
+      },
+      {
+       "q": "La limpieza y desinfección de toda la instalación de agua sanitaria se hace como mínimo:",
+       "o": [
+        "Cada mes",
+        "Cada tres meses",
+        "Una vez al año (≤ 12 meses entre dos)"
+       ],
+       "c": 2,
+       "e": "Además, en la primera puesta en marcha, tras una parada de más de un mes o tras una reforma."
+      },
+      {
+       "q": "Además de la anual, hay que limpiar y desinfectar tras una parada superior a:",
+       "o": [
+        "Un mes",
+        "Una semana",
+        "Seis meses"
+       ],
+       "c": 0,
+       "e": "El tema 6 (mantenimiento) exige limpiar y desinfectar, además de la vez anual, en la primera puesta en marcha, tras una parada de más de un mes y tras una reforma."
+      },
+      {
+       "q": "Una desinfección no es efectiva si no va acompañada de una limpieza exhaustiva previa.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "El tema 6 (mantenimiento) pide una limpieza exhaustiva antes de desinfectar: sin ella, la desinfección no es efectiva."
+      },
+      {
+       "q": "Los grifos y duchas de habitaciones poco usadas se abren dejando correr el agua unos minutos:",
+       "o": [
+        "Diariamente",
+        "Semanalmente",
+        "Mensualmente"
+       ],
+       "c": 1,
+       "e": "Se abren cada semana para que el agua no se quede estancada en las tuberías que se usan poco. (Test de clase, pregunta 23)"
+      },
+      {
+       "q": "La revisión de los puntos terminales se hace:",
+       "o": [
+        "Solo tras una avería",
+        "Una vez cada cinco años",
+        "Mensualmente, con muestra rotatoria"
+       ],
+       "c": 2,
+       "e": "Además, todos los terminales se revisan al menos una vez al año. (Test de clase, pregunta 25)"
+      },
+      {
+       "q": "La revisión, limpieza y desinfección de los acumuladores de ACS es:",
+       "o": [
+        "Trimestral",
+        "Mensual",
+        "Anual"
+       ],
+       "c": 0,
+       "e": "Es la periodicidad del tema 6 (plazos y controles): los acumuladores, cada tres meses; la limpieza y desinfección de toda la instalación, una vez al año."
+      },
+      {
+       "q": "La purga del fondo de los acumuladores se hace:",
+       "o": [
+        "Mensualmente",
+        "Semanalmente",
+        "Trimestralmente"
+       ],
+       "c": 1,
+       "e": "Sin confirmar: el banco usa la diapositiva del tema 6, que pone la purga del fondo de los acumuladores como semanal (lo mensual es eliminar sedimentos por las válvulas de drenaje de las tuberías). El test de clase decía «mensual»: confírmalo con el profesor. (Test de clase, pregunta 24)",
+       "d": true
+      },
+      {
+       "q": "La temperatura del agua en los acumuladores finales y en el retorno se controla:",
+       "o": [
+        "Mensualmente",
+        "Semanalmente",
+        "Diariamente"
+       ],
+       "c": 2,
+       "e": "Debe estar a 60 ºC o más en los acumuladores finales y a 50 ºC o más en el retorno. En grifos y duchas, el control es mensual. (Test de clase, pregunta 26)"
+      },
+      {
+       "q": "Si el agua del depósito de agua fría supera 25 ºC, hay que:",
+       "o": [
+        "Evaluar el riesgo y tomar medidas",
+        "Vaciar el depósito",
+        "Subirla a 70 ºC"
+       ],
+       "c": 0,
+       "e": "La temperatura del depósito de agua fría se mide semanalmente."
+      },
+      {
+       "q": "En la desinfección térmica del ACS, el acumulador se mantiene a:",
+       "o": [
+        "60 ºC durante 30 min",
+        "70 ºC durante al menos 2 horas",
+        "80 ºC durante 24 horas"
+       ],
+       "c": 1,
+       "e": "Después se abren por sectores grifos y duchas con el agua a 60 ºC durante al menos 5 minutos. Si no se llega a 70 ºC, se usan biocidas. (Test de clase, preguntas 5 y 6)"
+      },
+      {
+       "q": "En la desinfección térmica, cada grifo y ducha se mantiene abierto con el agua a 60 ºC al menos:",
+       "o": [
+        "1 minuto",
+        "5 minutos",
+        "30 minutos"
+       ],
+       "c": 1,
+       "e": "Se abren por sectores, después de mantener el acumulador a 70 ºC al menos 2 horas."
+      },
+      {
+       "q": "En la desinfección química del ACS, el tratamiento empieza con el agua por debajo de:",
+       "o": [
+        "30 ºC",
+        "50 ºC",
+        "60 ºC"
+       ],
+       "c": 0,
+       "e": "Para eso se apaga el calentamiento con antelación."
+      },
+      {
+       "q": "Durante la desinfección química, el pH y el nivel de desinfectante se controlan:",
+       "o": [
+        "Una vez al día",
+        "Al menos cada hora",
+        "Solo al final"
+       ],
+       "c": 1,
+       "e": "En el depósito y en los terminales más alejados; al acabar se neutraliza el biocida."
+      },
+      {
+       "q": "¿En qué orden se limpia el sistema de agua sanitaria?",
+       "o": [
+        "Red, acumulador y depósito",
+        "Acumulador, red y depósito",
+        "Depósito, acumulador y red con sus terminales"
+       ],
+       "c": 2,
+       "e": "La desinfección se hace inmediatamente después de la limpieza."
+      },
+      {
+       "q": "La frecuencia mínima de muestreo en los sistemas de agua sanitaria es:",
+       "o": [
+        "Cada mes",
+        "Cada 3 meses",
+        "Cada año"
+       ],
+       "c": 1,
+       "e": "El muestreo es trimestral, igual que la revisión de los acumuladores. (Test de clase, pregunta 27)"
+      },
+      {
+       "q": "Entre los puntos mínimos de muestreo están: depósito, acumulador, retorno, dos puntos medios y cada terminal identificado.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "El número de puntos depende de los terminales, que deben ser representativos. (Test de clase, pregunta 28)"
+      },
+      {
+       "q": "La toma de muestra en un terminal «con purga» (dejando correr el agua) sirve para muestrear:",
+       "o": [
+        "El agua del circuito",
+        "El grifo y su tubería",
+        "El acumulador"
+       ],
+       "c": 0,
+       "e": "Sin purga se muestrea el terminal y su tubería."
+      },
+      {
+       "q": "En el ACS los tratamientos preventivos solo pueden ser químicos.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "En las redes de agua los tratamientos son químicos, pero en el ACS pueden ser químicos o térmicos (tema 6, resumen)."
+      }
+     ]
     }
    ]
   },
