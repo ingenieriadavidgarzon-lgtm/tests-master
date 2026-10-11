@@ -11,10 +11,14 @@ Dirección (GitHub Pages): `https://ingenieriadavidgarzon-lgtm.github.io/tests-m
 ```
 index.html               Página principal (carga el CSS, los datos y la lógica)
 css/styles.css           Estilos (tema claro y oscuro, diseño móvil)
+css/fonts.css            Fuentes servidas desde la propia app (sin Google Fonts)
+fonts/                   Archivos de las fuentes (WOFF2) y sus licencias (SIL Open Font License)
 js/app.js                Lógica de la app (menú, práctica, examen, progreso)
 js/qid.js                Id estable de cada pregunta (hash del enunciado)
 js/legacy-map.js         Ids de las preguntas de la versión anterior (para migrar el progreso)
 js/config.js             URL y anon key de Supabase
+js/legal.js              Textos de Privacidad y Condiciones de uso, con su versión
+js/vendor/               Copia local de supabase-js 2.117.2 (sin CDN de terceros)
 js/cloud.js              Sesión, cola sin conexión, sincronización, migración y ranking
 js/online-ui.js          Pantallas de acceso, perfil y ranking
 js/learn.js              Módulo Aprender: lecciones, repaso espaciado y chuleta
@@ -207,9 +211,9 @@ Así, al abrir la app, el navegador descarga la versión nueva y borra la caché
 
 - Sin sesión, la única pantalla es la de acceso, con dos pestañas:
   - **Entrar:** email y contraseña.
-  - **Crear cuenta:** email, contraseña, nombre visible (único, 3–20 caracteres) y código de grupo.
+  - **Crear cuenta:** email, contraseña, nombre visible (único, 3–20 caracteres; puede ser un apodo), código de grupo y las dos casillas de Condiciones de uso y Privacidad.
 
-  Ninguna otra pantalla es accesible, tampoco escribiendo una dirección con `#…`.
+  Sin sesión solo se pueden ver, además, las páginas de Privacidad y Condiciones de uso.
 - **«¿Has olvidado tu contraseña?»** envía el email de recuperación de Supabase. El enlace vuelve a la app, a la pantalla «Nueva contraseña».
 - **La sesión se recuerda** en cada dispositivo hasta que se cierra.
 - **Sin conexión:** con una sesión guardada, la app se abre y funciona: respuestas y exámenes van a una cola local y se suben al volver la red. Sin sesión guardada, la app muestra «Necesitas conexión para iniciar sesión la primera vez».
@@ -235,6 +239,58 @@ Si quieres proteger también el contenido, estas son las opciones (no están imp
 
 Para un grupo de clase, lo razonable es la opción 1 si el contenido es sensible. Si no lo es, puedes dejarlo como está.
 
+## Privacidad y condiciones de uso (RGPD y LOPDGDD)
+
+### Qué hace la app
+
+- **Páginas legales:** «Privacidad» y «Condiciones de uso», accesibles sin sesión y enlazadas en el acceso, el registro y «Tu cuenta». Los textos están en `js/legal.js`.
+- **Consentimiento:** al crear la cuenta hay que marcar dos casillas (no premarcadas): las Condiciones de uso y el aviso de Privacidad. El perfil guarda la versión y la fecha de cada aceptación (`terms_version`, `terms_accepted_at`, `privacy_version`, `privacy_accepted_at`).
+- **Usuarios que ya existían o documentos nuevos:** si la versión aceptada no coincide con la de `js/legal.js`, al abrir la app aparece la pantalla «Antes de seguir» con los documentos que han cambiado y sus casillas. Mientras no acepte, no se sube nada a Supabase y no aparece en el ranking. Si no acepta, puede cerrar sesión o borrar la cuenta.
+- **Ranking voluntario:** interruptor «Aparecer en el ranking» en «Tu cuenta» (activado tras el consentimiento). Desactivado, el usuario desaparece de todas las clasificaciones para los demás: lo filtran las vistas `ranking_*`, las funciones `ranking_data*` y la política de lectura de `profiles` en Supabase. Puede seguir viendo el ranking y usando la app. Los avisos «Fulano te ha pasado» solo mencionan a usuarios visibles.
+- **Derechos desde «Tu cuenta»:** cambiar el nombre visible y el email (con el enlace de confirmación de Supabase), descargar un JSON con todos sus datos (`export_my_data`) y borrar la cuenta escribiendo BORRAR (`delete_my_account`). El borrado elimina sus filas de todas las tablas, su usuario de Supabase Auth (con sus sesiones, identidades y registros de auditoría) y sus datos del dispositivo. Se hace con funciones SQL `SECURITY DEFINER` que solo actúan sobre `auth.uid()`; la app nunca tiene la `service_role`.
+- **Última actividad:** `profiles.last_active_at` se actualiza al abrir la app (una vez al día) y al responder, hacer exámenes o avanzar en Aprender.
+- **Sin terceros:** la app no carga analítica, píxeles ni scripts externos. Las fuentes se sirven desde `fonts/` (antes venían de Google Fonts, que recibía la IP de cada usuario) y supabase-js desde `js/vendor/` (antes, desde jsDelivr). La única conexión externa es la de Supabase. En el dispositivo solo se guardan la sesión y el progreso para usar la app sin conexión (`localStorage`), sin cookies.
+
+### Cambiar los textos y sus versiones
+
+1. Edita el texto en `js/legal.js` (`privacy.html` o `terms.html`).
+2. Si el cambio es de fondo (qué datos, para qué, plazos, derechos, normas de uso), **sube su `version`** (por ejemplo `'1.0'` → `'1.1'`) y cambia `updated`. Al abrir la app, cada usuario tendrá que aceptar de nuevo solo ese documento. Para una errata, cambia el texto sin subir la versión.
+3. Sube la versión de caché en `sw.js`, haz commit y push.
+
+Los datos del responsable y la región están al principio de `js/legal.js` (`OWNER`, `EMAIL`, `REGION`).
+
+### Conservación y borrado (SQL Editor)
+
+```sql
+-- Cuentas sin actividad durante más de 12 meses: las borra pg_cron cada día a las 03:17 (UTC).
+-- Comprobar que la tarea está programada y su último resultado:
+select jobname, schedule, active from cron.job;
+select status, start_time, return_message from cron.job_run_details order by start_time desc limit 5;
+-- Ejecutarla a mano (devuelve cuántas cuentas ha borrado):
+select public.purge_inactive();
+
+-- Borrar una cuenta concreta y todos sus datos:
+select public.purge_user('uuid-del-usuario');
+
+-- CIERRE DE LA APP: borra TODAS las cuentas y TODOS los datos. No está programada.
+-- Ejecútala solo cuando decidas cerrar la app (no se puede deshacer):
+select public.purge_everything('BORRAR TODO');
+```
+
+Si `cron.job` no existe, pg_cron no está activado: actívalo en *Database → Extensions → pg_cron* y vuelve a ejecutar la migración `20261011_privacidad_y_condiciones.sql`, o ejecuta `select public.purge_inactive();` a mano una vez al mes. Estas funciones no se pueden llamar desde la app: solo desde el SQL Editor o pg_cron.
+
+### Región de Supabase
+
+La región está en *Project Settings → General → Region* y debe coincidir con `REGION` en `js/legal.js`. Si el proyecto está fuera de la Unión Europea, pasarlo a una región europea (por ejemplo *Central EU (Frankfurt)*) supone:
+
+1. Crear un proyecto nuevo en esa región: Supabase no permite cambiar la región de un proyecto existente.
+2. Configurarlo igual (email, URLs de redirección, código de grupo) y ejecutar `schema.sql` y todas las migraciones.
+3. Copiar los datos: un volcado del proyecto antiguo (*Database → Backups*, o `pg_dump` con la cadena de conexión) que incluya `auth.users` y las tablas de `public`, y restaurarlo en el nuevo. Así las cuentas conservan su contraseña. Si no se copian, cada usuario tendría que registrarse de nuevo y perdería su progreso.
+4. Cambiar la URL y la anon key en `js/config.js`, subir la versión de caché y publicar. Todos tendrán que volver a iniciar sesión.
+5. Comprobar que todo funciona y borrar el proyecto antiguo.
+
+Mientras siga fuera de la UE, la transferencia internacional se ampara en el acuerdo de tratamiento de datos de Supabase (con cláusulas contractuales tipo), y el aviso de Privacidad debería indicarlo.
+
 ## Cuentas y ranking (Supabase)
 
 ### Configuración (una vez)
@@ -257,7 +313,7 @@ Para un grupo de clase, lo razonable es la opción 1 si el contenido es sensible
 
 ### Cómo funciona
 
-- **Registro:** el perfil lo crea la función `create_profile`, que valida el código de grupo en el servidor. Una cuenta sin perfil no puede leer ni escribir nada. En el ranking solo se ve el nombre visible, nunca el email.
+- **Registro:** el perfil lo crea la función `create_profile`, que valida el código de grupo en el servidor y guarda la versión y la fecha de aceptación de las Condiciones de uso y del aviso de Privacidad. Una cuenta sin perfil no puede leer ni escribir nada. En el ranking solo se ve el nombre visible, nunca el email.
 - **Progreso:** cada respuesta se guarda en local y en una cola que se sube a `answer_events` (test + id de pregunta). El servidor mantiene un resumen por pregunta (`question_progress`) y la app lo descarga al abrirse: el móvil y el ordenador ven el mismo progreso.
 - **Seguridad (RLS):** cada usuario solo escribe sus datos. Las vistas del ranking (`ranking_*_v2`) y la función `ranking_data_v2` solo las pueden leer los usuarios autenticados del grupo. El rol anónimo no puede leer ninguna tabla ni vista; solo puede llamar a `signup_check` (comprobación previa al registro).
 
@@ -278,10 +334,10 @@ Para un grupo de clase, lo razonable es la opción 1 si el contenido es sensible
 ### Administración (SQL Editor)
 
 ```sql
--- Ver los usuarios del grupo
-select display_name, created_at from public.profiles order by created_at;
--- Borrar una cuenta y todos sus datos
-delete from auth.users where id = (select id from public.profiles where display_name = 'Nombre');
+-- Ver los usuarios del grupo, si están en el ranking y su última actividad
+select display_name, in_ranking, last_active_at, created_at from public.profiles order by created_at;
+-- Borrar una cuenta y todos sus datos (también sus registros de Auth)
+select public.purge_user((select id from public.profiles where display_name = 'Nombre'));
 -- Anular un examen concreto (deja de contar para el ranking)
 update public.exam_results set ranked = false where id = 123;
 ```

@@ -32,13 +32,16 @@ const defaultBoard = () => { const b = getJ(LASTB(), null); return root(b) ? b :
 // Devuelve la vista a la que hay que ir si la actual no está permitida (o null si lo está)
 function gate(V){
   if (!on) return null;
+  if (V.name === 'legal') return null;                 // Privacidad y Condiciones: siempre accesibles
   if (C.recovery) return V.name === 'recover' ? null : {name: 'recover'};
   if (C.user){
     if (C.needsProfile) return V.name === 'account' && V.mode === 'complete' ? null : {name: 'account', mode: 'complete'};
-    return V.name === 'account' || V.name === 'recover' ? {name: 'home'} : null;
+    const pend = C.pendingLegal;
+    if (pend && pend.length) return V.name === 'consent' ? null : {name: 'consent'};
+    return V.name === 'account' || V.name === 'recover' || V.name === 'consent' ? {name: 'home'} : null;
   }
   if (V.name === 'account' && V.mode !== 'complete') return null;
-  return {name: 'account', mode: 'login', msg: C.ended || C.linkError || ''};
+  return {name: 'account', mode: 'login', msg: C.ended || C.linkError || '', ok: C.endedOk};
 }
 
 /* ---------- añadidos en pantallas existentes ---------- */
@@ -81,7 +84,9 @@ function paintResults(){
     const data = C.cachedRanking();
     if (data){
       const w = C.wouldRank(data, a, R.grade, X.cloudId);
-      lines.push(w.missing
+      lines.push(w.hidden
+        ? `<p class="st">No apareces en el ranking: lo tienes desactivado en tu cuenta.</p>`
+        : w.missing
         ? `<p class="pos">Te ${w.missing === 1 ? 'falta 1 examen' : 'faltan ' + w.missing + ' exámenes'} para entrar en el ranking de ${esc(boardName(a))}.</p>`
         : `<p class="pos">Con esta nota entrarías ${w.pos}.º en ${esc(boardName(a))}.</p>`);
     }
@@ -108,12 +113,56 @@ const field = (name, label, type, ac, hint, value) =>
 const netMsg = () => !navigator.onLine && !C.user ? 'Necesitas conexión para iniciar sesión la primera vez.' : '';
 const hero = (lede, title) => `<header class="hero"><p class="eyebrow">${title ? 'Tests del Máster' : 'Máster en Ingeniería Industrial'}</p><h2 class="big">${title || 'Tests del Máster'}</h2><p class="lede">${lede}</p></header>`;
 
+/* ---------- privacidad y condiciones ---------- */
+const L = () => window.LEGAL;
+const CONSENT = {
+  terms: 'He leído y acepto las <button type="button" class="linkbtn inl" data-act="legal" data-id="terms">Condiciones de uso</button>, y me comprometo a no compartir el acceso ni el contenido de la app sin autorización.',
+  privacy: 'He leído el aviso de <button type="button" class="linkbtn inl" data-act="legal" data-id="privacy">Privacidad</button> y acepto que mi nombre visible y mis resultados aparezcan en el ranking del grupo.'
+};
+const checkBox = (doc, checked) => `<label class="check consent"><input type="checkbox" name="c_${doc}" ${checked ? 'checked' : ''}><span>${CONSENT[doc]}</span></label>`;
+const legalLinks = () => `<p class="legallinks"><button data-act="legal" data-id="privacy">Privacidad</button> · <button data-act="legal" data-id="terms">Condiciones de uso</button></p>`;
+const docFoot = d => `<p class="legalver">Última actualización: ${esc(d.updated)} · Versión ${esc(d.version)}</p>`;
+function vLegal(V){
+  const d = L()[V.doc === 'terms' ? 'terms' : 'privacy'], other = L()[d.id === 'terms' ? 'privacy' : 'terms'];
+  return T().top(d.title, 'legalBack') + `
+    <p class="eyebrow">Tests del Máster</p><h2 class="big">${esc(d.title)}</h2>
+    <div class="legaltext">${d.html}</div>${docFoot(d)}
+    <p class="legallinks"><button data-act="legal" data-id="${other.id}">${esc(other.title)}</button></p>`;
+}
+function deleteForm(){
+  return `<form class="form" data-form="delete" novalidate>
+      ${field('confirm', 'Escribe BORRAR para confirmar', 'text', 'off', 'Se borran para siempre tu cuenta, tu progreso, tus respuestas, tus exámenes y tu avance en Aprender, también en este dispositivo.')}
+      <p class="formerr" role="alert"></p>
+      <button class="btn danger" type="submit">Borrar mi cuenta</button>
+    </form>`;
+}
+function vConsent(){
+  const pend = C.pendingLegal || ['terms', 'privacy'];
+  const both = pend.length === 2, first = !(C.user && C.user.legal && (C.user.legal.t || C.user.legal.p));
+  const lede = first ? 'Para seguir usando la app, lee y acepta las Condiciones de uso y el aviso de Privacidad.'
+    : both ? 'Han cambiado las Condiciones de uso y el aviso de Privacidad. Léelos y acéptalos para seguir.'
+    : `Ha cambiado ${pend[0] === 'terms' ? 'las Condiciones de uso' : 'el aviso de Privacidad'}. Léelo y acéptalo para seguir.`;
+  const docs = pend.map(k => { const d = L()[k]; return `<section class="legaldoc"><h3>${esc(d.title)}</h3><div class="legaltext">${d.html}</div>${docFoot(d)}</section>`; }).join('');
+  return hero(lede, 'Antes de seguir') + docs + `
+    <form class="form" data-form="consent" novalidate style="margin-top:18px">
+      ${pend.map(k => checkBox(k, false)).join('')}
+      <p class="formerr" role="alert"></p>
+      <button class="btn primary" type="submit">Aceptar y entrar</button>
+    </form>
+    <h3>¿No estás de acuerdo?</h3>
+    <p class="hint" style="margin-bottom:12px">Puedes cerrar sesión o borrar tu cuenta y todos tus datos.</p>
+    <p class="reset" style="margin-top:0"><button data-act="logout" style="color:var(--ink)">Cerrar sesión</button></p>
+    <details class="panel"><summary>Borrar mi cuenta</summary><div class="in">${deleteForm()}</div></details>`;
+}
+
 function vAccount(V){
   const m = V.mode || 'login';
+  const D = V.draft || {};
   if (m === 'complete') return hero('Tu cuenta existe, pero falta el nombre visible y el código de grupo.') + `
     <form class="form" data-form="complete" novalidate>
-      ${field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres. Es lo único que verán tus compañeros.')}
-      ${field('code', 'Código de grupo', 'text', 'off', 'Te lo da quien organiza el grupo.')}
+      ${field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres. No hace falta que sea tu nombre real. Es lo único que verán tus compañeros.', D.name)}
+      ${field('code', 'Código de grupo', 'text', 'off', 'Te lo da quien organiza el grupo.', D.code)}
+      ${checkBox('terms', D.c_terms)}${checkBox('privacy', D.c_privacy)}
       <p class="formerr" role="alert"></p>
       <button class="btn primary" type="submit">Guardar</button>
     </form>
@@ -128,18 +177,20 @@ function vAccount(V){
     <p class="reset"><button data-act="amode" data-id="login" style="color:var(--accent)">Volver a entrar</button></p>`;
   const signup = m === 'signup';
   return hero(signup ? 'Crea tu cuenta con el código de grupo de la clase.' : 'Entra con tu cuenta para practicar, hacer exámenes y ver el ranking.') + `
-    ${V.msg ? `<p class="formerr" role="alert" style="margin-bottom:14px">${esc(V.msg)}</p>` : ''}${netLine}
+    ${V.msg ? `<p class="${V.ok ? 'formok' : 'formerr'}" role="${V.ok ? 'status' : 'alert'}" style="margin-bottom:14px">${esc(V.msg)}</p>` : ''}${netLine}
     <div class="seg" style="margin-bottom:18px"><button data-act="amode" data-id="login" aria-pressed="${!signup}">Entrar</button><button data-act="amode" data-id="signup" aria-pressed="${signup}">Crear cuenta</button></div>
     <form class="form" data-form="${signup ? 'signup' : 'login'}" novalidate>
-      ${field('email', 'Email', 'email', 'email', signup ? 'No se muestra a nadie.' : '', V.email || '')}
+      ${field('email', 'Email', 'email', 'email', signup ? 'No se muestra a nadie.' : '', D.email || V.email || '')}
       ${field('password', 'Contraseña', 'password', signup ? 'new-password' : 'current-password', signup ? 'Al menos 6 caracteres.' : '')}
-      ${signup ? field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres. Es lo único que verán tus compañeros en el ranking.') : ''}
-      ${signup ? field('code', 'Código de grupo', 'text', 'off', 'Te lo da quien organiza el grupo.') : ''}
+      ${signup ? field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres. No hace falta que sea tu nombre real: puede ser un apodo. Es lo único que verán tus compañeros en el ranking.', D.name) : ''}
+      ${signup ? field('code', 'Código de grupo', 'text', 'off', 'Te lo da quien organiza el grupo.', D.code) : ''}
+      ${signup ? checkBox('terms', D.c_terms) + checkBox('privacy', D.c_privacy) : ''}
       <p class="formerr" role="alert"></p>
       <p class="formok" role="status"></p>
       <button class="btn primary" type="submit">${signup ? 'Crear cuenta' : 'Entrar'}</button>
     </form>
-    ${signup ? '' : `<p class="reset"><button data-act="amode" data-id="forgot" style="color:var(--accent)">¿Has olvidado tu contraseña?</button></p>`}`;
+    ${signup ? '' : `<p class="reset"><button data-act="amode" data-id="forgot" style="color:var(--accent)">¿Has olvidado tu contraseña?</button></p>`}
+    ${legalLinks()}`;
 }
 
 function vRecover(){
@@ -153,6 +204,12 @@ function vRecover(){
     </form>`;
 }
 
+const fdate = t => t ? new Date(t).toLocaleDateString('es-ES', {day: 'numeric', month: 'long', year: 'numeric'}) : '';
+function legalState(u){
+  const l = u.legal || {};
+  const one = (n, v, t) => v ? `${n}: versión ${esc(v)}${t ? ', aceptada el ' + fdate(t) : ''}` : `${n}: sin aceptar`;
+  return `${one('Condiciones de uso', l.t, l.ta)}.<br>${one('Privacidad', l.p, l.pa)}.<br>Descarga un archivo con tu perfil, tu progreso, tus respuestas, tus exámenes y tu avance en Aprender.`;
+}
 function vProfile(){
   const t = T(), u = C.user || {};
   return t.top('Tu cuenta', 'rankBack') + `
@@ -161,9 +218,12 @@ function vProfile(){
     <p class="lede">${esc(u.email || '')}<br>Tu email solo lo ves tú. En el ranking solo aparece tu nombre visible.</p>
     <p class="syncline" id="cloud-sync">${syncText()}</p>
     <button class="pick rankpick" data-act="ranking"><span class="l"><b>Ranking</b><small>Una clasificación por asignatura</small></span><span class="n">Ver</span></button>
+    <h3>Ranking</h3>
+    <label class="switch"><input type="checkbox" data-ptoggle="rank" ${C.inRanking ? 'checked' : ''}><span class="sw" aria-hidden="true"></span><span>Aparecer en el ranking</span></label>
+    <p class="hint" id="rank-msg">${C.inRanking ? 'Tus compañeros ven tu nombre visible y tus estadísticas en las clasificaciones.' : 'No apareces en ninguna clasificación para los demás. Puedes seguir viendo el ranking y usando la app.'}</p>
     <h3>Cambiar nombre visible</h3>
     <form class="form" data-form="rename" novalidate>
-      ${field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres.', u.name || '')}
+      ${field('name', 'Nombre visible', 'text', 'nickname', 'Entre 3 y 20 caracteres. Puede ser un apodo.', u.name || '')}
       <p class="formerr" role="alert"></p><p class="formok" role="status"></p>
       <button class="btn" type="submit">Guardar nombre</button>
     </form>
@@ -174,6 +234,19 @@ function vProfile(){
       <p class="formerr" role="alert"></p><p class="formok" role="status"></p>
       <button class="btn" type="submit">Cambiar contraseña</button>
     </form>
+    <h3>Cambiar email</h3>
+    <form class="form" data-form="email" novalidate>
+      ${field('email', 'Email nuevo', 'email', 'email', 'Te enviaremos un enlace para confirmar el cambio. Hasta que lo abras, sigues entrando con el email actual.')}
+      <p class="formerr" role="alert"></p><p class="formok" role="status"></p>
+      <button class="btn" type="submit">Cambiar email</button>
+    </form>
+    <h3>Tus datos</h3>
+    <p class="hint" style="margin-top:0">${legalState(u)}</p>
+    <button class="btn" data-act="exportData" style="margin-top:12px;width:100%">Descargar mis datos</button>
+    <p class="hint" id="export-msg" role="status"></p>
+    ${legalLinks()}
+    <h3>Borrar mi cuenta</h3>
+    <details class="panel"><summary>Borrar mi cuenta y todos mis datos</summary><div class="in">${deleteForm()}</div></details>
     <div class="spacer"></div>
     <div class="dock"><button class="btn" data-act="logout">Cerrar sesión</button></div>`;
 }
@@ -222,6 +295,7 @@ function vRanking(V){
     <p class="hint">${RULES[V.tab](a)}</p>`;
 
   const data = V.data || C.cachedRanking();
+  if (data && data.visible === false) h += `<p class="rankhint no">No apareces en el ranking para los demás. Puedes volver a aparecer desde <button class="linkbtn inl" data-act="account">Tu cuenta</button>.</p>`;
   if (!data){
     return h + `<p class="empty">${V.fetching || !V.fetched ? 'Cargando el ranking…' : esc(V.err || 'No se ha podido cargar el ranking.')}</p>` +
       (V.fetched && !V.fetching ? `<p class="rnote"><button class="linkbtn" data-act="rretry">Reintentar</button></p>` : '');
@@ -260,6 +334,8 @@ function view(name, V){
   if (name === 'recover') return vRecover(V);
   if (name === 'profile') return vProfile(V);
   if (name === 'ranking') return vRanking(V);
+  if (name === 'legal') return vLegal(V);
+  if (name === 'consent') return vConsent(V);
   return null;
 }
 
@@ -306,8 +382,46 @@ const A = {
   rretry(){ const V = T().V; V.fetched = false; V.fetching = false; T().render(); },
   account(){ const t = T(); t.go({name: 'profile', back: backOf(t.V)}); },
   amode(d){ const t = T(); const f = document.querySelector('form[data-form] [name=email]'); t.V.email = f ? f.value : (t.V.email || ''); t.V.mode = d.id; t.V.msg = ''; t.render(); },
+  legal(d){
+    const t = T(), V = t.V;
+    // se guarda lo escrito en el formulario de registro para no perderlo al volver
+    const f = document.querySelector('form[data-form]');
+    if (f && V.name === 'account'){
+      const D = {}; ['email', 'name', 'code'].forEach(n => { if (f.elements[n]) D[n] = f.elements[n].value; });
+      ['c_terms', 'c_privacy'].forEach(n => { if (f.elements[n]) D[n] = f.elements[n].checked; });
+      V.draft = D;
+    }
+    t.go({name: 'legal', doc: d.id, back: V.name === 'legal' ? V.back : V});
+  },
+  legalBack(){ const t = T(); t.go(t.V.back || {name: 'home'}); },
+  async exportData(d, el){
+    const msg = document.getElementById('export-msg');
+    el.disabled = true; if (msg) msg.textContent = 'Preparando el archivo…';
+    try {
+      const data = await C.exportMyData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'mis-datos-tests-master-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+      if (msg) msg.textContent = 'Archivo descargado.';
+    } catch(e){ if (msg) msg.textContent = e.message || String(e); }
+    el.disabled = false;
+  },
   async logout(){ const t = T(); await C.signOut(); notes = []; notesAt = 0; t.reset(); t.go({name: 'account', mode: 'login'}); }
 };
+
+/* ---------- interruptor «Aparecer en el ranking» ---------- */
+document.addEventListener('change', async e => {
+  const t = e.target.closest('[data-ptoggle="rank"]'); if (!t || !on) return;
+  const want = t.checked, msg = document.getElementById('rank-msg');
+  t.disabled = true;
+  try {
+    await C.setInRanking(want);
+    if (msg) msg.textContent = want ? 'Vuelves a aparecer en el ranking.' : 'Ya no apareces en ninguna clasificación para los demás. Puedes seguir viendo el ranking y usando la app.';
+  } catch(ex){ t.checked = !want; if (msg) msg.textContent = ex.message || String(ex); }
+  t.disabled = false;
+});
 
 /* ---------- formularios ---------- */
 document.addEventListener('submit', async e => {
@@ -325,6 +439,14 @@ document.addEventListener('submit', async e => {
   if (kind === 'signup' && val('password').length < 6) return show('La contraseña debe tener al menos 6 caracteres.');
   if ((kind === 'signup' || kind === 'complete' || kind === 'rename') && (name.length < 3 || name.length > 20)) return show('El nombre visible debe tener entre 3 y 20 caracteres.');
   if ((kind === 'signup' || kind === 'complete') && !val('code').trim()) return show('Escribe el código de grupo.');
+  const checked = n => !!(f.elements[n] && f.elements[n].checked);
+  if ((kind === 'signup' || kind === 'complete') && (!checked('c_terms') || !checked('c_privacy')))
+    return show('Para crear la cuenta tienes que marcar las dos casillas: Condiciones de uso y Privacidad.');
+  if (kind === 'consent' && [...f.querySelectorAll('input[type=checkbox]')].some(x => !x.checked))
+    return show('Marca las casillas para aceptar y seguir.');
+  if (kind === 'email' && !emailOk) return show('Escribe un email válido.');
+  if (kind === 'delete' && val('confirm').trim() !== 'BORRAR') return show('Escribe BORRAR, en mayúsculas, para confirmar.');
+  if ((kind === 'consent' || kind === 'email' || kind === 'delete') && !navigator.onLine) return show('Necesitas conexión para hacerlo.');
   if (kind === 'password' || kind === 'recover'){
     if (val('p1').length < 6) return show('La contraseña debe tener al menos 6 caracteres.');
     if (val('p1') !== val('p2')) return show('Las contraseñas no coinciden.');
@@ -351,6 +473,16 @@ document.addEventListener('submit', async e => {
       const n = await C.rename(name);
       const h = document.querySelector('h2.big'); if (h) h.textContent = n;
       show('Nombre cambiado.', true);
+    } else if (kind === 'consent'){
+      await C.acceptLegal(C.pendingLegal || ['terms', 'privacy']);
+      t.go({name: 'home'});
+    } else if (kind === 'email'){
+      await C.changeEmail(val('email'));
+      f.reset(); show('Te hemos enviado un enlace a la dirección nueva (y puede que también a la actual). Abre el enlace para confirmar el cambio.', true);
+    } else if (kind === 'delete'){
+      await C.deleteAccount(val('confirm').trim());
+      notes = []; notesAt = 0; t.reset(); t.go(gate({name: 'home'}));
+      return;
     } else if (kind === 'password'){
       await C.changePassword(val('p1'));
       f.reset(); show('Contraseña cambiada.', true);

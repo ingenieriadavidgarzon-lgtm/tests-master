@@ -1,13 +1,25 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v9';
-const FONTS = 'tests-fonts';   // caché de Google Fonts y de supabase-js (versión fija), se conserva entre versiones
+const VERSION = 'tests-v10';
 
 const ASSETS = [
   './',
   './index.html',
   './css/styles.css',
+  './css/fonts.css',
+  './fonts/barlow-condensed-latin-79f19b.woff2',
+  './fonts/barlow-condensed-latin-b57619.woff2',
+  './fonts/barlow-condensed-latin-ext-477044.woff2',
+  './fonts/barlow-condensed-latin-ext-93cdc0.woff2',
+  './fonts/barlow-condensed-latin-ext-aaa351.woff2',
+  './fonts/barlow-condensed-latin-f60870.woff2',
+  './fonts/jetbrains-mono-latin-480c06.woff2',
+  './fonts/jetbrains-mono-latin-ext-ba1653.woff2',
+  './fonts/source-sans-3-latin-263ee0.woff2',
+  './fonts/source-sans-3-latin-ext-7ee8ef.woff2',
   './js/config.js',
+  './js/legal.js',
+  './js/vendor/supabase-2.117.2.js',
   './js/qid.js',
   './js/legacy-map.js',
   './js/cloud.js',
@@ -81,7 +93,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== VERSION && k !== FONTS).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -91,24 +103,8 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Google Fonts y supabase-js (CDN con versión fija): se guardan en caché la primera vez que se usan.
-  // Las llamadas a Supabase (*.supabase.co) no se tocan: van siempre a la red y nunca se cachean.
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com' ||
-      (url.hostname === 'cdn.jsdelivr.net' && url.pathname.startsWith('/npm/@supabase/supabase-js@'))) {
-    event.respondWith(
-      caches.open(FONTS).then(cache =>
-        cache.match(req).then(hit => {
-          const net = fetch(req).then(res => {
-            if (res && (res.ok || res.type === 'opaque')) cache.put(req, res.clone());
-            return res;
-          }).catch(() => hit || Response.error());
-          return hit || net;
-        })
-      )
-    );
-    return;
-  }
-
+  // Todo lo de la app se sirve desde aquí: no hay fuentes ni scripts de terceros. Las llamadas a Supabase
+  // (*.supabase.co) no se tocan: van siempre a la red y nunca se cachean.
   if (url.origin !== self.location.origin) return;
 
   // Navegación: la app es una sola página

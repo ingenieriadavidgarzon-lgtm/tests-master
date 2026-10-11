@@ -3,7 +3,7 @@
 // (tests.u.<id>.…) y las respuestas y exámenes pasan por una cola local que se sube cuando hay red.
 (function(){
 const CFG = window.TESTS_CONFIG || {};
-const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
+const LIB = './js/vendor/supabase-2.117.2.js';      // copia local de supabase-js (sin peticiones a CDN de terceros)
 const LIB_SRI = 'sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok';
 const enabled = !!(CFG.supabaseUrl && CFG.supabaseAnonKey && !/TU-PROYECTO|TU-ANON-KEY/.test(CFG.supabaseUrl + CFG.supabaseAnonKey));
 const AUTH_KEY = 'tests.cloud.auth';    // donde supabase-js guarda la sesión
@@ -50,6 +50,7 @@ let online = navigator.onLine;
 let profileOk = false, needsProfile = false, boardsDone = false, verified = false;
 let recovery = false;                  // se ha vuelto del enlace de «he olvidado mi contraseña»
 let ended = '';                        // motivo del último cierre de sesión no pedido por el usuario
+let endedOk = false;                   // el motivo es una confirmación (cuenta borrada), no un error
 let signingOut = false;
 let lastError = null, rankCache = null;
 const listeners = [];
@@ -106,7 +107,7 @@ function onSession(ev, session){
   if (id !== uid){
     uid = id; profileOk = false; needsProfile = false; boardsDone = false; verified = false;
     me = Object.assign({}, me && me.id === id ? me : {}, { id, email: session.user.email }); set(K.me, me);
-    ended = ''; linkError = '';
+    ended = ''; endedOk = false; linkError = '';
     adoptLocal(id);
     applyKeyFixes(id);
     emit('auth');
@@ -141,6 +142,8 @@ function msg(e){
   if (/bad_name/.test(s)) return 'El nombre visible debe tener entre 3 y 20 caracteres.';
   if (/bad_code/.test(s)) return 'El código de grupo no es correcto.';
   if (/not_member/.test(s)) return 'Tu cuenta no tiene perfil en el grupo.';
+  if (/consent_required/.test(s)) return 'Para crear la cuenta tienes que aceptar las Condiciones de uso y el aviso de Privacidad.';
+  if (/confirm_required/.test(s)) return 'Escribe BORRAR para confirmar.';
   return 'No se ha podido completar: ' + m;
 }
 const fail = e => { const err = new Error(msg(e)); err.net = isNet(e); err.raw = e; return err; };
@@ -160,6 +163,17 @@ async function signIn(email, password){
   try { await ensureProfile(); } catch(e){ throw fail(e); }
   return needsProfile ? 'profile' : 'ok';
 }
+// Versiones de los documentos legales que tiene que haber aceptado el usuario (js/legal.js)
+const LEGAL = window.LEGAL || { terms: { version: '' }, privacy: { version: '' } };
+const legalOf = d => ({ t: d.terms_version || null, p: d.privacy_version || null, ta: d.terms_accepted_at || null, pa: d.privacy_accepted_at || null });
+// Documentos pendientes de aceptar: [] si está al día; null si aún no se sabe (sin red y sin copia local)
+function pendingLegal(){
+  if (!me || !me.legal) return null;
+  const out = [];
+  if (me.legal.t !== LEGAL.terms.version) out.push('terms');
+  if (me.legal.p !== LEGAL.privacy.version) out.push('privacy');
+  return out;
+}
 async function signUp(email, password, name, code){
   await need();
   name = name.trim().replace(/\s+/g, ' ');
@@ -167,7 +181,7 @@ async function signUp(email, password, name, code){
   let r;
   try { r = await rpc('signup_check', { p_code: code, p_name: name }); } catch(e){ throw fail(e); }
   if (r !== 'ok') throw fail(new Error(r));
-  set(K.pend, { email: email.trim().toLowerCase(), name, code });
+  set(K.pend, { email: email.trim().toLowerCase(), name, code, terms: LEGAL.terms.version, privacy: LEGAL.privacy.version });
   const { data, error } = await sb.auth.signUp({ email: email.trim(), password, options: { data: { display_name: name }, emailRedirectTo: redirectUrl() } });
   if (error) throw fail(error);
   if (!data.session) return 'confirm';               // confirmación por email activada en Supabase
@@ -175,11 +189,12 @@ async function signUp(email, password, name, code){
   try { await ensureProfile(); } catch(e){ throw fail(e); }
   return needsProfile ? 'profile' : 'ok';
 }
-async function createProfile(code, name){
+async function createProfile(code, name, terms, privacy){
   await need();
+  terms = terms || LEGAL.terms.version; privacy = privacy || LEGAL.privacy.version;
   try {
-    const n = await rpc('create_profile', { p_code: code, p_name: name });
-    me = Object.assign({}, me, { name: n }); set(K.me, me);
+    const n = await rpc('create_profile', { p_code: code, p_name: name, p_terms: terms, p_privacy: privacy });
+    me = Object.assign({}, me, { name: n, legal: { t: terms, p: privacy, ta: new Date().toISOString(), pa: new Date().toISOString() }, inRanking: true }); set(K.me, me);
     profileOk = true; needsProfile = false; del(K.pend);
   } catch(e){ throw fail(e); }
   emit('auth'); sync();
@@ -192,12 +207,18 @@ function ensureProfile(){
   return profilePromise;
 }
 async function checkProfile(){
-  const { data, error } = await sb.from('profiles').select('display_name').eq('id', uid).maybeSingle();
+  const { data, error } = await sb.from('profiles')
+    .select('display_name,terms_version,terms_accepted_at,privacy_version,privacy_accepted_at,in_ranking').eq('id', uid).maybeSingle();
   if (error) throw error;
-  if (data){ profileOk = true; needsProfile = false; me = Object.assign({}, me, { name: data.display_name }); set(K.me, me); return true; }
+  if (data){
+    profileOk = true; needsProfile = false;
+    me = Object.assign({}, me, { name: data.display_name, legal: legalOf(data), inRanking: data.in_ranking !== false }); set(K.me, me);
+    emit('auth');
+    return true;
+  }
   const p = get(K.pend, null);
-  if (p && p.code && me && (!p.email || p.email === String(me.email || '').toLowerCase())){
-    try { await createProfile(p.code, p.name); return true; }
+  if (p && p.code && me && (!p.email || p.email === String(me.email || '').toLowerCase()) && p.terms && p.privacy){
+    try { await createProfile(p.code, p.name, p.terms, p.privacy); return true; }
     catch(e){ if (!e.net) del(K.pend); if (e.net) throw e.raw; }
   }
   if (profileOk) return true;            // se creó mientras tanto desde «Completa tu registro»
@@ -246,6 +267,66 @@ async function verifySession(){
     throw new Error('session_ended');
   }
   if (!error) verified = true;
+}
+
+/* ---------- privacidad: consentimiento, ranking, actividad, datos y borrado ---------- */
+async function acceptLegal(docs){
+  await need();
+  const p = { p_terms: docs.includes('terms') ? LEGAL.terms.version : null, p_privacy: docs.includes('privacy') ? LEGAL.privacy.version : null };
+  let r;
+  try { r = await rpc('accept_legal', p); } catch(e){ throw fail(e); }
+  me = Object.assign({}, me, { legal: legalOf(r), inRanking: r.in_ranking !== false }); set(K.me, me);
+  emit('auth'); sync();
+}
+async function setInRanking(on){
+  await need();
+  try { await rpc('set_in_ranking', { p_on: !!on }); } catch(e){ throw fail(e); }
+  me = Object.assign({}, me, { inRanking: !!on }); set(K.me, me);
+  rankCache = null; del(K.rank);
+  emit('auth');
+}
+async function touchActivity(){
+  const k = ukey(uid, 'touched'), today = new Date().toISOString().slice(0, 10);
+  if (get(k, '') === today) return;
+  await rpc('touch_activity', {});
+  set(k, today);
+}
+async function changeEmail(email){
+  await need();
+  const { error } = await sb.auth.updateUser({ email: email.trim() }, { emailRedirectTo: redirectUrl() });
+  if (error) throw fail(error);
+}
+// Derecho de acceso y portabilidad: todo lo del servidor más lo que aún está en la cola de este dispositivo
+async function exportMyData(){
+  await need();
+  let data;
+  try { data = await rpc('export_my_data', {}); } catch(e){ throw fail(e); }
+  const u = uid;
+  data.pendiente_de_subir_desde_este_dispositivo = {
+    respuestas: get(K.answers, []).filter(e => e.u === u), examenes: get(K.exams, []).filter(e => e.u === u),
+    aprender: get(K.learn, []).filter(e => e.u === u)
+  };
+  return data;
+}
+// Borra todo lo de un usuario en este dispositivo
+function wipeLocal(u){
+  try {
+    Object.keys(localStorage).filter(k => k.startsWith('tests.u.' + u + '.')).forEach(k => localStorage.removeItem(k));
+  } catch(e){}
+  [K.answers, K.exams, K.resets, K.imports, K.learn].forEach(k => set(k, get(k, []).filter(e => e.u !== u)));
+  [K.me, K.pend, K.status, K.rank, AUTH_KEY].forEach(del);
+}
+async function deleteAccount(confirmText){
+  await need();
+  if (confirmText !== 'BORRAR') throw fail(new Error('confirm_required'));
+  const u = uid;
+  try { await rpc('delete_my_account', { p_confirm: confirmText }); } catch(e){ throw fail(e); }
+  signingOut = true;
+  try { await sb.auth.signOut({ scope: 'local' }); } catch(e){}
+  signingOut = false;
+  wipeLocal(u);
+  ended = 'Tu cuenta y tus datos se han borrado.'; endedOk = true;
+  endSession();
 }
 
 /* ---------- correcciones de la clave ---------- */
@@ -392,6 +473,8 @@ async function syncOnce(){
   try {
     await verifySession();
     if (!(await ensureProfile())) return;
+    if ((pendingLegal() || []).length) return;        // sin aceptar los documentos no se envía nada
+    await touchActivity();
     await registerBoards();
     await pushImports();
     await pushResets();
@@ -554,14 +637,16 @@ function board(data, a, tab){
     else r.value = wk[u] || 0;
     return r;
   });
-  const shown = rows.filter(r => tab === 'exams' ? r.value !== null : r.value > 0)
+  // quien ha salido del ranking no se ve a sí mismo en la clasificación (los demás tampoco lo ven: lo filtra el servidor)
+  const shown = rows.filter(r => !(r.me && data.visible === false)).filter(r => tab === 'exams' ? r.value !== null : r.value > 0)
     .sort((x, y) => y.value - x.value || x.name.localeCompare(y.name, 'es'));
   shown.forEach(r => { r.pos = 1 + shown.filter(o => o.value > r.value).length; });
-  const mine = shown.find(r => r.me) || rows.find(r => r.me) || null;
+  const mine = data.visible === false ? null : (shown.find(r => r.me) || rows.find(r => r.me) || null);
   return { rows: shown, me: mine, total };
 }
 // Posición que daría una nota recién hecha en la clasificación de su asignatura
 function wouldRank(data, a, grade, clientId){
+  if (data.visible === false) return { hidden: true };
   const mineAll = data.mine.filter(x => x.a === a).sort((x, y) => String(y.t).localeCompare(String(x.t)));
   const prev = mineAll.filter(x => x.c !== clientId).map(x => +x.g);
   const already = mineAll.some(x => x.c === clientId);
@@ -624,12 +709,16 @@ window.Cloud = {
   get recovery(){ return recovery; },
   get recoveryPending(){ return recoveryPending; },
   get ended(){ return ended; },
+  get endedOk(){ return endedOk; },
   get linkError(){ return linkError; },
   get online(){ return online && navigator.onLine; },
   get lastError(){ return lastError; },
   on(f){ listeners.push(f); },
   key, rootOf: id => rootOf[id], init,
   signIn, signUp, signOut, createProfile, rename, changePassword, sendReset, finishRecovery,
+  get pendingLegal(){ return pendingLegal(); },
+  get inRanking(){ return !(me && me.inRanking === false); },
+  acceptLegal, setInRanking, changeEmail, exportMyData, deleteAccount,
   onAnswer, onExam, onReset, onLearn, examStatus, counts, pending, sync,
   fetchRanking, cachedRanking, board, wouldRank, overtakes, uniqueCount
 };

@@ -326,3 +326,24 @@ details.panel[open] summary::after{content:"−"}
 .dockhint{flex:1;text-align:center;color:var(--muted);margin:0;padding:14px 0;font-size:15px}
 .btn.big{padding:17px 16px;font-size:18px}
 .linkbtn.study{display:inline-block;margin-top:12px}
+
+/* Privacidad y condiciones (js/legal.js, js/online-ui.js) */
+.check.consent{align-items:flex-start;font-size:15px;line-height:1.45;margin-top:4px}
+.check.consent input{flex:none;margin-top:2px}
+.linkbtn.inl{display:inline;margin:0;font-size:inherit;text-decoration:underline;text-underline-offset:2px}
+.legallinks{font-size:14px;color:var(--muted);margin:22px 0 0;text-align:center}
+.legallinks button{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.legaltext{font-size:15.5px;line-height:1.5}
+.legaltext p{margin:0 0 10px}
+.legaltext a{color:var(--accent)}
+.legalver{font-size:13.5px;color:var(--muted);margin:14px 0 0;padding-top:10px;border-top:1px solid var(--line)}
+.legaldoc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:4px 16px 14px;margin-top:12px}
+.legaldoc h3{margin:14px 0 8px}
+.switch{display:flex;align-items:center;gap:12px;font-weight:600;cursor:pointer}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .sw{flex:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;transition:background .15s}
+.switch .sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked + .sw{background:var(--accent)}
+.switch input:checked + .sw::after{transform:translateX(18px)}
+.switch input:focus-visible + .sw{outline:2px solid var(--accent);outline-offset:2px}
+.switch input:disabled + .sw{opacity:.5}
