@@ -5,7 +5,7 @@
 const OWNER = 'David Garzón';
 const EMAIL = 'ingenieria.davidgarzon@gmail.com';
 // Región del proyecto de Supabase (Supabase → Project Settings → General → Region)
-const REGION = 'PENDIENTE: región del proyecto de Supabase';
+const REGION = 'la Unión Europea (región West EU, París, Francia)';
 
 const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
 
