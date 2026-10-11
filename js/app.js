@@ -15,6 +15,7 @@ let P = null;               // sesión de práctica
 let X = null;               // sesión de examen
 let timerId = null;
 const O = window.OnlineUI && window.OnlineUI.enabled ? window.OnlineUI : null;   // cuentas y ranking (js/online-ui.js)
+const L = window.Learn || null;                                                    // módulo Aprender (js/learn.js)
 
 // Árbol: asignatura → temas (parts) → tests (tests). Los tests (hojas) son los que tienen preguntas.
 const kidsOf = n => n.parts || n.tests || null;
@@ -96,13 +97,15 @@ function vParts(){
       <span class="meter">${bar(t)}<span>${Math.round(100*t.mast/t.total)} % dominadas</span></span>
     </button>`;
   }).join('');
+  const learn = L && isTests && g.parent ? L.partsCard(g) : '';   // en los temas: Aprender va primero
   return top(g.name, 'up') + `
     <p class="eyebrow">${g.parent ? esc(g.parent.name) + ' · ' : esc(g.short) + ' · '}${kids.length} ${isTests ? 'tests' : 'temas'}</p>
     <h2 class="big">${esc(g.name)}</h2>
     <p class="lede">${isTests
-      ? 'Elige el test. Cada uno tiene su progreso, su modo práctica y su modo examen. La chuleta del tema está en los dos.'
+      ? (learn ? 'Aprende el tema por lecciones o elige un test. Cada test tiene su progreso, su modo práctica y su modo examen.'
+               : 'Elige el test. Cada uno tiene su progreso, su modo práctica y su modo examen. La chuleta del tema está en los dos.')
       : 'Elige el tema. Cada uno tiene sus tests, con su modo práctica y su modo examen.'}</p>
-    <div class="stack">${rows}</div>`;
+    <div class="stack">${learn}${rows}</div>`;
 }
 function vSubject(){
   const s = subj(V.sid); const st = getStats(s);
@@ -157,15 +160,14 @@ function explain(q){
     ${q.d ? `<p class="unsure">Respuesta sin confirmar: hay otra opción defendible. Contrástala con el profesor o los apuntes.</p>` : ''}
   </div>`;
 }
-function qhead(s, q, qi){
-  return `<div class="qmeta"><span class="ref">nº ${qi+1}</span>${q.d?'<span class="flag">Sin confirmar</span>':''}</div>
+function qhead(s, q, qi, mixed){
+  return `<div class="qmeta"><span class="ref">${mixed ? esc(s.short) + ' · ' : ''}nº ${qi+1}</span>${q.d?'<span class="flag">Sin confirmar</span>':''}</div>
     <p class="qtext">${esc(q.q)}</p>`;
 }
 
 function vPractice(){
-  const s = subj(P.sid);
   if (P.i >= P.list.length) return vPracticeEnd();
-  const qi = P.list[P.i]; const q = s.questions[qi]; const ord = P.orders[P.i]; const a = P.answer;
+  const it = P.list[P.i]; const s = subj(it.sid); const qi = it.qi; const q = s.questions[qi]; const ord = P.orders[P.i]; const a = P.answer;
   const opts = ord.map((oi, pos) => {
     let cls = '';
     if (a !== null){ if (oi === q.c) cls = 'right'; else if (oi === a) cls = 'wrong'; else cls = 'dim'; }
@@ -178,13 +180,13 @@ function vPractice(){
       ? `<div class="verdict ok"><p class="vh">Correcto</p>${P.showWhy ? explain(q) : `<button class="linkbtn" data-act="showWhy">Ver la explicación</button>`}</div>`
       : `<div class="verdict ko"><p class="vh">No es esa</p>
           <p class="yours">La correcta es la <b>${LET[posC]}</b>: <b>${esc(q.o[q.c])}</b></p>
-          ${explain(q)}</div>`;
+          ${explain(q)}${L ? L.studyBtn(q) : ''}</div>`;
   }
   const last = P.i === P.list.length - 1;
   return top('Práctica', 'leavePractice', `<span class="side"><span style="color:var(--ok)">✓ ${P.ok}</span> &nbsp;<span style="color:var(--ko)">✗ ${P.ko}</span></span>`) + `
     <div class="progress"><i style="width:${100*(P.i + (a!==null?1:0))/P.list.length}%"></i></div>
-    <p class="eyebrow" style="margin-bottom:8px">Pregunta ${P.i+1} de ${P.list.length}</p>
-    ${qhead(s, q, qi)}
+    <p class="eyebrow" style="margin-bottom:8px">${P.apt ? 'Apartado ' + esc(P.apt) + ' · ' : ''}Pregunta ${P.i+1} de ${P.list.length}</p>
+    ${qhead(s, q, qi, !!P.apt)}
     <div class="opts">${opts}</div>
     ${fb}
     <div class="spacer"></div>
@@ -193,10 +195,10 @@ function vPractice(){
       : `<button class="btn primary" data-act="pNext">${last ? 'Ver resultado' : 'Siguiente'}</button>`}</div>`;
 }
 function vPracticeEnd(){
-  const s = subj(P.sid); const n = P.ok + P.ko;
+  const n = P.ok + P.ko;
   const pct = n ? Math.round(100*P.ok/n) : 0;
-  const fails = P.failed.map(qi => `<li>${esc(s.questions[qi].q)}</li>`).join('');
-  return top('Práctica terminada', 'open') + `
+  const fails = P.failed.map(it => `<li>${esc(subj(it.sid).questions[it.qi].q)}</li>`).join('');
+  return top('Práctica terminada', P.back ? 'leavePractice' : 'open') + `
     <p class="eyebrow">Resultado de la ronda</p>
     <div class="score"><span class="num">${P.ok}</span><span class="of">/ ${n} · ${pct} %</span></div>
     <div class="kpis"><div class="g"><b>${P.ok}</b><span>Aciertos</span></div><div class="r"><b>${P.ko}</b><span>Fallos</span></div><div><b>${P.list.length - n}</b><span>Saltadas</span></div></div>
@@ -204,7 +206,8 @@ function vPracticeEnd(){
     <div class="spacer"></div>
     <div class="dock" style="flex-wrap:wrap">
       ${P.failed.length ? `<button class="btn primary" data-act="retryFails">Repetir las falladas</button>` : ''}
-      <button class="btn ${P.failed.length?'':'primary'}" data-act="practiceSetup">Otra ronda</button>
+      ${P.back ? `<button class="btn ${P.failed.length?'':'primary'}" data-act="leavePractice">Volver a la lección</button>`
+               : `<button class="btn ${P.failed.length?'':'primary'}" data-act="practiceSetup">Otra ronda</button>`}
     </div>`;
 }
 
@@ -275,7 +278,7 @@ function vResults(){
     }).join('');
     const sym = {ok:'✓', ko:'✗', bl:'–'}[it.st];
     return `<details class="rev"${it.st==='ko'&&filt==='ko'?' open':''}><summary><span class="mark ${it.st}">${sym}</span><span class="st">${esc(q.q)}<small>Pregunta ${it.i+1}${it.st==='bl'?' · en blanco':''}</small></span></summary>
-      <div class="body"><div class="opts">${opts}</div>${explain(q)}</div></details>`;
+      <div class="body"><div class="opts">${opts}</div>${explain(q)}${L && it.st === 'ko' ? L.studyBtn(q) : ''}</div></details>`;
   }).join('') || `<p class="empty">Nada en este filtro.</p>`;
   const chip = (k, l) => `<button class="chip" data-act="rf" data-v="${k}" aria-pressed="${filt===k}">${l}</button>`;
   const pass = R.grade >= 5;
@@ -306,9 +309,13 @@ function render(){
   else if (V.name === 'examSetup') h = vExamSetup();
   else if (V.name === 'exam'){ h = vExam(); timerId = setInterval(tick, 1000); }
   else if (V.name === 'results') h = vResults();
-  else if (O) h = O.view(V.name, V) || '';
+  else {
+    const lh = L ? L.view(V) : null;
+    if (lh != null) h = lh; else if (O) h = O.view(V.name, V) || '';
+  }
   app.innerHTML = h;
   if (O) O.after(V);
+  if (L) L.after(V);
 }
 function tick(){
   if (!X || V.name !== 'exam') return;
@@ -319,9 +326,13 @@ function tick(){
 
 /* ---------- acciones ---------- */
 function startPractice(sid, idxs, doShuffle=true){
-  const s = subj(sid); const list = doShuffle ? shuffle(idxs) : idxs.slice();
-  P = {sid, list, orders: list.map(qi => optOrder(s.questions[qi])), i:0, answer:null, ok:0, ko:0, failed:[], showWhy:false};
-  go({name:'practice', sid});
+  startItems(idxs.map(qi => ({sid, qi})), doShuffle, {sid});
+}
+// Práctica sobre una lista de preguntas {sid: test, qi: índice}, que pueden venir de varios tests (Aprender → apartado)
+function startItems(items, doShuffle=true, opt={}){
+  const list = doShuffle ? shuffle(items) : items.slice();
+  P = Object.assign({sid: list[0].sid, list, orders: list.map(it => optOrder(subj(it.sid).questions[it.qi])), i:0, answer:null, ok:0, ko:0, failed:[], showWhy:false}, opt);
+  go({name:'practice', sid: P.sid});
 }
 function finishExam(timeout=false){
   const s = subj(X.sid); let ok=0, ko=0, bl=0;
@@ -357,16 +368,17 @@ const A = {
   },
   pAnswer(d){
     if (P.answer !== null) return;
-    const s = subj(P.sid); const qi = P.list[P.i]; const o = +d.o; const ok = o === s.questions[qi].c;
-    P.answer = o; P.showWhy = false; ok ? P.ok++ : (P.ko++, P.failed.push(qi));
-    record(s, qi, ok); render();
+    const it = P.list[P.i]; const s = subj(it.sid); const o = +d.o; const ok = o === s.questions[it.qi].c;
+    P.answer = o; P.showWhy = false; ok ? P.ok++ : (P.ko++, P.failed.push(it));
+    record(s, it.qi, ok); render();
     if (!ok){ const v = app.querySelector('.verdict'); if (v) v.scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
   },
   showWhy(){ P.showWhy = true; render(); },
   pNext(){ P.i++; P.answer = null; P.showWhy = false; render(); window.scrollTo(0,0); },
   pSkip(){ P.i++; P.answer = null; render(); window.scrollTo(0,0); },
-  leavePractice(){ go({name: P.i >= P.list.length ? 'subject' : 'practiceSetup', sid: P.sid}); },
-  retryFails(){ startPractice(P.sid, P.failed, true); },
+  leavePractice(){ if (P.back) go(P.back); else go({name: P.i >= P.list.length ? 'subject' : 'practiceSetup', sid: P.sid}); },
+  retryFails(){ startItems(P.failed, true, {sid: P.sid, apt: P.apt, back: P.back}); },
+  studyApt(d){ if (L) L.openApt(d.apt, Object.assign({}, V)); },
   examSetup(){
     const sid = V.sid || (X && X.sid); const s = subj(sid);
     const cfg = Object.assign({n: s.examSize, pen: s.examPen || 0, t: s.examTime || 0}, store.get(userKey('exam.'+sid), {}));
@@ -406,7 +418,7 @@ const A = {
 app.addEventListener('click', e => {
   const t = e.target.closest('[data-act]'); if (!t || t.disabled) return;
   if (t.tagName === 'INPUT') return;
-  const fn = A[t.dataset.act] || (O && O.act[t.dataset.act]); if (fn) fn(t.dataset, t);
+  const fn = A[t.dataset.act] || (L && L.act[t.dataset.act]) || (O && O.act[t.dataset.act]); if (fn) fn(t.dataset, t);
 });
 app.addEventListener('change', e => {
   const t = e.target.closest('[data-act]'); if (t && t.tagName === 'INPUT'){ const fn = A[t.dataset.act]; if (fn) fn(t.dataset, t); }
@@ -423,7 +435,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-window.TestsApp = { go, render, top, penLabel, get V(){ return V; }, get X(){ return X; },
+window.TestsApp = { go, render, top, penLabel, key: userKey, startItems, get V(){ return V; }, get X(){ return X; },
   reset(){ clearInterval(timerId); timerId = null; P = null; X = null; V = {name:'home'}; } };
 render();
 })();

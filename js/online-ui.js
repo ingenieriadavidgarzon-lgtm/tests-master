@@ -94,11 +94,12 @@ function paintResults(){
 }
 function syncText(){
   const p = C.pending();
-  if (!p.answers && !p.exams) return C.lastError ? esc(C.lastError) : 'Todo tu progreso está sincronizado con tu cuenta.';
+  if (!p.answers && !p.exams && !p.learn) return C.lastError ? esc(C.lastError) : 'Todo tu progreso está sincronizado con tu cuenta.';
   const parts = [];
   if (p.answers) parts.push(plural(p.answers, 'respuesta', 'respuestas'));
   if (p.exams) parts.push(plural(p.exams, 'examen', 'exámenes'));
-  return 'Pendiente de subir: ' + parts.join(' y ') + '.' + (C.online ? '' : ' Sin conexión: se subirá al volver la red.');
+  if (p.learn) parts.push(plural(p.learn, 'avance de Aprender', 'avances de Aprender'));
+  return 'Pendiente de subir: ' + parts.join(', ').replace(/, ([^,]*)$/, ' y $1') + '.' + (C.online ? '' : ' Sin conexión: se subirá al volver la red.');
 }
 
 /* ---------- pantallas nuevas ---------- */
@@ -370,6 +371,7 @@ if (on) C.on(what => {
   }
   if (what === 'net'){ const el = document.getElementById('net-msg'); if (el) el.textContent = netMsg(); }
   if (what === 'stats' && ['home', 'parts', 'subject', 'practiceSetup'].includes(V.name)) return t.render();
+  if (what === 'learn' && ['parts', 'learn'].includes(V.name)) return t.render();
   if (V.name === 'results') paintResults();
   if (V.name === 'profile'){ const el = document.getElementById('cloud-sync'); if (el) el.innerHTML = syncText(); }
 });

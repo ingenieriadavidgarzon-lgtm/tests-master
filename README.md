@@ -17,8 +17,12 @@ js/legacy-map.js         Ids de las preguntas de la versión anterior (para migr
 js/config.js             URL y anon key de Supabase
 js/cloud.js              Sesión, cola sin conexión, sincronización, migración y ranking
 js/online-ui.js          Pantallas de acceso, perfil y ranking
+js/learn.js              Módulo Aprender: lecciones, repaso espaciado y chuleta
 data/sif.js              Sistemas Integrados de Fabricación (un test)
 data/inst.js             Instalaciones Industriales: Climatización, PCI, Fontanería y Comunicaciones, con dos tests cada uno
+data/learn/pci.js        Contenido de Aprender de Protección contra incendios
+assets/learn/pci/        Figuras de Aprender de PCI (WebP)
+tools/check-learn.js     Comprobación del contenido de Aprender (node tools/check-learn.js)
 supabase/schema.sql      SQL base de Supabase (tablas, RLS, funciones y vistas)
 supabase/migrations/     Migraciones posteriores, en orden de fecha
 manifest.webmanifest     Datos de instalación de la PWA
@@ -120,10 +124,70 @@ Cada asignatura tiene su clasificación en el ranking automáticamente.
 | `e` | Explicación (se muestra al fallar y en la corrección). No cites opciones por letra: se barajan. |
 | `k` | *Opcional.* Líneas de cálculo paso a paso, array de textos. |
 | `d` | *Opcional.* `true` si la respuesta está sin confirmar. |
+| `apt` | *Opcional.* Apartado del temario en Aprender, por ejemplo `"pci-1.3"`. Activa «Estudiar este apartado» al fallarla. |
 
 Las opciones se barajan, salvo en preguntas de 2 opciones o con opciones del tipo «A y B…» o «Ambas…». Una última opción que empiece por «Todas…» o «Ninguna…» se queda siempre al final.
 
 **Id estable.** Cada pregunta se identifica por un hash corto de su enunciado normalizado (`js/qid.js`), no por su posición. Puedes añadir, quitar o reordenar preguntas sin romper el progreso. Si cambias el texto de un enunciado, esa pregunta empieza de cero.
+
+## Aprender
+
+En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: lecciones cortas (una por apartado del temario, de 4 a 10 tarjetas, 3–5 minutos) que alternan explicaciones con comprobaciones. Hoy solo tiene contenido Protección contra incendios; en los demás temas aparece desactivada, con «Próximamente».
+
+- **Entrada:** «Cómo pregunta este profesorado», «Continuar donde lo dejé», «Repaso de hoy», «Chuleta» y la lista de lecciones por tema con su estado (sin empezar, en curso, completada o para repasar).
+- **Tarjetas:** explicación (con tabla o figura), aviso «Ojo» y comprobaciones: test (del banco o nuevo), «¿Cuál NO está?», completar la lista, ordenar, dato exacto, emparejar y reconocer una figura. Cada comprobación se corrige al momento y cita el apartado del temario. Si se falla, la tarjeta vuelve al final de la lección.
+- **Al terminar:** resumen y «Practicar preguntas de este apartado», que abre el modo práctica solo con las preguntas de los dos tests que tienen ese `apt`.
+- **Repaso de hoy:** sistema Leitner con cajas de 1, 3, 7 y 14 días. Entran las comprobaciones falladas, las de dato exacto y las tarjetas de la chuleta marcadas «No lo sabía». Como mucho 20 por sesión.
+- **Desde los tests:** al fallar una pregunta con `apt` (en la práctica o en la corrección del examen) aparece «Estudiar este apartado».
+- **Progreso:** por usuario, en `localStorage` y en la tabla `learn_progress` de Supabase (migración `supabase/migrations/20261011_aprender.sql`), con la misma cola sin conexión que las respuestas. Gana siempre el cambio más reciente, así que se puede avanzar en dos dispositivos. **No cuenta para el ranking.**
+
+### Cómo añadir el módulo Aprender a un tema
+
+1. **Contenido.** Crea `data/learn/<id del tema>.js` siguiendo el modelo de `data/learn/pci.js`:
+
+   ```js
+   window.LEARN = window.LEARN || {};
+   window.LEARN.clim = {
+     tema: 'clim', name: 'Climatización', source: 'De dónde sale el contenido',
+     base: 'assets/learn/clim/',                       // carpeta de las figuras
+     howAsks: ['…', '…'],                              // «Cómo pregunta este profesorado»: de 4 a 6 líneas
+     figs: { f01: { src: 'fig01.webp', w: 1200, h: 500, alt: 'Descripción completa', cap: 'Figura 1. Pie del temario.' } },
+     temas: [ { n: 1, name: 'Nombre del tema 1', lessons: [
+       { id: 'clim-1.1', apt: ['clim-1.1'], title: '1.1. Título del apartado', cards: [ … ], sum: ['3 a 5 puntos'] }
+     ] } ],
+     cheat: [ ['Concepto', 'Dato'] ]                   // chuleta para dar la vuelta
+   };
+   ```
+
+   - `id` de la lección: `<tema>-<apartado>`; si un apartado largo se divide, `clim-2.4-1`, `clim-2.4-2`… con el mismo `apt`.
+   - `title` empieza por el número del apartado («2.4. …»): es lo que se cita en las correcciones.
+
+2. **Tarjetas** (`cards`). De 4 a 10 por lección y nunca dos explicaciones seguidas sin una comprobación entre medias:
+
+   | Tipo | Campos |
+   |---|---|
+   | `ex` explicación | `h` título, `p` texto (HTML sencillo: `<b>`, unas 80 palabras), `tab: {h: [cabeceras], r: [[fila]]}` y `fig: 'f01'` opcionales |
+   | `ojo` aviso | `p`. Solo los recuadros «Ojo» del temario, tal cual |
+   | `q` test del banco | `ref`: id estable de la pregunta (`TESTS_QID(enunciado)`); usa su explicación |
+   | `q` test nuevo | `q`, `o` (3 opciones), `c`, `e` |
+   | `notin` ¿Cuál NO está? | `q` (con «NO»), `o` (3 o 4), `c`, `e` |
+   | `fill` completar | `q`, `items` (textos con `{}` en cada hueco), `ans` (en orden), `dis` (distractores), `e` |
+   | `order` ordenar | `q`, `items` en el orden correcto, `e`. Solo si el orden importa |
+   | `num` dato exacto | `q`, `v` (número), `u` (unidades), `e`. Acepta coma o punto |
+   | `match` emparejar | `q`, `pairs` (de 4 a 6 `[izquierda, derecha]`, sin repetir), `e` |
+   | `img` reconocer figura | `fig`, `q`, `o`, `c`, `e`. El pie se muestra al responder |
+
+   El id de cada comprobación es `<lección>:<hash del enunciado>`: si cambias el enunciado, su repaso empieza de cero.
+
+3. **Figuras.** WebP de 1200 px de ancho como máximo y unos 150 KB, en `assets/learn/<tema>/`, con `alt` (lo que muestra la figura, para lectores de pantalla) y el pie del temario. Añádelas a `ASSETS` en `sw.js`.
+
+4. **Asociación con el banco.** Añade `"apt": "<tema>-<apartado>"` a cada pregunta de los tests del tema, sin cambiar nada más. Si una pregunta no encaja en ningún apartado, no lleva `apt`.
+
+5. **Registro.** En `index.html`, `<script src="./data/learn/<tema>.js"></script>` después de los datos de las asignaturas; en `sw.js`, el archivo, las figuras y la versión de caché nueva. La tarjeta Aprender del tema se activa sola.
+
+6. **Comprobación.** `node tools/check-learn.js` revisa número de tarjetas, explicaciones seguidas, referencias al banco, figuras, parejas, huecos, duración estimada y qué preguntas se han quedado sin `apt`.
+
+No hace falta ninguna migración nueva: la tabla `learn_progress` sirve para todos los temas.
 
 ## Importante: sube la versión de caché en cada cambio
 

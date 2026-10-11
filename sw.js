@@ -1,6 +1,6 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v7';
+const VERSION = 'tests-v8';
 const FONTS = 'tests-fonts';   // caché de Google Fonts y de supabase-js (versión fija), se conserva entre versiones
 
 const ASSETS = [
@@ -12,9 +12,34 @@ const ASSETS = [
   './js/legacy-map.js',
   './js/cloud.js',
   './js/online-ui.js',
+  './js/learn.js',
   './js/app.js',
   './data/sif.js',
   './data/inst.js',
+  './data/learn/pci.js',
+  // figuras de Aprender (data/learn/pci.js)
+  './assets/learn/pci/fig01.webp',
+  './assets/learn/pci/fig02.webp',
+  './assets/learn/pci/fig03.webp',
+  './assets/learn/pci/fig04.webp',
+  './assets/learn/pci/fig05.webp',
+  './assets/learn/pci/fig06.webp',
+  './assets/learn/pci/fig07.webp',
+  './assets/learn/pci/fig08.webp',
+  './assets/learn/pci/fig09.webp',
+  './assets/learn/pci/fig10.webp',
+  './assets/learn/pci/fig11.webp',
+  './assets/learn/pci/fig12.webp',
+  './assets/learn/pci/fig13.webp',
+  './assets/learn/pci/fig14.webp',
+  './assets/learn/pci/fig15.webp',
+  './assets/learn/pci/fig16.webp',
+  './assets/learn/pci/fig17.webp',
+  './assets/learn/pci/fig18.webp',
+  './assets/learn/pci/fig19.webp',
+  './assets/learn/pci/fig20.webp',
+  './assets/learn/pci/fig21.webp',
+  './assets/learn/pci/fig22.webp',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',

@@ -14,6 +14,7 @@ const K = {
   exams: 'tests.cloud.q.exams',     // cola de exámenes
   resets: 'tests.cloud.q.resets',   // «Borrar mi progreso» pendientes
   imports: 'tests.cloud.q.imports', // progreso local que se suma a la cuenta
+  learn: 'tests.cloud.q.learn',     // avances del módulo Aprender: {u, tema, k, d, at}
   pend: 'tests.cloud.pending',      // registro a medias (perfil por crear)
   status: 'tests.cloud.status',     // estado de subida de cada examen
   rank: 'tests.cloud.rank',         // última copia del ranking
@@ -356,6 +357,14 @@ function onReset(testId){
   const r = get(K.resets, []); r.push({ u, s: testId }); set(K.resets, r);
   schedule(0);
 }
+// Aprender: se guarda solo el último cambio pendiente de cada elemento (no cuenta para el ranking)
+function onLearn(tema, k, d, at){
+  const u = enabled && cur(); if (!u) return;
+  const q = get(K.learn, []).filter(e => !(e.u === u && e.tema === tema && e.k === k));
+  q.push({ u, tema, k, d, at });
+  set(K.learn, q);
+  schedule(3000);
+}
 function setStatus(id, st){
   const all = get(K.status, {}); all[id] = Object.assign({ at: Date.now() }, st);
   const keys = Object.keys(all).sort((a, b) => all[b].at - all[a].at).slice(0, 30);
@@ -389,6 +398,8 @@ async function syncOnce(){
     await pushAnswers();
     await pushExams();
     await pullProgress();
+    await pushLearn();
+    await pullLearn();
     online = true; lastError = null;
   } catch(e){
     if (e && e.message === 'session_ended') return;
@@ -465,6 +476,45 @@ async function pullProgress(){
     }
   });
   if (changed) emit('stats');
+}
+
+/* ---------- Aprender: progreso por usuario y tema (data/learn, js/learn.js) ---------- */
+// Local: tests.u.<id>.learn.<tema> = { items: { 'L:<lección>' | 'R:<tarjeta>': { d, at } } }.
+// Gana la versión más reciente de cada elemento (at), aquí y en el servidor (learn_put).
+const LEARN_TEMAS = () => Object.keys(window.LEARN || {});
+async function pushLearn(){
+  for (;;){
+    const batch = get(K.learn, []).filter(e => e.u === uid).slice(0, 500);
+    if (!batch.length) return;
+    await rpc('learn_put', { p: batch.map(e => ({ tema: e.tema, item: e.k, data: e.d, at: e.at })) });
+    const sent = new Set(batch.map(e => e.tema + '|' + e.k + '|' + e.at));
+    set(K.learn, get(K.learn, []).filter(e => !(e.u === uid && sent.has(e.tema + '|' + e.k + '|' + e.at))));
+  }
+}
+async function pullLearn(){
+  if (!LEARN_TEMAS().length) return;
+  const u = uid, rows = [];
+  for (let from = 0; ; from += 1000){
+    const { data, error } = await sb.from('learn_progress').select('tema_id,item_id,data,updated_at')
+      .order('tema_id').order('item_id').range(from, from + 999);
+    if (error) throw error;
+    rows.push(...data);
+    if (data.length < 1000) break;
+  }
+  if (u !== uid) return;
+  const by = {};
+  rows.forEach(r => { (by[r.tema_id] = by[r.tema_id] || {})[r.item_id] = { d: r.data, at: new Date(r.updated_at).toISOString() }; });
+  let changed = false;
+  LEARN_TEMAS().forEach(t => {
+    const k = ukey(u, 'learn.' + t), items = get(k, { items: {} }).items || {};
+    let ch = false;
+    Object.entries(by[t] || {}).forEach(([id, r]) => {
+      const mine = items[id];
+      if (!mine || mine.at < r.at){ items[id] = r; ch = true; }
+    });
+    if (ch){ set(k, { items }); changed = true; }
+  });
+  if (changed) emit('learn');
 }
 
 /* ---------- ranking: una clasificación por asignatura ---------- */
@@ -547,7 +597,8 @@ function overtakes(data){
 /* ---------- arranque ---------- */
 function pending(){
   const u = cur();
-  return { answers: get(K.answers, []).filter(e => e.u === u).length, exams: get(K.exams, []).filter(e => e.u === u).length };
+  return { answers: get(K.answers, []).filter(e => e.u === u).length, exams: get(K.exams, []).filter(e => e.u === u).length,
+    learn: get(K.learn, []).filter(e => e.u === u).length };
 }
 if (enabled && me) applyKeyFixes(me.id);     // también al abrir sin conexión con la sesión guardada
 if (enabled){
@@ -579,7 +630,7 @@ window.Cloud = {
   on(f){ listeners.push(f); },
   key, rootOf: id => rootOf[id], init,
   signIn, signUp, signOut, createProfile, rename, changePassword, sendReset, finishRecovery,
-  onAnswer, onExam, onReset, examStatus, counts, pending, sync,
+  onAnswer, onExam, onReset, onLearn, examStatus, counts, pending, sync,
   fetchRanking, cachedRanking, board, wouldRank, overtakes, uniqueCount
 };
 })();

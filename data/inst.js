@@ -2127,6 +2127,7 @@ SUBJECTS.push({
      ],
      "questions": [
       {
+       "apt": "pci-1.1",
        "q": "La combustión es cuando la velocidad de propagación es:",
        "o": [
         "Inferior a 1 m/s",
@@ -2137,6 +2138,7 @@ SUBJECTS.push({
        "e": "Combustión: menos de 1 m/s. Entre 1 m/s y la velocidad del sonido es deflagración, y por encima, detonación."
       },
       {
+       "apt": "pci-1.2",
        "q": "La sectorización es una medida de protección contra incendios:",
        "o": [
         "Pasiva",
@@ -2147,6 +2149,7 @@ SUBJECTS.push({
        "e": "Es arquitectónica: elementos constructivos resistentes al fuego."
       },
       {
+       "apt": "pci-1.4",
        "q": "El estudio de la carga de fuego:",
        "o": [
         "Sirve para categorizar el riesgo de los sectores de incendio",
@@ -2157,6 +2160,7 @@ SUBJECTS.push({
        "e": "La carga de fuego (MJ/m²) es lo que fija el nivel de riesgo intrínseco de cada sector. Fuente: tema 1, 1.2."
       },
       {
+       "apt": "pci-4.3",
        "q": "El control del humo del incendio se aplica a:",
        "o": [
         "Zonas de uso aparcamiento que no tengan la consideración de aparcamiento abierto",
@@ -2167,6 +2171,7 @@ SUBJECTS.push({
        "e": "Las cifras de las otras dos opciones están intercambiadas: comercial o pública concurrencia es con más de 1.000 personas, y atrios con más de 500."
       },
       {
+       "apt": "pci-2.2",
        "q": "Un sistema de detección de incendios analógico es:",
        "o": [
         "Aquel cuyos componentes trabajan por zonas, áreas o grupos",
@@ -2177,6 +2182,7 @@ SUBJECTS.push({
        "e": "Trabajar por zonas, áreas o grupos es lo que define al sistema convencional."
       },
       {
+       "apt": "pci-2.4",
        "q": "Los detectores iónicos son detectores puntuales.",
        "o": [
         "Falso",
@@ -2186,6 +2192,7 @@ SUBJECTS.push({
        "e": "Son detectores puntuales de cámara ionizada."
       },
       {
+       "apt": "pci-2.4",
        "q": "Los detectores ópticos se determinan en función de:",
        "o": [
         "Área y altura del local donde se instala",
@@ -2196,6 +2203,7 @@ SUBJECTS.push({
        "e": "UNE 23007-14: sistema, área y altura, forma del techo y uso."
       },
       {
+       "apt": "pci-2.5",
        "q": "Los pulsadores de alarma se situarán de modo que la distancia máxima a recorrer desde cualquier origen de evacuación hasta un pulsador:",
        "o": [
         "No supere los 25 m",
@@ -2206,6 +2214,7 @@ SUBJECTS.push({
        "e": "15 m es el extintor y 50 m la separación entre BIE."
       },
       {
+       "apt": "pci-3.1",
        "q": "Un extintor de polvo polivalente se puede utilizar para fuegos tipo E.",
        "o": [
         "Verdadero",
@@ -2215,6 +2224,7 @@ SUBJECTS.push({
        "e": "Clase E = eléctricos; el polvo no conduce."
       },
       {
+       "apt": "pci-3.3",
        "q": "Para seleccionar los sistemas de abastecimiento se necesita determinar para su dimensionamiento:",
        "o": [
         "Caudal nominal, presión nominal y tiempo de autonomía",
@@ -2225,6 +2235,7 @@ SUBJECTS.push({
        "e": "Datos nominales, categoría y clase; la altura del edificio no es un dato de la UNE 23500."
       },
       {
+       "apt": "pci-3.5",
        "q": "Las BIE de 45 mm:",
        "o": [
         "Se deben utilizar por una sola persona y no es necesaria formación previa",
@@ -2235,6 +2246,7 @@ SUBJECTS.push({
        "e": "Manguera flexible de mayor caudal (200 l/min)."
       },
       {
+       "apt": "pci-3.6",
        "q": "La columna seca está normativamente constituida por:",
        "o": [
         "Tubería ascendente de acero galvanizado de 80 mm de diámetro interior",
@@ -2245,6 +2257,7 @@ SUBJECTS.push({
        "e": "DN 80 (3\") en acero galvanizado."
       },
       {
+       "apt": "pci-3.7",
        "q": "Los rociadores automáticos de agua permiten detectar el incendio y apagarlo.",
        "o": [
         "Verdadero",
@@ -2254,6 +2267,7 @@ SUBJECTS.push({
        "e": "O controlarlo para que se apague por otros medios."
       },
       {
+       "apt": "pci-3.8",
        "q": "El tamaño de la señalética fotoluminiscente depende de la distancia de observación.",
        "o": [
         "Verdadero",
@@ -2263,6 +2277,7 @@ SUBJECTS.push({
        "e": "Una señal de 210 × 210 mm sirve hasta 10 m; para más distancia la señal tiene que ser mayor."
       },
       {
+       "apt": "pci-4.2",
        "q": "Los exutorios son sistemas de control de humo que se instalan en los puntos más bajos del edificio.",
        "o": [
         "Verdadero",
@@ -2272,6 +2287,7 @@ SUBJECTS.push({
        "e": "Se instalan en los puntos altos: el humo caliente sube."
       },
       {
+       "apt": "pci-4.2",
        "q": "Los sistemas por impulsos (jet fan) son sistemas alternativos del control de humo que:",
        "o": [
         "Se instalan exclusivamente en túneles",
@@ -2282,6 +2298,7 @@ SUBJECTS.push({
        "e": "También en aparcamientos; no hay norma UNE-EN."
       },
       {
+       "apt": "pci-4.3",
        "q": "El control de humo se debe instalar en establecimientos de uso comercial o pública concurrencia cuya ocupación exceda de 500 personas.",
        "o": [
         "Verdadero",
@@ -2291,6 +2308,7 @@ SUBJECTS.push({
        "e": "Son 1.000 personas; 500 es para atrios."
       },
       {
+       "apt": "pci-4.4",
        "q": "En las escaleras protegidas la ventilación se puede hacer:",
        "o": [
         "Ventana o hueco directo al exterior de al menos 0,5 m² por planta",
@@ -2301,6 +2319,7 @@ SUBJECTS.push({
        "e": "El hueco es de 1 m² y los conductos deben ser exclusivos."
       },
       {
+       "apt": "pci-1.6",
        "q": "El RD 2267/2004 y el RD 164/2025 se aplican a:",
        "o": [
         "Exclusivamente establecimientos industriales",
@@ -2311,6 +2330,7 @@ SUBJECTS.push({
        "e": "El RSCIEI (RD 2267/2004, actualizado por el RD 164/2025) se aplica a los establecimientos industriales y también cuando el CTE DB SI remite a él, por ejemplo en zonas de uso industrial dentro de edificios no industriales."
       },
       {
+       "apt": "pci-1.5",
        "q": "El CTE DB SI establece las necesidades normativas de:",
        "o": [
         "Medidas pasivas",
@@ -2321,6 +2341,7 @@ SUBJECTS.push({
        "e": "SI 1, 2, 3, 6 pasivas; SI 4 activas."
       },
       {
+       "apt": "pci-1.1",
        "q": "La deflagración es una reacción cuya velocidad de propagación es:",
        "o": [
         "Inferior a 1 m/s",
@@ -2331,6 +2352,7 @@ SUBJECTS.push({
        "e": "Combustión: menos de 1 m/s; deflagración: entre 1 m/s y la velocidad del sonido; detonación: por encima. Fuente: tema 1, 1.1."
       },
       {
+       "apt": "pci-1.2",
        "q": "Un local de riesgo especial se considera sector de incendio.",
        "o": [
         "Verdadero",
@@ -2340,6 +2362,7 @@ SUBJECTS.push({
        "e": "El DB SI lo excluye expresamente."
       },
       {
+       "apt": "pci-1.3",
        "q": "En la clasificación de resistencia al fuego, la letra I indica:",
        "o": [
         "Integridad",
@@ -2350,6 +2373,7 @@ SUBJECTS.push({
        "e": "R portante, E integridad, I aislamiento."
       },
       {
+       "apt": "pci-1.3",
        "q": "Un material de clase A1 de reacción al fuego:",
        "o": [
         "No contribuye a la propagación del fuego",
@@ -2360,6 +2384,7 @@ SUBJECTS.push({
        "e": "Muy baja es B; sin ensayar es F."
       },
       {
+       "apt": "pci-1.3",
        "q": "En la clasificación de reacción al fuego, «d2» significa:",
        "o": [
         "Producción alta de humo",
@@ -2370,6 +2395,7 @@ SUBJECTS.push({
        "e": "d0 ninguna, d1 no inflamadas, d2 inflamadas."
       },
       {
+       "apt": "pci-1.3",
        "q": "No se debe confundir la reacción al fuego con la resistencia al fuego.",
        "o": [
         "Verdadero",
@@ -2379,6 +2405,7 @@ SUBJECTS.push({
        "e": "Reacción: contribución del material; resistencia: tiempo que el elemento mantiene su función."
       },
       {
+       "apt": "pci-1.4",
        "q": "Los almacenamientos en establecimientos no industriales se consideran zona de uso industrial cuando su carga de fuego ponderada y corregida excede de:",
        "o": [
         "3·10⁶ MJ",
@@ -2389,6 +2416,7 @@ SUBJECTS.push({
        "e": "40 MJ/m² es el umbral de riesgo mínimo."
       },
       {
+       "apt": "pci-1.5",
        "q": "La sección del DB SI que fija la dotación de instalaciones de protección contra incendios es:",
        "o": [
         "SI 1",
@@ -2399,6 +2427,7 @@ SUBJECTS.push({
        "e": "SI 3 es evacuación (incluye el control de humo)."
       },
       {
+       "apt": "pci-1.1",
        "q": "En un edificio terciario, el diseño, montaje y mantenimiento de las instalaciones activas los fija:",
        "o": [
         "El CTE DB SI 4",
@@ -2409,6 +2438,7 @@ SUBJECTS.push({
        "e": "El CTE fija la dotación; el RIPCI, cómo se diseñan y mantienen."
       },
       {
+       "apt": "pci-1.6",
        "q": "Un establecimiento industrial que ocupa totalmente un edificio situado a más de 3 m de otros es de tipo:",
        "o": [
         "A",
@@ -2419,6 +2449,7 @@ SUBJECTS.push({
        "e": "B: adosado o a ≤ 3 m."
       },
       {
+       "apt": "pci-1.6",
        "q": "Un establecimiento que ocupa un espacio abierto cubierto hasta el 50 % de su superficie es de tipo:",
        "o": [
         "C",
@@ -2429,6 +2460,7 @@ SUBJECTS.push({
        "e": "D puede estar totalmente cubierto."
       },
       {
+       "apt": "pci-1.6",
        "q": "Un sector industrial con Qs = 2.000 MJ/m² tiene un riesgo intrínseco:",
        "o": [
         "Medio",
@@ -2439,6 +2471,7 @@ SUBJECTS.push({
        "e": "Medio: de 850 a 3.400 MJ/m² (nivel 5)."
       },
       {
+       "apt": "pci-1.6",
        "q": "En un establecimiento de tipo A, los sectores de riesgo intrínseco alto:",
        "o": [
         "Se admiten hasta 2.000 m²",
@@ -2449,6 +2482,7 @@ SUBJECTS.push({
        "e": "En un establecimiento tipo A (parte de un edificio) el RSCIEI no admite sectores de riesgo intrínseco alto."
       },
       {
+       "apt": "pci-1.6",
        "q": "El RSCIEI se considera un reglamento autocontenido.",
        "o": [
         "Verdadero",
@@ -2458,6 +2492,7 @@ SUBJECTS.push({
        "e": "Regula dotación, sectorización, evacuación, etc. para la industria."
       },
       {
+       "apt": "pci-2.1",
        "q": "La fase del incendio en la que hay humos todavía invisibles es:",
        "o": [
         "La de humo visible",
@@ -2468,6 +2503,7 @@ SUBJECTS.push({
        "e": "Por eso interesa la detección precoz."
       },
       {
+       "apt": "pci-2.1",
        "q": "La norma de diseño, instalación y puesta en servicio de los sistemas de detección a la que remite el RIPCI es:",
        "o": [
         "UNE 23500",
@@ -2478,6 +2514,7 @@ SUBJECTS.push({
        "e": "UNE 23500 es abastecimiento; 12845, rociadores."
       },
       {
+       "apt": "pci-2.2",
        "q": "En un sistema convencional, la alarma de un detector se interpreta como alarma:",
        "o": [
         "De la zona que protege",
@@ -2488,6 +2525,7 @@ SUBJECTS.push({
        "e": "El analógico identifica cada equipo."
       },
       {
+       "apt": "pci-2.5",
        "q": "Los pulsadores se situarán con su parte superior a una altura entre:",
        "o": [
         "80 y 120 cm",
@@ -2498,6 +2536,7 @@ SUBJECTS.push({
        "e": "RIPCI, anexo I: parte superior entre 80 y 120 cm, y recorrido máximo de 25 m hasta un pulsador."
       },
       {
+       "apt": "pci-2.4",
        "q": "Los detectores ópticos admiten, según la UNE 23007-14, alturas de local de hasta:",
        "o": [
         "6 m",
@@ -2508,6 +2547,7 @@ SUBJECTS.push({
        "e": "Con coberturas de 60 a 80 m²."
       },
       {
+       "apt": "pci-2.4",
        "q": "En un local de más de 80 m² y altura ≤ 6 m, la superficie vigilada por un detector puntual de humo (pendiente ≤ 20º) es:",
        "o": [
         "60 m²",
@@ -2518,6 +2558,7 @@ SUBJECTS.push({
        "e": "80 m² si el local es ≤ 80 m² o la altura está entre 6 y 12 m."
       },
       {
+       "apt": "pci-2.4",
        "q": "En una cocina, para evitar falsas alarmas, lo adecuado es un detector:",
        "o": [
         "Iónico",
@@ -2528,6 +2569,7 @@ SUBJECTS.push({
        "e": "Los térmicos se usan en atmósferas calientes o con humo."
       },
       {
+       "apt": "pci-2.4",
        "q": "Un detector termovelocimétrico actúa por:",
        "o": [
         "Alcanzar una temperatura fija",
@@ -2538,6 +2580,7 @@ SUBJECTS.push({
        "e": "El termovelocimétrico reacciona a la velocidad de subida de la temperatura, del orden de 5 a 10 ºC/min, no a un valor fijo."
       },
       {
+       "apt": "pci-2.4",
        "q": "Los detectores de llama son adecuados para detectar llamas invisibles como las del hidrógeno.",
        "o": [
         "Verdadero",
@@ -2547,6 +2590,7 @@ SUBJECTS.push({
        "e": "Pero dan falsas alarmas con sol o soldadura."
       },
       {
+       "apt": "pci-2.4",
        "q": "Los detectores de aspiración están indicados en:",
        "o": [
         "Salas de informática y falsos suelos",
@@ -2557,6 +2601,7 @@ SUBJECTS.push({
        "e": "Detección precoz y de alta sensibilidad."
       },
       {
+       "apt": "pci-2.5",
        "q": "Los avisadores visuales son obligatorios, entre otros casos, cuando el ruido supera:",
        "o": [
         "40 dB(A)",
@@ -2567,6 +2612,7 @@ SUBJECTS.push({
        "e": "También con personas sordas o con protección auditiva."
       },
       {
+       "apt": "pci-2.5",
        "q": "Los cables de detección que deban funcionar más de un minuto tras la detección deben soportar el fuego al menos:",
        "o": [
         "15 min",
@@ -2577,6 +2623,7 @@ SUBJECTS.push({
        "e": "UNE 23007-14, anexo A: los cables que deban seguir funcionando tras la detección resisten al menos 30 minutos."
       },
       {
+       "apt": "pci-2.5",
        "q": "Los retenedores de puerta liberan la hoja:",
        "o": [
         "Al recibir tensión",
@@ -2587,6 +2634,7 @@ SUBJECTS.push({
        "e": "Seguridad positiva: el electroimán retiene la puerta mientras hay tensión; al cortarse (alarma o fallo) la puerta se cierra."
       },
       {
+       "apt": "pci-2.5",
        "q": "El puesto de control de rociadores de acción previa se emplea donde:",
        "o": [
         "Hay riesgo de heladas",
@@ -2597,6 +2645,7 @@ SUBJECTS.push({
        "e": "La acción previa solo llena la tubería cuando la detección confirma el incendio. Se usa donde una descarga accidental sería grave: CPD, archivos de papel."
       },
       {
+       "apt": "pci-2.6",
        "q": "La zona de refugio para usuario de silla de ruedas mide:",
        "o": [
         "0,80 × 0,60 m",
@@ -2607,6 +2656,7 @@ SUBJECTS.push({
        "e": "0,80 × 0,60 m es para otra movilidad reducida; 1,50 m es el círculo libre."
       },
       {
+       "apt": "pci-3.1",
        "q": "El tetraedro del fuego añade al triángulo:",
        "o": [
         "La reacción en cadena",
@@ -2617,6 +2667,7 @@ SUBJECTS.push({
        "e": "Combustible, comburente, calor y reacción en cadena."
       },
       {
+       "apt": "pci-3.1",
        "q": "El método de extinción más adecuado para un fuego de clase A es:",
        "o": [
         "Sofocación",
@@ -2627,6 +2678,7 @@ SUBJECTS.push({
        "e": "Los fuegos de clase A son de sólidos y se apagan sobre todo por enfriamiento (agua)."
       },
       {
+       "apt": "pci-3.1",
        "q": "Los fuegos de clase F/K son los originados por:",
        "o": [
         "Metales",
@@ -2637,6 +2689,7 @@ SUBJECTS.push({
        "e": "La clase F (K en EE. UU.) es la de aceites y grasas de cocina; se creó en 2005."
       },
       {
+       "apt": "pci-3.2",
        "q": "En la eficacia 21A-113B, «113B» se refiere a:",
        "o": [
         "113 vigas de madera",
@@ -2647,6 +2700,7 @@ SUBJECTS.push({
        "e": "En 113B, el número son los litros de líquido del hogar tipo: 1/3 agua y 2/3 heptano."
       },
       {
+       "apt": "pci-3.2",
        "q": "En un local de riesgo especial alto, el recorrido máximo hasta un extintor es:",
        "o": [
         "10 m",
@@ -2657,6 +2711,7 @@ SUBJECTS.push({
        "e": "15 m en riesgo bajo o medio."
       },
       {
+       "apt": "pci-3.3",
        "q": "En un abastecimiento combinado de BIE y rociadores se requiere como mínimo categoría:",
        "o": [
         "I",
@@ -2667,6 +2722,7 @@ SUBJECTS.push({
        "e": "UNE 23500, tabla 2: el abastecimiento combinado de BIE y rociadores exige como mínimo categoría II."
       },
       {
+       "apt": "pci-3.3",
        "q": "El grupo de bombeo debe impulsar como mínimo el 140 % del caudal nominal a una presión no inferior al:",
        "o": [
         "50 % de la nominal",
@@ -2677,6 +2733,7 @@ SUBJECTS.push({
        "e": "UNE 23500, 6.4.2.2: al 140 % del caudal nominal, la presión no puede bajar del 70 % de la nominal."
       },
       {
+       "apt": "pci-3.3",
        "q": "La presión de impulsión de las bombas contra incendios no debe sobrepasar:",
        "o": [
         "10 bar",
@@ -2687,6 +2744,7 @@ SUBJECTS.push({
        "e": "20 bar es la prueba de la columna seca."
       },
       {
+       "apt": "pci-3.4",
        "q": "El caudal mínimo de cada boca de hidrante es:",
        "o": [
         "100 l/min",
@@ -2697,6 +2755,7 @@ SUBJECTS.push({
        "e": "100 y 200 l/min son las BIE de 25 y 45 mm."
       },
       {
+       "apt": "pci-3.5",
        "q": "Las BIE deben situarse a una distancia máxima de las salidas del sector de:",
        "o": [
         "5 m",
@@ -2707,6 +2766,7 @@ SUBJECTS.push({
        "e": "Medida sobre recorrido de evacuación."
       },
       {
+       "apt": "pci-3.5",
        "q": "El radio de acción de una BIE es:",
        "o": [
         "La longitud de su manguera más 5 m",
@@ -2717,6 +2777,7 @@ SUBJECTS.push({
        "e": "50 m es la separación máxima entre BIE."
       },
       {
+       "apt": "pci-3.5",
        "q": "La red de BIE debe garantizar durante una hora el caudal de las dos más desfavorables a una presión dinámica de:",
        "o": [
         "100 a 300 kPa",
@@ -2727,6 +2788,7 @@ SUBJECTS.push({
        "e": "Durante una hora, con las dos BIE más desfavorables funcionando, la presión dinámica debe estar entre 300 y 600 kPa. Fuente: tema 3, 2.4."
       },
       {
+       "apt": "pci-3.5",
        "q": "Un establecimiento industrial de riesgo intrínseco alto requiere BIE de:",
        "o": [
         "25 mm, 2 simultáneas, 60 min",
@@ -2737,6 +2799,7 @@ SUBJECTS.push({
        "e": "Bajo: DN 25; medio: DN 45, 2 y 60 min."
       },
       {
+       "apt": "pci-3.6",
        "q": "La columna seca es de uso exclusivo de los bomberos.",
        "o": [
         "Verdadero",
@@ -2746,6 +2809,7 @@ SUBJECTS.push({
        "e": "Lleva el agua del camión a las plantas."
       },
       {
+       "apt": "pci-3.6",
        "q": "La toma de alimentación de la columna seca en fachada es la:",
        "o": [
         "IPF-39",
@@ -2756,6 +2820,7 @@ SUBJECTS.push({
        "e": "IPF-39 son las salidas en plantas."
       },
       {
+       "apt": "pci-3.8",
        "q": "Las señales de los medios manuales de 210 × 210 mm sirven para una distancia de observación de hasta:",
        "o": [
         "10 m",
@@ -2766,6 +2831,7 @@ SUBJECTS.push({
        "e": "UNE 23033-1: una señal de 210 × 210 mm sirve hasta 10 m de distancia de observación."
       },
       {
+       "apt": "pci-3.8",
        "q": "Los sistemas de extinción por gases llevan retardo para:",
        "o": [
         "Ahorrar agente extintor",
@@ -2776,6 +2842,7 @@ SUBJECTS.push({
        "e": "Los gases desplazan el oxígeno y hay riesgo de asfixia: el retardo da tiempo a evacuar antes de la descarga."
       },
       {
+       "apt": "pci-4.1",
        "q": "La mayoría de las muertes en incendios de locales de pública concurrencia se deben a:",
        "o": [
         "Las altas temperaturas",
@@ -2786,6 +2853,7 @@ SUBJECTS.push({
        "e": "Por eso se controla el humo."
       },
       {
+       "apt": "pci-4.2",
        "q": "La estrategia de presurización diferencial se aplica en:",
        "o": [
         "Vías de evacuación",
@@ -2796,6 +2864,7 @@ SUBJECTS.push({
        "e": "Techo alto: flotabilidad; túneles: ventilación horizontal."
       },
       {
+       "apt": "pci-4.2",
        "q": "Para la ventilación horizontal (jet fan) existe una norma UNE-EN de diseño.",
        "o": [
         "Verdadero",
@@ -2805,6 +2874,7 @@ SUBJECTS.push({
        "e": "Se usan documentos de reconocida solvencia y CFD."
       },
       {
+       "apt": "pci-4.2",
        "q": "Los sistemas de control de humo por flotabilidad se diseñan según la norma:",
        "o": [
         "UNE 23585",
@@ -2815,6 +2885,7 @@ SUBJECTS.push({
        "e": "23584 es instalación y mantenimiento."
       },
       {
+       "apt": "pci-4.3",
        "q": "Según el CTE, el control de humo es obligatorio en atrios cuando su ocupación en el sector excede de:",
        "o": [
         "500 personas",
@@ -2825,6 +2896,7 @@ SUBJECTS.push({
        "e": "1.000 es para comercial y pública concurrencia."
       },
       {
+       "apt": "pci-4.3",
        "q": "En un aparcamiento con ventilación mecánica, los ventiladores de extracción deben ser:",
        "o": [
         "F400 120",
@@ -2835,6 +2907,7 @@ SUBJECTS.push({
        "e": "E300 60 se exige a conductos y compuertas."
       },
       {
+       "apt": "pci-4.3",
        "q": "Según el RSCIEI, un sector de almacenamiento de riesgo alto necesita evacuación de humos a partir de:",
        "o": [
         "800 m²",
@@ -2845,6 +2918,7 @@ SUBJECTS.push({
        "e": "Almacenamiento medio ≥ 1.000; producción medio ≥ 2.000, alto ≥ 1.000."
       },
       {
+       "apt": "pci-4.4",
        "q": "En una escalera protegida ventilada por conductos, estos pueden compartirse con la ventilación general.",
        "o": [
         "Verdadero",
@@ -2854,6 +2928,7 @@ SUBJECTS.push({
        "e": "Deben ser exclusivos para esa función."
       },
       {
+       "apt": "pci-4.5",
        "q": "En presurización, la velocidad del aire por la puerta abierta no será inferior a:",
        "o": [
         "0,5 m/s",
@@ -2864,6 +2939,7 @@ SUBJECTS.push({
        "e": "UNE-EN 12101-6: con la puerta abierta, el aire debe pasar a 0,75 m/s como mínimo para frenar el humo."
       },
       {
+       "apt": "pci-4.5",
        "q": "En un sistema de presurización de clase E, con las puertas cerradas la diferencia de presión mínima es:",
        "o": [
         "10 Pa",
@@ -2874,6 +2950,7 @@ SUBJECTS.push({
        "e": "10 Pa con puertas abiertas; 100 N es la fuerza en el tirador."
       },
       {
+       "apt": "pci-4.5",
        "q": "La fuerza para abrir una puerta en un espacio presurizado no debe superar:",
        "o": [
         "50 N",
@@ -2884,6 +2961,7 @@ SUBJECTS.push({
        "e": "UNE-EN 12101-6, 4.6.2.3: la fuerza en el tirador no debe superar 100 N, para que cualquiera pueda abrir."
       },
       {
+       "apt": "pci-4.5",
        "q": "Al activarse la presurización de una escalera, los climatizadores del edificio deben:",
        "o": [
         "Seguir funcionando",
@@ -2894,6 +2972,7 @@ SUBJECTS.push({
        "e": "Para no interferir con el gradiente de presión."
       },
       {
+       "apt": "pci-5.4",
        "q": "Para poner en funcionamiento una instalación del RIPCI hay que presentar ante la comunidad autónoma:",
        "o": [
         "El contrato con la compañía de agua",
@@ -2904,6 +2983,7 @@ SUBJECTS.push({
        "e": "Firmado por su técnico titulado."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las operaciones de mantenimiento anuales y quinquenales pueden realizarlas:",
        "o": [
         "El personal del titular",
@@ -2914,6 +2994,7 @@ SUBJECTS.push({
        "e": "RIPCI, anexo II, tabla II: las anuales y quinquenales solo el fabricante o la empresa mantenedora."
       },
       {
+       "apt": "pci-5.5",
        "q": "Si el fabricante no indica la vida útil de los detectores, esta se considera de:",
        "o": [
         "5 años",
@@ -2924,6 +3005,7 @@ SUBJECTS.push({
        "e": "Igual que las señales fotoluminiscentes."
       },
       {
+       "apt": "pci-5.5",
        "q": "La verificación de la ubicación, visibilidad y estado de los pulsadores se hace cada:",
        "o": [
         "3 meses",
@@ -2934,6 +3016,7 @@ SUBJECTS.push({
        "e": "La prueba de funcionamiento de todos los pulsadores es anual."
       },
       {
+       "apt": "pci-5.6",
        "q": "Según el RIPCI, el titular debe solicitar la inspección de sus instalaciones a un organismo de control al menos cada:",
        "o": [
         "5 años",
@@ -2944,6 +3027,7 @@ SUBJECTS.push({
        "e": "Con las excepciones por uso y superficie."
       },
       {
+       "apt": "pci-5.6",
        "q": "Si en una inspección se detectan defectos muy graves o no se corrigen en plazo, el organismo de control:",
        "o": [
         "Precinta la instalación",
@@ -2954,6 +3038,7 @@ SUBJECTS.push({
        "e": "El organismo de control lo comunica a los servicios de industria de la comunidad autónoma. Fuente: tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.3",
        "q": "El certificado para la puesta en marcha de un establecimiento industrial lo emite:",
        "o": [
         "El ayuntamiento",
@@ -2964,6 +3049,7 @@ SUBJECTS.push({
        "e": "Con riesgo intrínseco, sectores, características constructivas y certificado de la instaladora."
       },
       {
+       "apt": "pci-5.1",
        "q": "El RIPCI se estructura en:",
        "o": [
         "17 artículos y 4 anexos",
@@ -2974,6 +3060,7 @@ SUBJECTS.push({
        "e": "17 artículos y 4 anexos es el RSCIEI; 6 secciones, el DB SI."
       },
       {
+       "apt": "pci-3.5",
        "q": "Antes de su puesta en servicio, la red de BIE se prueba a una presión mínima de 980 kPa durante:",
        "o": [
         "30 minutos",
@@ -2984,6 +3071,7 @@ SUBJECTS.push({
        "e": "A la presión máxima de servicio y como mínimo 980 kPa, durante 2 horas, sin fugas en ningún punto."
       },
       {
+       "apt": "pci-4.2",
        "q": "La instalación, puesta en marcha y mantenimiento de los sistemas de control de humo por flotabilidad siguen la norma:",
        "o": [
         "UNE 23585",
@@ -3005,6 +3093,7 @@ SUBJECTS.push({
      "source": "Banco ampliado de verificación de PCI (tema 5: CTE DB SI 4, RSCIEI y RIPCI, más las pruebas y verificaciones de los temas 1 a 4): 87 preguntas tipo test. Las respuestas son las de las soluciones comentadas del documento.",
      "questions": [
       {
+       "apt": "pci-5.4",
        "q": "Para poner en funcionamiento una instalación del RIPCI hay que presentar ante la comunidad autónoma:",
        "o": [
         "El contrato con la compañía de agua",
@@ -3015,6 +3104,7 @@ SUBJECTS.push({
        "e": "Firmado por su técnico titulado."
       },
       {
+       "apt": "pci-5.4",
        "q": "El titular de una instalación de protección contra incendios puede asumir las funciones de mantenedor.",
        "o": [
         "Verdadero",
@@ -3024,6 +3114,7 @@ SUBJECTS.push({
        "e": "Si se habilita, dispone de medios y asume la ejecución."
       },
       {
+       "apt": "pci-5.1",
        "q": "El objeto del CTE DB SI es establecer las condiciones de los edificios:",
        "o": [
         "Incluidos los de uso industrial",
@@ -3034,6 +3125,7 @@ SUBJECTS.push({
        "e": "El DB SI del CTE se aplica a los edificios excepto a los de uso industrial, que se rigen por el RSCIEI (RD 2267/2004, actualizado por el RD 164/2025)."
       },
       {
+       "apt": "pci-1.7",
        "q": "El objeto del RIPCI es regular el diseño, instalación, mantenimiento e inspección de:",
        "o": [
         "La protección activa contra incendios",
@@ -3044,6 +3136,7 @@ SUBJECTS.push({
        "e": "El RIPCI regula los medios de protección activa: detección, alarma, control y extinción. La protección pasiva (sectorización, resistencia y reacción al fuego) y la evacuación las regulan el CTE DB SI y el RSCIEI."
       },
       {
+       "apt": "pci-1.7",
        "q": "La protección activa contra incendios puede estar formada por medios manuales o automáticos.",
        "o": [
         "Verdadero",
@@ -3053,6 +3146,7 @@ SUBJECTS.push({
        "e": "Según la definición del RIPCI, la protección activa la forman equipos y sistemas que pueden ser manuales (extintores, BIE, pulsadores) o automáticos (detección, rociadores)."
       },
       {
+       "apt": "pci-1.7",
        "q": "En el RIPCI, las normas UNE de cada equipo o sistema se enumeran en:",
        "o": [
         "El anexo III",
@@ -3063,6 +3157,7 @@ SUBJECTS.push({
        "e": "El apéndice del anexo I del RIPCI recoge las normas UNE que deben cumplir cada equipo y cada sistema. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.4",
        "q": "El certificado de la empresa instaladora del RIPCI lo emite:",
        "o": [
         "El titular de la instalación",
@@ -3073,6 +3168,7 @@ SUBJECTS.push({
        "e": "El certificado lo emite la empresa instaladora y lo firma un técnico titulado competente designado por ella. El organismo de control interviene después, en las inspecciones. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.4",
        "q": "El certificado de la instaladora acredita que la instalación cumple el RIPCI y se ajusta:",
        "o": [
         "Al proyecto o documentación técnica",
@@ -3083,6 +3179,7 @@ SUBJECTS.push({
        "e": "Con el certificado, la instaladora acredita que la instalación cumple el RIPCI y que se ha ejecutado según el proyecto o la documentación técnica que la define. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.2",
        "q": "La señalización de las instalaciones manuales que exige el DB SI 4 debe cumplir lo establecido en:",
        "o": [
         "El REBT",
@@ -3093,6 +3190,7 @@ SUBJECTS.push({
        "e": "El DB SI 4 remite al RIPCI (RD 513/2017) para la señalización de las instalaciones manuales de protección contra incendios, como extintores, BIE y pulsadores."
       },
       {
+       "apt": "pci-5.2",
        "q": "Entre los requisitos generales del DB SI 4, el ascensor de emergencia depende de:",
        "o": [
         "La superficie construida",
@@ -3103,6 +3201,7 @@ SUBJECTS.push({
        "e": "En el DB SI 4, el ascensor de emergencia se exige según la altura de evacuación del edificio, no según la superficie ni la ocupación. Tema 5, apartado 2."
       },
       {
+       "apt": "pci-5.2",
        "q": "En el DB SI 4, la extinción automática en cocinas depende de:",
        "o": [
         "La potencia instalada",
@@ -3113,6 +3212,7 @@ SUBJECTS.push({
        "e": "En el DB SI 4, la extinción automática en cocinas se exige según la potencia instalada de los aparatos de cocción. También se exige en centros de transformación."
       },
       {
+       "apt": "pci-5.2",
        "q": "Los locales de riesgo especial se clasifican en riesgo:",
        "o": [
         "Niveles 1 a 8",
@@ -3123,6 +3223,7 @@ SUBJECTS.push({
        "e": "El DB SI clasifica los locales de riesgo especial en riesgo alto, medio y bajo. Los niveles 1 a 8 de riesgo intrínseco y las configuraciones de tipo A a E son del RSCIEI, para establecimientos industriales."
       },
       {
+       "apt": "pci-5.1",
        "q": "El RIPCI también regula las condiciones de control de los productos a emplear.",
        "o": [
         "Verdadero",
@@ -3132,6 +3233,7 @@ SUBJECTS.push({
        "e": "Además del diseño, la instalación y el mantenimiento, el RIPCI regula las condiciones de control de los productos que se emplean: marcado CE, certificación y conformidad con las normas. Tema 1, apartado 2.3."
       },
       {
+       "apt": "pci-3.2",
        "q": "Los extintores portátiles deben certificarse antes de su fabricación o importación según el:",
        "o": [
         "Anexo III del RIPCI",
@@ -3142,6 +3244,7 @@ SUBJECTS.push({
        "e": "El art. 5.2 del RIPCI exige que los extintores portátiles estén certificados antes de fabricarse o importarse, conforme a las normas UNE-EN 3-7 y UNE-EN 3-10."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las operaciones de mantenimiento trimestrales y semestrales pueden realizarlas:",
        "o": [
         "El fabricante, la mantenedora o el personal del titular",
@@ -3152,6 +3255,7 @@ SUBJECTS.push({
        "e": "RIPCI, anexo II, tabla I: las operaciones trimestrales y semestrales las puede hacer el fabricante, la mantenedora o el personal del titular."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las operaciones de mantenimiento anuales y quinquenales pueden realizarlas:",
        "o": [
         "El personal del titular",
@@ -3162,6 +3266,7 @@ SUBJECTS.push({
        "e": "RIPCI, anexo II, tabla II: las anuales y quinquenales solo el fabricante o la empresa mantenedora."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las actas de mantenimiento deben estar a disposición de la comunidad autónoma al menos durante:",
        "o": [
         "2 años",
@@ -3172,6 +3277,7 @@ SUBJECTS.push({
        "e": "Cinco años contados desde su expedición."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las actas de mantenimiento deben ser conformes con la serie de normas:",
        "o": [
         "UNE 23580",
@@ -3182,6 +3288,7 @@ SUBJECTS.push({
        "e": "UNE 192005 es el procedimiento de inspección."
       },
       {
+       "apt": "pci-5.5",
        "q": "Si el fabricante no indica la vida útil de los detectores, esta se considera de:",
        "o": [
         "5 años",
@@ -3192,6 +3299,7 @@ SUBJECTS.push({
        "e": "Igual que las señales fotoluminiscentes."
       },
       {
+       "apt": "pci-5.5",
        "q": "La comprobación del espacio libre de 500 mm bajo los detectores puntuales tiene periodicidad:",
        "o": [
         "Trimestral",
@@ -3202,6 +3310,7 @@ SUBJECTS.push({
        "e": "Es una operación anual (tabla II del RIPCI), hecha por el fabricante o la mantenedora."
       },
       {
+       "apt": "pci-5.5",
        "q": "La prueba de conmutación del sistema de detección a baterías por fallo de red se realiza cada:",
        "o": [
         "3 meses",
@@ -3212,6 +3321,7 @@ SUBJECTS.push({
        "e": "Es una operación trimestral (tabla I del RIPCI)."
       },
       {
+       "apt": "pci-5.5",
        "q": "La verificación de la ubicación, visibilidad y estado de los pulsadores se hace cada:",
        "o": [
         "3 meses",
@@ -3222,6 +3332,7 @@ SUBJECTS.push({
        "e": "La prueba de funcionamiento de todos los pulsadores es anual."
       },
       {
+       "apt": "pci-5.5",
        "q": "La prueba de funcionamiento individual de todos los detectores automáticos es:",
        "o": [
         "Trimestral",
@@ -3232,6 +3343,7 @@ SUBJECTS.push({
        "e": "Es una operación anual (tabla II del RIPCI), hecha por el fabricante o la mantenedora."
       },
       {
+       "apt": "pci-5.5",
        "q": "El mantenimiento anual de la señalización luminiscente lo puede hacer el personal del titular.",
        "o": [
         "Verdadero",
@@ -3241,6 +3353,7 @@ SUBJECTS.push({
        "e": "La sustitución al final de su vida útil, no: fabricante o mantenedora."
       },
       {
+       "apt": "pci-5.5",
        "q": "Además de las tablas del anexo II, el programa de mantenimiento debe tener en cuenta:",
        "o": [
         "Las instrucciones y programa del fabricante",
@@ -3251,6 +3364,7 @@ SUBJECTS.push({
        "e": "El programa de mantenimiento combina las operaciones mínimas de las tablas del anexo II con las instrucciones y el programa del fabricante de cada equipo. Tema 1, apartado 2.3."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las operaciones de mantenimiento de menor responsabilidad pueden hacerse con personal propio.",
        "o": [
         "Verdadero",
@@ -3260,6 +3374,7 @@ SUBJECTS.push({
        "e": "El RIPCI permite que el personal del usuario o del titular haga las operaciones de menor responsabilidad (las de la tabla I). Las demás exigen una empresa mantenedora habilitada."
       },
       {
+       "apt": "pci-1.7",
        "q": "Las operaciones mínimas de mantenimiento del RIPCI se recogen en el anexo II, en las tablas:",
        "o": [
         "I, II y III",
@@ -3270,6 +3385,7 @@ SUBJECTS.push({
        "e": "El anexo II del RIPCI recoge las operaciones mínimas de mantenimiento en sus tablas I, II y III; la tabla I incluye las que puede hacer el personal del titular. Tema 1, apartado 2.3."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las actas de mantenimiento deben estar firmadas por:",
        "o": [
         "El organismo de control",
@@ -3280,6 +3396,7 @@ SUBJECTS.push({
        "e": "Las actas de mantenimiento las firma el personal cualificado que ha hecho las operaciones, para dejar constancia de quién las realizó. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.5",
        "q": "Antes de la revisión trimestral de un sistema de detección, el «paso previo» consiste en:",
        "o": [
         "Avisar al organismo de control",
@@ -3290,6 +3407,7 @@ SUBJECTS.push({
        "e": "Antes de probar el sistema hay que tomar medidas para que la prueba no dispare maniobras no deseadas, como paros de máquinas, cierre de compuertas o descargas. Tabla I del RIPCI."
       },
       {
+       "apt": "pci-5.5",
        "q": "Cada tres meses se verifica si ha habido cambios o modificaciones en el sistema de detección desde la última revisión.",
        "o": [
         "Verdadero",
@@ -3299,6 +3417,7 @@ SUBJECTS.push({
        "e": "En la revisión trimestral se comprueba si ha habido cambios en el sistema de detección desde la anterior y, si los hay, se documentan."
       },
       {
+       "apt": "pci-5.5",
        "q": "El mantenimiento de los acumuladores (limpieza de bornas, agua destilada) del sistema de detección es:",
        "o": [
         "Trimestral",
@@ -3309,6 +3428,7 @@ SUBJECTS.push({
        "e": "El mantenimiento de los acumuladores (limpieza de bornas y reposición de agua destilada) es una operación trimestral. Tabla I del RIPCI."
       },
       {
+       "apt": "pci-5.5",
        "q": "La revisión de las indicaciones luminosas de alarma, avería y desconexión de la central es:",
        "o": [
         "Trimestral",
@@ -3319,6 +3439,7 @@ SUBJECTS.push({
        "e": "Comprobar las indicaciones luminosas de alarma, avería y desconexión de la central es una operación trimestral. Tabla I del RIPCI."
       },
       {
+       "apt": "pci-5.5",
        "q": "La verificación y actualización del software de la central de detección es:",
        "o": [
         "Trimestral",
@@ -3329,6 +3450,7 @@ SUBJECTS.push({
        "e": "La verificación y actualización del software de la central de detección es una operación anual, según las recomendaciones del fabricante."
       },
       {
+       "apt": "pci-5.5",
        "q": "La comprobación de todas las maniobras de la central (paro de aire, ascensores, compuertas, extracción…) es:",
        "o": [
         "Trimestral",
@@ -3339,6 +3461,7 @@ SUBJECTS.push({
        "e": "Comprobar todas las maniobras programadas de la central (paro del aire acondicionado, ascensores, cierre de compuertas, extracción…) es una operación anual que hace la empresa mantenedora. Tabla II del RIPCI."
       },
       {
+       "apt": "pci-5.5",
        "q": "Al verificar un detector se deben emplear métodos que no dañen ni perjudiquen su rendimiento.",
        "o": [
         "Verdadero",
@@ -3348,6 +3471,7 @@ SUBJECTS.push({
        "e": "La tabla II del RIPCI exige verificar los detectores con métodos que no los dañen ni reduzcan su rendimiento, por ejemplo con el gas o el calor de prueba que indique el fabricante."
       },
       {
+       "apt": "pci-5.5",
        "q": "Las operaciones anuales de los sistemas de detección deben seguir además la norma:",
        "o": [
         "UNE 23007-14",
@@ -3358,6 +3482,7 @@ SUBJECTS.push({
        "e": "Además de la tabla II del RIPCI, las operaciones anuales de los sistemas de detección deben seguir la norma UNE 23007-14, que regula su diseño, instalación y mantenimiento. La UNE 23500 es de abastecimiento de agua y la UNE-EN 12845, de rociadores."
       },
       {
+       "apt": "pci-5.5",
        "q": "La comprobación de la señalización de los pulsadores de alarma es:",
        "o": [
         "Trimestral",
@@ -3368,6 +3493,7 @@ SUBJECTS.push({
        "e": "Comprobar la señalización de los pulsadores de alarma es una operación trimestral. La revisión de su ubicación, visibilidad y estado es semestral."
       },
       {
+       "apt": "pci-5.5",
        "q": "El mantenimiento anual de la señalización luminiscente comprueba:",
        "o": [
         "El software de la central",
@@ -3378,6 +3504,7 @@ SUBJECTS.push({
        "e": "En la señalización luminiscente, la revisión anual comprueba la existencia, la ubicación, la limpieza, la legibilidad y la iluminación en la oscuridad de las señales, además de sus sujeciones."
       },
       {
+       "apt": "pci-5.5",
        "q": "La sustitución de las señales fotoluminiscentes al acabar su vida útil la hace:",
        "o": [
         "El fabricante o una empresa mantenedora",
@@ -3388,6 +3515,7 @@ SUBJECTS.push({
        "e": "Al acabar su vida útil, las señales fotoluminiscentes las sustituye el fabricante o una empresa mantenedora, no el personal del titular. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-3.8",
        "q": "El mantenimiento de las señales fotoluminiscentes se realiza conforme a la norma:",
        "o": [
         "UNE 23035-3",
@@ -3398,6 +3526,7 @@ SUBJECTS.push({
        "e": "El mantenimiento de las señales fotoluminiscentes se hace según la UNE 23035-3. La UNE 23033-1 define las propias señales."
       },
       {
+       "apt": "pci-5.5",
        "q": "Los registros de mantenimiento de sistemas que aún no tienen norma UNE 23580 asociada no necesitan acta.",
        "o": [
         "Verdadero",
@@ -3407,6 +3536,7 @@ SUBJECTS.push({
        "e": "Aunque un sistema no tenga todavía norma UNE 23580 asociada, hay que registrar su mantenimiento y tener ese contenido disponible para la evaluación. Por eso es falso que no necesite acta."
       },
       {
+       "apt": "pci-5.6",
        "q": "Según el RIPCI, el titular debe solicitar la inspección de sus instalaciones a un organismo de control al menos cada:",
        "o": [
         "5 años",
@@ -3417,6 +3547,7 @@ SUBJECTS.push({
        "e": "Con las excepciones por uso y superficie."
       },
       {
+       "apt": "pci-5.6",
        "q": "Está exento de la inspección periódica del RIPCI un edificio:",
        "o": [
         "Comercial de 400 m²",
@@ -3427,6 +3558,7 @@ SUBJECTS.push({
        "e": "Exentos: comercial, PC y aparcamiento < 500 m²; administrativo y docente < 2.000 m²."
       },
       {
+       "apt": "pci-1.7",
        "q": "Una instalación existente con 22 años de antigüedad debe pasar su primera inspección del RIPCI en un plazo de:",
        "o": [
         "1 año",
@@ -3437,6 +3569,7 @@ SUBJECTS.push({
        "e": "15–20 años: 2 años; 10–15 años: 3 años."
       },
       {
+       "apt": "pci-5.6",
        "q": "Si en una inspección se detectan defectos muy graves o no se corrigen en plazo, el organismo de control:",
        "o": [
         "Precinta la instalación",
@@ -3447,6 +3580,7 @@ SUBJECTS.push({
        "e": "El organismo de control lo comunica a los servicios de industria de la comunidad autónoma. Fuente: tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.6",
        "q": "Durante las inspecciones periódicas del RIPCI se inspecciona:",
        "o": [
         "Solo la documentación",
@@ -3457,6 +3591,7 @@ SUBJECTS.push({
        "e": "Según el art. 22 del RIPCI, en las inspecciones periódicas se revisa la documentación (actas y registros de mantenimiento) y también el estado real de los equipos in situ."
       },
       {
+       "apt": "pci-1.7",
        "q": "El procedimiento de inspección reglamentaria de las instalaciones PCI en edificios no industriales es la norma:",
        "o": [
         "UNE 192005-2",
@@ -3467,6 +3602,7 @@ SUBJECTS.push({
        "e": "La UNE 192005-2 es el procedimiento de inspección reglamentaria de las instalaciones de protección contra incendios en edificios no industriales. La parte 1 es la de establecimientos industriales."
       },
       {
+       "apt": "pci-1.7",
        "q": "Una instalación existente con 12 años de antigüedad debe pasar su primera inspección del RIPCI en un plazo de:",
        "o": [
         "1 año",
@@ -3477,6 +3613,7 @@ SUBJECTS.push({
        "e": "Las instalaciones existentes deben pasar la primera inspección en un plazo que depende de su antigüedad. Con entre 10 y 15 años, el plazo es de 3 años; 12 años está en ese tramo."
       },
       {
+       "apt": "pci-1.7",
        "q": "Una instalación existente con 17 años de antigüedad debe pasar su primera inspección en un plazo de:",
        "o": [
         "1 año",
@@ -3487,6 +3624,7 @@ SUBJECTS.push({
        "e": "Con entre 15 y 20 años de antigüedad, la primera inspección debe hacerse en un plazo de 2 años; 17 años está en ese tramo."
       },
       {
+       "apt": "pci-5.6",
        "q": "Está exento de la inspección periódica del RIPCI un edificio docente de 1.800 m².",
        "o": [
         "Verdadero",
@@ -3496,6 +3634,7 @@ SUBJECTS.push({
        "e": "El uso docente está exento de la inspección periódica del RIPCI si su superficie es menor de 2.000 m². 1.800 m² está por debajo, así que es verdadero."
       },
       {
+       "apt": "pci-5.6",
        "q": "Está exento de la inspección periódica del RIPCI un local de pública concurrencia de 600 m².",
        "o": [
         "Verdadero",
@@ -3505,6 +3644,7 @@ SUBJECTS.push({
        "e": "La pública concurrencia solo está exenta si su superficie es menor de 500 m². Un local de 600 m² supera el umbral, así que debe inspeccionarse."
       },
       {
+       "apt": "pci-5.6",
        "q": "Está exento de la inspección periódica del RIPCI un edificio de uso residencial vivienda.",
        "o": [
         "Verdadero",
@@ -3514,6 +3654,7 @@ SUBJECTS.push({
        "e": "El uso residencial vivienda está exento de la inspección periódica del RIPCI en todo caso, sea cual sea su superficie."
       },
       {
+       "apt": "pci-5.6",
        "q": "El acta de inspección del RIPCI la firman:",
        "o": [
         "La mantenedora y la instaladora",
@@ -3524,6 +3665,7 @@ SUBJECTS.push({
        "e": "El acta de inspección la firman el técnico del organismo de control que la hace y el titular de la instalación. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-5.6",
        "q": "Las inspecciones del RIPCI las solicita:",
        "o": [
         "El titular de la instalación",
@@ -3534,6 +3676,7 @@ SUBJECTS.push({
        "e": "Es el titular de la instalación quien debe solicitar las inspecciones a un organismo de control acreditado."
       },
       {
+       "apt": "pci-5.3",
        "q": "Según el RSCIEI, un establecimiento de riesgo intrínseco medio se inspecciona como máximo cada:",
        "o": [
         "2 años",
@@ -3544,6 +3687,7 @@ SUBJECTS.push({
        "e": "RSCIEI: riesgo bajo cada 5 años, medio cada 3 y alto cada 2."
       },
       {
+       "apt": "pci-5.3",
        "q": "Según el RSCIEI, un establecimiento de riesgo intrínseco alto se inspecciona como máximo cada:",
        "o": [
         "2 años",
@@ -3554,6 +3698,7 @@ SUBJECTS.push({
        "e": "RSCIEI: riesgo bajo cada 5 años, medio cada 3 y alto cada 2. Fuente: tema 5, apartado 3."
       },
       {
+       "apt": "pci-5.3",
        "q": "El certificado para la puesta en marcha de un establecimiento industrial lo emite:",
        "o": [
         "El ayuntamiento",
@@ -3564,6 +3709,7 @@ SUBJECTS.push({
        "e": "Con riesgo intrínseco, sectores, características constructivas y certificado de la instaladora."
       },
       {
+       "apt": "pci-5.3",
        "q": "En la inspección de un establecimiento industrial NO se comprueba:",
        "o": [
         "El consumo energético de la instalación",
@@ -3574,6 +3720,7 @@ SUBJECTS.push({
        "e": "El consumo energético es materia del RITE, no de la inspección de protección contra incendios."
       },
       {
+       "apt": "pci-5.3",
        "q": "Las inspecciones de los organismos de control en establecimientos industriales deben seguir la norma:",
        "o": [
         "UNE 192005-1",
@@ -3584,6 +3731,7 @@ SUBJECTS.push({
        "e": "La parte 2 es para instalaciones en edificios no industriales."
       },
       {
+       "apt": "pci-1.6",
        "q": "Según la guía técnica del RSCIEI, los organismos de control deben inspeccionar según la norma:",
        "o": [
         "UNE 192005-1",
@@ -3594,6 +3742,7 @@ SUBJECTS.push({
        "e": "La guía técnica del RSCIEI establece que los organismos de control inspeccionen los establecimientos industriales según la UNE 192005-1:2014. La parte 2 es para edificios no industriales."
       },
       {
+       "apt": "pci-5.3",
        "q": "El RSCIEI se aplica a los talleres de reparación y estacionamientos de vehículos de transporte de personas y mercancías.",
        "o": [
         "Verdadero",
@@ -3603,6 +3752,7 @@ SUBJECTS.push({
        "e": "El ámbito de aplicación del RSCIEI incluye expresamente los talleres de reparación y los estacionamientos de vehículos de transporte de personas y de mercancías."
       },
       {
+       "apt": "pci-5.3",
        "q": "¿Cuál de estos datos NO figura en el certificado de puesta en marcha de un establecimiento industrial?",
        "o": [
         "Número de sectores y su riesgo intrínseco",
@@ -3613,6 +3763,7 @@ SUBJECTS.push({
        "e": "El certificado de puesta en marcha recoge el número de sectores y su riesgo intrínseco, el riesgo intrínseco del establecimiento, sus características constructivas y el certificado de la instaladora. No incluye ningún plan de evacuación individual."
       },
       {
+       "apt": "pci-5.3",
        "q": "Del acta de inspección del RSCIEI conservan copia:",
        "o": [
         "Solo el titular",
@@ -3623,6 +3774,7 @@ SUBJECTS.push({
        "e": "Del acta de inspección del RSCIEI conservan copia el técnico del organismo de control y el titular del establecimiento. Tema 5, apartado 3."
       },
       {
+       "apt": "pci-1.4",
        "q": "En la fórmula del riesgo intrínseco, el coeficiente Ra corrige la peligrosidad por:",
        "o": [
         "La activación propia de la actividad",
@@ -3633,6 +3785,7 @@ SUBJECTS.push({
        "e": "En la fórmula del riesgo intrínseco, Ra corrige por el peligro de activación propio de la actividad (producción, almacenamiento…). La combustibilidad la pondera Ci."
       },
       {
+       "apt": "pci-5.3",
        "q": "En la fórmula del riesgo intrínseco, Gi es:",
        "o": [
         "El poder calorífico en MJ/kg",
@@ -3643,6 +3796,7 @@ SUBJECTS.push({
        "e": "En Qs = Σ(Gi·qi·Ci)·Ra / A, Gi es la masa en kg de cada combustible. qi es su poder calorífico (MJ/kg) y A, la superficie del sector."
       },
       {
+       "apt": "pci-5.3",
        "q": "Un sector de 100 m² con 10.000 kg de un combustible de 17 MJ/kg (Ci = 1, Ra = 1) tiene un riesgo intrínseco:",
        "o": [
         "Bajo",
@@ -3658,6 +3812,7 @@ SUBJECTS.push({
        ]
       },
       {
+       "apt": "pci-5.3",
        "q": "Un edificio industrial con dos sectores de 1.000 m², uno con Qs = 400 y otro con Qs = 1.200 MJ/m², tiene un Qe de:",
        "o": [
         "800 MJ/m² (riesgo bajo)",
@@ -3673,6 +3828,7 @@ SUBJECTS.push({
        ]
       },
       {
+       "apt": "pci-5.1",
        "q": "El RIPCI se estructura en:",
        "o": [
         "17 artículos y 4 anexos",
@@ -3683,6 +3839,7 @@ SUBJECTS.push({
        "e": "17 artículos y 4 anexos es el RSCIEI; 6 secciones, el DB SI."
       },
       {
+       "apt": "pci-2.2",
        "q": "El ECI (equipo de control e indicación) NO tiene como función:",
        "o": [
         "Indicar la localización del peligro",
@@ -3693,6 +3850,7 @@ SUBJECTS.push({
        "e": "Recibe señales, decide si hay alarma, avisa e indica dónde."
       },
       {
+       "apt": "pci-3.5",
        "q": "Las BIE pueden llevar manguera plana de hasta 20 m o semirrígida de hasta 30 m.",
        "o": [
         "Verdadero",
@@ -3702,6 +3860,7 @@ SUBJECTS.push({
        "e": "El RIPCI admite manguera plana de hasta 20 m o semirrígida de hasta 30 m."
       },
       {
+       "apt": "pci-2.2",
        "q": "Las siglas SDAI corresponden a:",
        "o": [
         "Sistema de detección y alarma de incendios",
@@ -3712,6 +3871,7 @@ SUBJECTS.push({
        "e": "SDAI significa sistema de detección y alarma de incendios. En inglés se llama FDAS (fire detection and alarm system)."
       },
       {
+       "apt": "pci-2.2",
        "q": "Si es necesario, el ECI puede transmitir el aviso de fallo a una central de recepción.",
        "o": [
         "Verdadero",
@@ -3721,6 +3881,7 @@ SUBJECTS.push({
        "e": "El equipo de control e indicación (ECI, la central) puede enviar el aviso de fallo a una central de recepción mediante el equipo de envío de aviso de fallo."
       },
       {
+       "apt": "pci-2.2",
        "q": "La familia de normas que regula los sistemas de detección y alarma es la:",
        "o": [
         "UNE-EN 54",
@@ -3731,6 +3892,7 @@ SUBJECTS.push({
        "e": "La familia UNE-EN 54 regula los componentes de los sistemas de detección y alarma. La UNE-EN 671 es de BIE y la UNE-EN 12845, de rociadores."
       },
       {
+       "apt": "pci-3.5",
        "q": "Las BIE están reguladas por la norma:",
        "o": [
         "UNE-EN 671",
@@ -3741,6 +3903,7 @@ SUBJECTS.push({
        "e": "Las bocas de incendio equipadas (BIE) se regulan por la UNE-EN 671. La UNE-EN 54 es de detección y la UNE 23500, de abastecimiento de agua. Tema 5, apartado 4."
       },
       {
+       "apt": "pci-3.7",
        "q": "En un sistema de rociadores, las cabezas pueden instalarse también entre estanterías y debajo de estantes.",
        "o": [
         "Verdadero",
@@ -3750,6 +3913,7 @@ SUBJECTS.push({
        "e": "Según la UNE-EN 12845, en almacenes los rociadores pueden instalarse también entre estanterías y bajo los estantes, para llegar al fuego que el estante tapa desde el techo."
       },
       {
+       "apt": "pci-3.7",
        "q": "Un sistema de rociadores consta de abastecimiento de agua y una o varias instalaciones, cada una con:",
        "o": [
         "Una central de detección",
@@ -3769,6 +3933,7 @@ SUBJECTS.push({
        "e": "La lista de equipos y sistemas regulados del tema 5 incluye las mantas ignífugas (punto 14) y el alumbrado de emergencia (punto 15)."
       },
       {
+       "apt": "pci-3.5",
        "q": "Antes de su puesta en servicio, la red de BIE se prueba a una presión mínima de 980 kPa durante:",
        "o": [
         "30 minutos",
@@ -3779,6 +3944,7 @@ SUBJECTS.push({
        "e": "A la presión máxima de servicio y como mínimo 980 kPa, durante 2 horas, sin fugas en ningún punto."
       },
       {
+       "apt": "pci-3.6",
        "q": "La instalación de columna seca debe resistir sin fugas una presión de:",
        "o": [
         "10 bar durante 2 horas",
@@ -3789,6 +3955,7 @@ SUBJECTS.push({
        "e": "Prueba de la columna seca: 20 bar durante 2 horas sin fugas. Fuente: tema 3, 2.5."
       },
       {
+       "apt": "pci-2.2",
        "q": "El plan de alarmas de la central de detección es objeto de inspección periódica.",
        "o": [
         "Verdadero",
@@ -3798,6 +3965,7 @@ SUBJECTS.push({
        "e": "La matriz de actuaciones de la central (plan de alarmas) se revisa en la inspección periódica según la UNE 192005-2 en edificios no industriales y la UNE 192005-1 en establecimientos industriales."
       },
       {
+       "apt": "pci-4.2",
        "q": "La instalación, puesta en marcha y mantenimiento de los sistemas de control de humo por flotabilidad siguen la norma:",
        "o": [
         "UNE 23585",
@@ -3808,6 +3976,7 @@ SUBJECTS.push({
        "e": "La UNE 23584 es la de instalación, puesta en marcha y mantenimiento; la UNE 23585 es la de diseño."
       },
       {
+       "apt": "pci-3.5",
        "q": "La prueba de estanqueidad de la red de BIE se hace a la presión máxima de servicio, con un mínimo de:",
        "o": [
         "600 kPa",
@@ -3818,6 +3987,7 @@ SUBJECTS.push({
        "e": "La red de BIE se somete a una prueba de estanquidad a la presión máxima de servicio, con un mínimo de 980 kPa (unos 10 kg/cm²), durante 2 horas y sin fugas."
       },
       {
+       "apt": "pci-2.2",
        "q": "La matriz de actuaciones (plan de alarmas) de la central es necesaria para programarla y es objeto de inspección.",
        "o": [
         "Verdadero",
@@ -3827,6 +3997,7 @@ SUBJECTS.push({
        "e": "La matriz de actuaciones (plan de alarmas) define qué maniobras dispara cada señal. Hace falta para programar la central y es objeto de inspección. Tema 2, apartado 1.2."
       },
       {
+       "apt": "pci-2.5",
        "q": "El puesto de control de rociadores transmite hoy la descarga a la central mediante:",
        "o": [
         "Un pulsador",
@@ -3837,6 +4008,7 @@ SUBJECTS.push({
        "e": "Hoy, el puesto de control transmite la descarga de los rociadores a la central mediante un presostato, que detecta el cambio de presión cuando se abre un rociador. Se mantiene además el gong hidráulico como alarma sonora."
       },
       {
+       "apt": "pci-2.5",
        "q": "El puesto de control húmedo incorpora una cámara de retardo para:",
        "o": [
         "Evitar falsas alarmas",
@@ -3847,6 +4019,7 @@ SUBJECTS.push({
        "e": "La cámara de retardo absorbe las variaciones bruscas de presión de la red, que podrían activar la alarma sin que haya descarga. Así se evitan falsas alarmas. Tema 2, apartado 2.7."
       },
       {
+       "apt": "pci-3.3",
        "q": "El depósito de reserva de agua contra incendios debe garantizar un funcionamiento sin vaciarlo de:",
        "o": [
         "5 años",
@@ -3857,6 +4030,7 @@ SUBJECTS.push({
        "e": "El depósito de reserva de agua debe poder funcionar 15 años sin vaciarse para su mantenimiento. Por eso debe ser de material rígido y resistente a la corrosión."
       },
       {
+       "apt": "pci-4.2",
        "q": "La instalación, puesta en marcha y mantenimiento de los sistemas de presión diferencial siguen la UNE-EN 12101-6 y la:",
        "o": [
         "UNE 23584",
