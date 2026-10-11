@@ -21,7 +21,9 @@ js/learn.js              Módulo Aprender: lecciones, repaso espaciado y chuleta
 data/sif.js              Sistemas Integrados de Fabricación (un test)
 data/inst.js             Instalaciones Industriales: Climatización, PCI, Fontanería y Comunicaciones, con dos tests cada uno
 data/learn/pci.js        Contenido de Aprender de Protección contra incendios
+data/learn/fontaneria.js Contenido de Aprender de Fontanería y saneamiento (tema font, apartados fonta-X.Y)
 assets/learn/pci/        Figuras de Aprender de PCI (WebP)
+assets/learn/fontaneria/ Figuras de Aprender de Fontanería (WebP)
 tools/check-learn.js     Comprobación del contenido de Aprender (node tools/check-learn.js)
 supabase/schema.sql      SQL base de Supabase (tablas, RLS, funciones y vistas)
 supabase/migrations/     Migraciones posteriores, en orden de fecha
@@ -132,9 +134,9 @@ Las opciones se barajan, salvo en preguntas de 2 opciones o con opciones del tip
 
 ## Aprender
 
-En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: lecciones cortas (una por apartado del temario, de 4 a 10 tarjetas, 3–5 minutos) que alternan explicaciones con comprobaciones. Hoy solo tiene contenido Protección contra incendios; en los demás temas aparece desactivada, con «Próximamente».
+En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: lecciones cortas (una por apartado del temario, de 4 a 10 tarjetas, 3–5 minutos) que alternan explicaciones con comprobaciones. Hoy tienen contenido Protección contra incendios y Fontanería y saneamiento; en los demás temas aparece desactivada, con «Próximamente».
 
-- **Entrada:** «Cómo pregunta este profesorado», «Continuar donde lo dejé», «Repaso de hoy», «Chuleta» y la lista de lecciones por tema con su estado (sin empezar, en curso, completada o para repasar).
+- **Entrada:** «Cómo pregunta este profesorado», las discrepancias del temario (si las hay, en un bloque aparte), «Continuar donde lo dejé», «Repaso de hoy», «Chuleta» y la lista de lecciones por tema con su estado (sin empezar, en curso, completada o para repasar).
 - **Tarjetas:** explicación (con tabla o figura), aviso «Ojo» y comprobaciones: test (del banco o nuevo), «¿Cuál NO está?», completar la lista, ordenar, dato exacto, emparejar y reconocer una figura. Cada comprobación se corrige al momento y cita el apartado del temario. Si se falla, la tarjeta vuelve al final de la lección.
 - **Al terminar:** resumen y «Practicar preguntas de este apartado», que abre el modo práctica solo con las preguntas de los dos tests que tienen ese `apt`.
 - **Repaso de hoy:** sistema Leitner con cajas de 1, 3, 7 y 14 días. Entran las comprobaciones falladas, las de dato exacto y las tarjetas de la chuleta marcadas «No lo sabía». Como mucho 20 por sesión.
@@ -151,6 +153,7 @@ En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: 
      tema: 'clim', name: 'Climatización', source: 'De dónde sale el contenido',
      base: 'assets/learn/clim/',                       // carpeta de las figuras
      howAsks: ['…', '…'],                              // «Cómo pregunta este profesorado»: de 4 a 6 líneas
+     discrep: ['…'],                                   // opcional: discrepancias del temario, en un bloque aparte de la entrada
      figs: { f01: { src: 'fig01.webp', w: 1200, h: 500, alt: 'Descripción completa', cap: 'Figura 1. Pie del temario.' } },
      temas: [ { n: 1, name: 'Nombre del tema 1', lessons: [
        { id: 'clim-1.1', apt: ['clim-1.1'], title: '1.1. Título del apartado', cards: [ … ], sum: ['3 a 5 puntos'] }
@@ -159,7 +162,8 @@ En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: 
    };
    ```
 
-   - `id` de la lección: `<tema>-<apartado>`; si un apartado largo se divide, `clim-2.4-1`, `clim-2.4-2`… con el mismo `apt`.
+   - `tema` es el id del tema en `data/` (por ejemplo `font`). El nombre del archivo y el prefijo de lecciones y apartados pueden ser otros (Fontanería usa `data/learn/fontaneria.js` y `fonta-1.1`).
+   - `id` de la lección: `<prefijo>-<apartado>`; si un apartado largo se divide, `clim-2.4-1`, `clim-2.4-2`… con el mismo `apt`.
    - `title` empieza por el número del apartado («2.4. …»): es lo que se cita en las correcciones.
 
 2. **Tarjetas** (`cards`). De 4 a 10 por lección y nunca dos explicaciones seguidas sin una comprobación entre medias:
@@ -167,7 +171,7 @@ En los temas de Instalaciones Industriales, la primera tarjeta es **Aprender**: 
    | Tipo | Campos |
    |---|---|
    | `ex` explicación | `h` título, `p` texto (HTML sencillo: `<b>`, unas 80 palabras), `tab: {h: [cabeceras], r: [[fila]]}` y `fig: 'f01'` opcionales |
-   | `ojo` aviso | `p`. Solo los recuadros «Ojo» del temario, tal cual |
+   | `ojo` aviso | `p`. Los recuadros «Ojo» del temario, tal cual, y cada discrepancia en la lección afectada con el dato que se usa en el examen |
    | `q` test del banco | `ref`: id estable de la pregunta (`TESTS_QID(enunciado)`); usa su explicación |
    | `q` test nuevo | `q`, `o` (3 opciones), `c`, `e` |
    | `notin` ¿Cuál NO está? | `q` (con «NO»), `o` (3 o 4), `c`, `e` |

@@ -305,6 +305,7 @@ function vHome(V){
     <h2 class="big">Aprender</h2>
     <div class="meter"><div class="bar" aria-hidden="true"><i class="g" style="width:${p.pct}%"></i></div><span>${p.pct} % de lecciones completadas (${p.done} de ${p.total})</span></div>
     <section class="howasks" aria-labelledby="howh"><h3 id="howh">Cómo pregunta este profesorado</h3><ul>${D.howAsks.map(l => `<li>${esc(l)}</li>`).join('')}</ul></section>
+    ${(D.discrep || []).length ? `<section class="howasks discrep" aria-labelledby="disch"><h3 id="disch">Discrepancias del temario</h3><ul>${D.discrep.map(l => `<li>${esc(l)}</li>`).join('')}</ul></section>` : ''}
     <div class="stack" style="margin-top:14px">
       ${cont ? `<button class="mode primary" data-act="lContinue"><b>Continuar donde lo dejé</b><span>${esc(cont.title)}${contState && contState.st === 'prog' ? ` · tarjeta ${Math.min(contState.i + 1, contState.q.length)} de ${contState.q.length}` : ''}</span></button>`
         : `<div class="mode primary off" aria-disabled="true"><b>Has completado todas las lecciones</b><span>Sigue con el repaso de hoy y la chuleta.</span></div>`}

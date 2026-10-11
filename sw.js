@@ -1,6 +1,6 @@
 // Service worker de Tests del Máster.
 // IMPORTANTE: sube VERSION en cada cambio (tests-v1 → tests-v2…) para que los usuarios reciban la versión nueva.
-const VERSION = 'tests-v8';
+const VERSION = 'tests-v9';
 const FONTS = 'tests-fonts';   // caché de Google Fonts y de supabase-js (versión fija), se conserva entre versiones
 
 const ASSETS = [
@@ -40,6 +40,28 @@ const ASSETS = [
   './assets/learn/pci/fig20.webp',
   './assets/learn/pci/fig21.webp',
   './assets/learn/pci/fig22.webp',
+  './data/learn/fontaneria.js',
+  // figuras de Aprender (data/learn/fontaneria.js)
+  './assets/learn/fontaneria/fig01.webp',
+  './assets/learn/fontaneria/fig02.webp',
+  './assets/learn/fontaneria/fig03.webp',
+  './assets/learn/fontaneria/fig04.webp',
+  './assets/learn/fontaneria/fig05.webp',
+  './assets/learn/fontaneria/fig06.webp',
+  './assets/learn/fontaneria/fig07.webp',
+  './assets/learn/fontaneria/fig08.webp',
+  './assets/learn/fontaneria/fig09.webp',
+  './assets/learn/fontaneria/fig10.webp',
+  './assets/learn/fontaneria/fig11.webp',
+  './assets/learn/fontaneria/fig12.webp',
+  './assets/learn/fontaneria/fig13.webp',
+  './assets/learn/fontaneria/fig14.webp',
+  './assets/learn/fontaneria/fig15.webp',
+  './assets/learn/fontaneria/fig16.webp',
+  './assets/learn/fontaneria/fig17.webp',
+  './assets/learn/fontaneria/fig18.webp',
+  './assets/learn/fontaneria/fig19.webp',
+  './assets/learn/fontaneria/fig20.webp',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',

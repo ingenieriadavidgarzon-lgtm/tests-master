@@ -4126,6 +4126,7 @@ SUBJECTS.push({
      ],
      "questions": [
       {
+       "apt": "fonta-1.3",
        "q": "La acometida es la tubería que enlaza:",
        "o": [
         "La instalación general del edificio con la red exterior de suministro",
@@ -4136,6 +4137,7 @@ SUBJECTS.push({
        "e": "Según la terminología del HS 4, la acometida es el tramo que une la red exterior de suministro (la de la compañía) con la instalación general del edificio. El cuarto de contadores y el grupo de presión ya forman parte de la instalación interior."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La suma de los caudales instantáneos mínimos de un grupo de aparatos sanitarios:",
        "o": [
         "Es siempre menor que el caudal simultáneo",
@@ -4146,6 +4148,7 @@ SUBJECTS.push({
        "e": "El caudal simultáneo es la suma de los caudales instantáneos multiplicada por un coeficiente de simultaneidad menor o igual que 1. Por eso la suma es mayor que el simultáneo, o igual cuando solo hay un aparato."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Los caudales instantáneos mínimos según el CTE DB HS 4:",
        "o": [
         "Son siempre mayores en AFS que en ACS",
@@ -4156,6 +4159,7 @@ SUBJECTS.push({
        "e": "En la tabla 2.1 del HS 4, el caudal instantáneo mínimo de agua fría es siempre mayor que el de agua caliente para el mismo aparato. Por ejemplo, en un lavabo son 0,10 dm³/s en AFS frente a 0,065 dm³/s en ACS."
       },
       {
+       "apt": "fonta-1.4",
        "q": "La presión mínima de un punto de consumo tipo fluxor debe ser:",
        "o": [
         "100 kPa",
@@ -4166,6 +4170,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige 150 kPa en fluxores y calentadores, porque necesitan más presión para funcionar bien. Para los grifos comunes basta con 100 kPa."
       },
       {
+       "apt": "fonta-1.4",
        "q": "La temperatura en los puntos de consumo de ACS debe estar comprendida entre:",
        "o": [
         "45 ºC y 65 ºC",
@@ -4176,6 +4181,7 @@ SUBJECTS.push({
        "e": "El HS 4 fija que el ACS llegue a los puntos de consumo entre 50 y 65 ºC, un rango que limita el riesgo de legionela sin llegar a quemar. No es exigible en edificios de uso exclusivo de vivienda."
       },
       {
+       "apt": "fonta-2.2",
        "q": "Las velocidades de cálculo en tuberías termoplásticas deben estar comprendidas entre:",
        "o": [
         "0,5 m/s y 2 m/s",
@@ -4186,6 +4192,7 @@ SUBJECTS.push({
        "e": "Las tuberías termoplásticas y multicapa admiten velocidades de cálculo de 0,5 a 3,5 m/s. En las metálicas el máximo es más bajo, de 2 m/s, para limitar ruidos y erosión."
       },
       {
+       "apt": "fonta-2.4",
        "q": "En ACS, la pérdida de temperatura al grifo más alejado debe ser como máximo:",
        "o": [
         "3 ºC",
@@ -4196,6 +4203,7 @@ SUBJECTS.push({
        "e": "El caudal de retorno de ACS se calcula para que el agua no pierda más de 3 ºC hasta el grifo más alejado de la red."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Las protecciones contra la corrosión cuando los tubos de cobre discurren enterrados o empotrados deben ser:",
        "o": [
         "Con revestimiento de plástico",
@@ -4206,6 +4214,7 @@ SUBJECTS.push({
        "e": "Los tubos de cobre enterrados o empotrados se protegen con un revestimiento de plástico. El revestimiento bituminoso es para tubos de acero y la película continua de polietileno, para fundición."
       },
       {
+       "apt": "fonta-3.1",
        "q": "En los receptores abiertos:",
        "o": [
         "El cálculo de la caída de presión debe tener en cuenta la presión mínima de descarga",
@@ -4216,6 +4225,7 @@ SUBJECTS.push({
        "e": "En un receptor abierto el agua sale al exterior (un grifo o un inodoro), así que hay que garantizar una presión mínima de descarga en ese punto. La pérdida de carga del intercambiador es lo que se tiene en cuenta en los receptores cerrados, por los que el agua circula sin salir."
       },
       {
+       "apt": "fonta-4.4",
        "q": "El sellado hidráulico debe realizarse siempre con un sifón individual.",
        "o": [
         "Verdadero",
@@ -4225,6 +4235,7 @@ SUBJECTS.push({
        "e": "El cierre hidráulico no tiene por qué ser un sifón individual: también vale un bote sifónico, un sumidero sifónico o una arqueta sifónica."
       },
       {
+       "apt": "fonta-3.4",
        "q": "Las aguas pluviales se pueden utilizar para consumo humano.",
        "o": [
         "Verdadero",
@@ -4234,6 +4245,7 @@ SUBJECTS.push({
        "e": "El RD 1620/2007 sobre reutilización de aguas prohíbe usar aguas regeneradas para consumo humano, salvo en situaciones de catástrofe declarada."
       },
       {
+       "apt": "fonta-4.3",
        "q": "El tratamiento de las aguas pluviales y residuales se realiza en una primera etapa en el propio edificio de viviendas antes de enviarlas al saneamiento general público.",
        "o": [
         "Verdadero",
@@ -4243,6 +4255,7 @@ SUBJECTS.push({
        "e": "Las aguas del edificio se vierten directamente a la red pública, que las lleva a la depuradora. Solo cuando no existe red de alcantarillado se exige una estación depuradora particular."
       },
       {
+       "apt": "fonta-4.2",
        "q": "El reflujo en una instalación de saneamiento se evita instalando:",
        "o": [
         "Una clapeta antirretorno",
@@ -4253,6 +4266,7 @@ SUBJECTS.push({
        "e": "El reflujo (que el agua vuelva desde la red hacia el edificio) se evita con válvulas antirretorno de seguridad, es decir, con una clapeta antirretorno. Una válvula de corte no lo impide de forma automática."
       },
       {
+       "apt": "fonta-4.2",
        "q": "En saneamiento, la ventilación primaria discurre paralela a la bajante y se conecta a esta.",
        "o": [
         "Verdadero",
@@ -4262,6 +4276,7 @@ SUBJECTS.push({
        "e": "La ventilación que discurre paralela a la bajante y se conecta a ella es la secundaria. La primaria es la prolongación de la propia bajante hasta la cubierta."
       },
       {
+       "apt": "fonta-4.2",
        "q": "En saneamiento, una unidad de desagüe equivale a:",
        "o": [
         "0,47 l/s",
@@ -4272,6 +4287,7 @@ SUBJECTS.push({
        "e": "En el HS 5, una unidad de desagüe (UD) equivale a 0,47 l/s. El valor de 0,03 l/s es el caudal que se asigna a cada UD en los desagües continuos, como las bandejas de condensación."
       },
       {
+       "apt": "fonta-4.4",
        "q": "La altura mínima de cierre hidráulico debe ser 70 mm para usos continuos.",
        "o": [
         "Verdadero",
@@ -4281,6 +4297,7 @@ SUBJECTS.push({
        "e": "La altura mínima del cierre hidráulico es de 50 mm en usos continuos y de 70 mm en usos discontinuos, donde el agua del sifón tiene más tiempo para evaporarse."
       },
       {
+       "apt": "fonta-4.5",
        "q": "Las derivaciones que acometen al bote sifónico deben tener una pendiente comprendida entre:",
        "o": [
         "1-2 %",
@@ -4291,6 +4308,7 @@ SUBJECTS.push({
        "e": "Las derivaciones que llegan a un bote sifónico deben tener una pendiente de entre el 2 y el 4 % y una longitud no mayor de 2,5 m."
       },
       {
+       "apt": "fonta-4.5",
        "q": "El desagüe de los inodoros a las bajantes debe realizarse directamente o por medio de un manguetón de longitud igual o menor que 2 m.",
        "o": [
         "Verdadero",
@@ -4300,6 +4318,7 @@ SUBJECTS.push({
        "e": "El inodoro debe desaguar a la bajante directamente o mediante un manguetón de 1 m como máximo, no de 2 m."
       },
       {
+       "apt": "fonta-4.6",
        "q": "Los colectores colgados deben tener una pendiente mínima del:",
        "o": [
         "1 %",
@@ -4310,6 +4329,7 @@ SUBJECTS.push({
        "e": "Los colectores colgados deben tener al menos un 1 % de pendiente. Los enterrados necesitan un mínimo del 2 %."
       },
       {
+       "apt": "fonta-4.2",
        "q": "Los sistemas de saneamiento mixtos son más caros de implantar que los separativos.",
        "o": [
         "Verdadero",
@@ -4320,6 +4340,7 @@ SUBJECTS.push({
        "d": true
       },
       {
+       "apt": "fonta-1.1",
        "q": "El documento de referencia para el diseño de las instalaciones de fontanería es:",
        "o": [
         "CTE DB HS 5",
@@ -4330,6 +4351,7 @@ SUBJECTS.push({
        "e": "El suministro de agua (fontanería) se regula en la sección HS 4 del CTE. La HS 5 trata la evacuación de aguas y el RITE, las instalaciones térmicas."
       },
       {
+       "apt": "fonta-1.1",
        "q": "Las reformas de instalaciones de suministro existentes quedan incluidas en el HS 4 cuando:",
        "o": [
         "Se cambia el material de las tuberías",
@@ -4340,6 +4362,7 @@ SUBJECTS.push({
        "e": "El HS 4 se aplica a las reformas de instalaciones existentes cuando se amplía el número o la capacidad de los aparatos receptores, porque eso cambia los caudales de cálculo. Cambiar de titular o sustituir el material no lo activa (ámbito de aplicación del HS 4)."
       },
       {
+       "apt": "fonta-1.3",
        "q": "Las ascendentes o montantes enlazan:",
        "o": [
         "El distribuidor principal con las instalaciones particulares o derivaciones colectivas",
@@ -4350,6 +4373,7 @@ SUBJECTS.push({
        "e": "Según la terminología del HS 4, las ascendentes o montantes son las tuberías verticales que llevan el agua desde el distribuidor principal hasta las instalaciones particulares o derivaciones colectivas de cada planta."
       },
       {
+       "apt": "fonta-1.3",
        "q": "El caudal simultáneo es el que se produce por:",
        "o": [
         "La suma de todos los caudales instantáneos",
@@ -4360,6 +4384,7 @@ SUBJECTS.push({
        "e": "El caudal simultáneo es el que circula cuando funcionan a la vez los aparatos que lógicamente coinciden en uso, no todos. Se obtiene aplicando un coeficiente de simultaneidad a la suma de caudales instantáneos (terminología del HS 4)."
       },
       {
+       "apt": "fonta-1.3",
        "q": "Los contadores divisionarios se instalarán, en general:",
        "o": [
         "En la acometida",
@@ -4370,6 +4395,7 @@ SUBJECTS.push({
        "e": "Los contadores divisionarios, que miden el consumo de cada abonado, se agrupan en baterías en el cuarto o armario de contadores."
       },
       {
+       "apt": "fonta-1.3",
        "q": "El distribuidor principal enlaza:",
        "o": [
         "Los sistemas de control de presión con las ascendentes o derivaciones",
@@ -4380,6 +4406,7 @@ SUBJECTS.push({
        "e": "Según el HS 4, el distribuidor principal es la tubería que va desde los sistemas de control de presión (grupo de presión o reductor) hasta las ascendentes o derivaciones."
       },
       {
+       "apt": "fonta-1.3",
        "q": "El tubo de alimentación enlaza:",
        "o": [
         "La acometida con la red pública",
@@ -4390,6 +4417,7 @@ SUBJECTS.push({
        "e": "Según el HS 4, el tubo de alimentación va desde la llave de corte general hasta los sistemas de control de presión o, si no los hay, hasta el distribuidor principal."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La llave de registro se coloca:",
        "o": [
         "En la base de las ascendentes",
@@ -4400,6 +4428,7 @@ SUBJECTS.push({
        "e": "La llave de registro se sitúa al final de la acometida, normalmente en la vía pública, y permite a la compañía cerrar el paso de agua a la instalación interior del edificio."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La presión de trabajo de un tubo se define considerando un uso continuado de:",
        "o": [
         "25 años",
@@ -4410,6 +4439,7 @@ SUBJECTS.push({
        "e": "La presión de trabajo de un tubo es la presión manométrica interna máxima que soporta en uso continuado durante 50 años, que es su vida de diseño."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La presión nominal de un tubo coincide con la presión máxima de trabajo a:",
        "o": [
         "10 ºC",
@@ -4420,6 +4450,7 @@ SUBJECTS.push({
        "e": "Según la terminología del HS 4, la presión nominal de un tubo es la presión máxima de trabajo a 20 ºC. A temperaturas más altas, la presión admisible baja."
       },
       {
+       "apt": "fonta-1.3",
        "q": "El pasamuros debe permitir que la tubería quede suelta para su libre dilatación.",
        "o": [
         "Verdadero",
@@ -4429,6 +4460,7 @@ SUBJECTS.push({
        "e": "El pasamuros es el manguito que atraviesa un muro o forjado: la tubería va suelta dentro de él para que pueda dilatar sin tensiones (terminología del HS 4)."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La válvula de seguridad descarga el exceso de presión y su escape se reconduce a:",
        "o": [
         "Desagüe",
@@ -4439,6 +4471,7 @@ SUBJECTS.push({
        "e": "La válvula de seguridad libera el exceso de presión, y el agua que expulsa se conduce a un desagüe para que no inunde ni dañe nada (terminología del HS 4)."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Los materiales de la instalación deben resistir sin daños temperaturas de hasta:",
        "o": [
         "40 ºC",
@@ -4449,6 +4482,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige que los materiales resistan sin daños temperaturas de hasta 40 ºC, además de las del entorno inmediato."
       },
       {
+       "apt": "fonta-1.4",
        "q": "¿En cuál de estos puntos NO se exige expresamente sistema antirretorno?",
        "o": [
         "Después de los contadores",
@@ -4459,6 +4493,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige antirretorno después de los contadores, en la base de las ascendentes, antes del tratamiento de agua, en los tubos de alimentación de usos no domésticos y antes de los equipos de refrigeración o climatización. No se exige en cada grifo de lavabo."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Las instalaciones de suministro de agua pueden conectarse directamente a instalaciones de evacuación.",
        "o": [
         "Verdadero",
@@ -4468,6 +4503,7 @@ SUBJECTS.push({
        "e": "Para no contaminar el agua potable, la red de suministro no puede conectarse directamente a la de evacuación, ni a instalaciones de agua de otro origen que no sea la red pública."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Los antirretornos se combinarán con:",
        "o": [
         "Filtros",
@@ -4478,6 +4514,7 @@ SUBJECTS.push({
        "e": "Los sistemas antirretorno se combinan con grifos de vaciado, para poder vaciar cualquier tramo de la red aunque el antirretorno impida que el agua vuelva."
       },
       {
+       "apt": "fonta-1.4",
        "q": "La presión mínima en un punto de consumo con grifo común es:",
        "o": [
         "100 kPa",
@@ -4488,6 +4525,7 @@ SUBJECTS.push({
        "e": "El HS 4 pide 100 kPa en los grifos comunes. Los fluxores y calentadores necesitan más presión: 150 kPa."
       },
       {
+       "apt": "fonta-1.4",
        "q": "La presión en cualquier punto de consumo no debe superar:",
        "o": [
         "300 kPa",
@@ -4499,6 +4537,7 @@ SUBJECTS.push({
        "d": true
       },
       {
+       "apt": "fonta-1.4",
        "q": "Debe disponerse red de retorno de ACS cuando la tubería de ida al punto más alejado mide:",
        "o": [
         "10 m o más",
@@ -4509,6 +4548,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige red de retorno de ACS cuando la tubería de ida hasta el punto más alejado mide 15 m o más, para que el agua caliente llegue enseguida y no se desperdicie agua (exigencia de ahorro de agua)."
       },
       {
+       "apt": "fonta-1.4",
        "q": "En zonas de pública concurrencia, los grifos de lavabos y las cisternas deben tener dispositivos de ahorro de agua.",
        "o": [
         "Verdadero",
@@ -4518,6 +4558,7 @@ SUBJECTS.push({
        "e": "Por la exigencia de ahorro de agua del HS 4, en las zonas de pública concurrencia los grifos de los lavabos y las cisternas deben llevar dispositivos de ahorro."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Las tuberías que suministren agua no apta para el consumo deben:",
        "o": [
         "Estar señalizadas de forma fácil e inequívoca",
@@ -4528,6 +4569,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige que las tuberías de agua no apta para el consumo se señalicen de forma fácil e inequívoca, para que nadie la beba por error. No impone un color ni un trazado concreto."
       },
       {
+       "apt": "fonta-1.5",
        "q": "La red con contador general único se compone de acometida, instalación general con armario o arqueta del contador, tubo de alimentación, distribuidor principal y:",
        "o": [
         "Contadores aislados",
@@ -4538,6 +4580,7 @@ SUBJECTS.push({
        "e": "La red con contador general único consta de acometida, instalación general con el armario o arqueta del contador general, tubo de alimentación, distribuidor principal y derivaciones colectivas (figura 3.1 del HS 4)."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Según el caudal del inodoro con fluxor de la tabla 2.1 del HS 4, su caudal instantáneo mínimo de AFS es:",
        "o": [
         "0,10 dm³/s",
@@ -4548,6 +4591,7 @@ SUBJECTS.push({
        "e": "El inodoro con fluxor necesita un caudal muy alto durante la descarga: 1,25 dm³/s en agua fría, según la tabla 2.1 del HS 4. Con cisterna basta con 0,10 dm³/s."
       },
       {
+       "apt": "fonta-1.4",
        "q": "El caudal instantáneo mínimo de AFS de una ducha es:",
        "o": [
         "0,10 dm³/s",
@@ -4558,6 +4602,7 @@ SUBJECTS.push({
        "e": "Según la tabla 2.1 del HS 4, la ducha necesita 0,20 dm³/s de agua fría y 0,10 dm³/s de agua caliente."
       },
       {
+       "apt": "fonta-2.2",
        "q": "En el dimensionado de la red se parte del circuito más desfavorable, que es el de:",
        "o": [
         "Mayor longitud",
@@ -4568,6 +4613,7 @@ SUBJECTS.push({
        "e": "El dimensionado parte del circuito más desfavorable, que es el que tiene más pérdida de presión sumando el rozamiento y la altura geométrica. No es necesariamente el más largo (HS 4, apartado 4.2)."
       },
       {
+       "apt": "fonta-2.2",
        "q": "El caudal de cálculo de un tramo es:",
        "o": [
         "El caudal máximo por el coeficiente de simultaneidad",
@@ -4578,6 +4624,7 @@ SUBJECTS.push({
        "e": "El caudal de cálculo de cada tramo es su caudal máximo (la suma de los caudales instantáneos que alimenta) multiplicado por el coeficiente de simultaneidad (HS 4, apartado 4.2)."
       },
       {
+       "apt": "fonta-2.2",
        "q": "En tuberías metálicas la velocidad de cálculo debe estar entre:",
        "o": [
         "0,5 y 2 m/s",
@@ -4588,6 +4635,7 @@ SUBJECTS.push({
        "e": "En tuberías metálicas la velocidad de cálculo va de 0,5 a 2 m/s. Las termoplásticas y multicapa admiten hasta 3,5 m/s."
       },
       {
+       "apt": "fonta-2.2",
        "q": "Las pérdidas de carga localizadas pueden estimarse como un porcentaje de las lineales del:",
        "o": [
         "5–10 %",
@@ -4598,6 +4646,7 @@ SUBJECTS.push({
        "e": "Para comprobar la presión, el HS 4 permite estimar las pérdidas de carga localizadas (codos, llaves…) como un 20 a 30 % de las pérdidas lineales del tramo."
       },
       {
+       "apt": "fonta-2.2",
        "q": "Si la presión disponible en el punto más desfavorable es inferior a la mínima exigida:",
        "o": [
         "Se aumenta el diámetro de la acometida",
@@ -4608,6 +4657,7 @@ SUBJECTS.push({
        "e": "Si la presión disponible en el punto más desfavorable no llega a la mínima exigida, hay que instalar un grupo de presión. El reductor hace lo contrario: baja la presión cuando supera la máxima (HS 4, comprobación de la presión)."
       },
       {
+       "apt": "fonta-2.3",
        "q": "El diámetro mínimo en cobre o plástico del ramal a un lavabo es:",
        "o": [
         "12 mm",
@@ -4618,6 +4668,7 @@ SUBJECTS.push({
        "e": "Según la tabla 4.2 del HS 4, el ramal de enlace a un lavabo en cobre o plástico tiene un diámetro mínimo de 12 mm."
       },
       {
+       "apt": "fonta-2.3",
        "q": "El diámetro mínimo en cobre o plástico del ramal a un inodoro con fluxor es:",
        "o": [
         "12 mm",
@@ -4628,6 +4679,7 @@ SUBJECTS.push({
        "e": "Según la tabla 4.2 del HS 4, el fluxor necesita un ramal de 25 a 40 mm en cobre o plástico, por su gran caudal instantáneo."
       },
       {
+       "apt": "fonta-2.3",
        "q": "El diámetro mínimo en cobre o plástico de la alimentación a un cuarto húmedo es:",
        "o": [
         "12 mm",
@@ -4638,6 +4690,7 @@ SUBJECTS.push({
        "e": "Según la tabla 4.3 del HS 4, la alimentación a un cuarto húmedo tiene un diámetro mínimo de 20 mm en cobre o plástico. El distribuidor principal, 25 mm."
       },
       {
+       "apt": "fonta-2.4",
        "q": "No se recircularán en cada columna de ACS menos de:",
        "o": [
         "100 l/h",
@@ -4648,6 +4701,7 @@ SUBJECTS.push({
        "e": "El HS 4 fija un caudal mínimo de recirculación de 250 l/h en cada columna de ACS, para poder equilibrar el retorno entre columnas."
       },
       {
+       "apt": "fonta-2.4",
        "q": "El caudal de retorno de ACS puede estimarse recirculando como mínimo el:",
        "o": [
         "5 % del agua de alimentación",
@@ -4658,6 +4712,7 @@ SUBJECTS.push({
        "e": "Como regla empírica, el HS 4 permite estimar el caudal de retorno de ACS recirculando como mínimo el 10 % del agua de alimentación."
       },
       {
+       "apt": "fonta-2.4",
        "q": "El diámetro interior mínimo de la tubería de retorno de ACS es:",
        "o": [
         "12 mm",
@@ -4668,6 +4723,7 @@ SUBJECTS.push({
        "e": "El HS 4 fija un diámetro interior mínimo de 16 mm para la tubería de retorno de ACS."
       },
       {
+       "apt": "fonta-2.4",
        "q": "En todo tramo recto sin conexiones de más de 25 m hay que tomar medidas frente a:",
        "o": [
         "Golpes de ariete",
@@ -4678,6 +4734,7 @@ SUBJECTS.push({
        "e": "En los tramos rectos de más de 25 m sin conexiones hay que prever las dilataciones y contracciones por temperatura, por ejemplo con dilatadores."
       },
       {
+       "apt": "fonta-2.5",
        "q": "El volumen del depósito auxiliar del grupo de presión es V = Q·t·60, con t estimado entre:",
        "o": [
         "5 y 10 min",
@@ -4688,6 +4745,7 @@ SUBJECTS.push({
        "e": "El depósito auxiliar del grupo de presión se dimensiona con V = Q·t·60, con t entre 15 y 20 minutos de reserva, Q en dm³/s y V en litros."
       },
       {
+       "apt": "fonta-2.5",
        "q": "Un grupo convencional con un caudal de 20 dm³/s debe llevar, sin contar las de reserva:",
        "o": [
         "2 bombas",
@@ -4698,6 +4756,7 @@ SUBJECTS.push({
        "e": "El número de bombas del grupo convencional depende del caudal: hasta 10 dm³/s, 2 bombas; hasta 30 dm³/s, 3; por encima de 30, 4. 20 dm³/s está en el tramo de 3 bombas, sin contar las de reserva."
       },
       {
+       "apt": "fonta-2.5",
        "q": "La presión máxima de parada del grupo de presión estará entre:",
        "o": [
         "0,5 y 1 bar por encima de la mínima",
@@ -4708,6 +4767,7 @@ SUBJECTS.push({
        "e": "La presión de parada del grupo se fija entre 2 y 3 bar por encima de la mínima (la de arranque). Ese margen limita el número de arranques y paradas de las bombas."
       },
       {
+       "apt": "fonta-2.5",
        "q": "El diámetro del reductor de presión se calcula en función de:",
        "o": [
         "El caudal máximo simultáneo",
@@ -4718,6 +4778,7 @@ SUBJECTS.push({
        "e": "El reductor de presión se elige por el caudal máximo simultáneo que debe dejar pasar (tabla 4.5 del HS 4), nunca por el diámetro de la tubería donde se instala."
       },
       {
+       "apt": "fonta-2.5",
        "q": "Para dimensionar un descalcificador se toma como caudal mínimo:",
        "o": [
         "50 l/persona·día",
@@ -4728,6 +4789,7 @@ SUBJECTS.push({
        "e": "El HS 4 indica dimensionar el descalcificador con un consumo mínimo de 80 litros por persona y día."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Las tuberías empotradas NO pueden ir en:",
        "o": [
         "Patinillos registrables",
@@ -4738,6 +4800,7 @@ SUBJECTS.push({
        "e": "Las tuberías empotradas no pueden ir en tabiques de ladrillo hueco sencillo, por su poco espesor (condiciones de ejecución del HS 4). Los patinillos registrables y los techos técnicos sí se permiten."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Las conducciones enterradas pueden instalarse en contacto directo con el terreno.",
        "o": [
         "Verdadero",
@@ -4747,6 +4810,7 @@ SUBJECTS.push({
        "e": "Las conducciones enterradas nunca van en contacto directo con el terreno: deben llevar siempre un revestimiento de protección contra la corrosión."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Las protecciones contra la corrosión de tubos de acero enterrados pueden ser de:",
        "o": [
         "Película continua de polietileno con zincado",
@@ -4757,6 +4821,7 @@ SUBJECTS.push({
        "e": "Los tubos de acero enterrados se protegen con polietileno, bituminoso, resina epoxídica o alquitrán de poliuretano. El cobre se protege con plástico y la fundición, con polietileno, epoxi o betún."
       },
       {
+       "apt": "fonta-2.6",
        "q": "En redes metálicas enterradas se instala una junta dieléctrica:",
        "o": [
         "Después de la entrada al edificio y antes de la salida",
@@ -4767,6 +4832,7 @@ SUBJECTS.push({
        "e": "En las redes metálicas enterradas se instala una junta dieléctrica después de la entrada al edificio y antes de la salida, para cortar las corrientes que causan corrosión (protecciones del HS 4)."
       },
       {
+       "apt": "fonta-2.6",
        "q": "El golpe de ariete positivo medido antes de válvulas y aparatos no debe sobrepasar:",
        "o": [
         "1 bar",
@@ -4777,6 +4843,7 @@ SUBJECTS.push({
        "e": "El golpe de ariete positivo no debe superar los 2 bar medido antes de válvulas y aparatos. El negativo no debe bajar del 50 % de la presión de servicio."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Cuando un pasatubos vertical visto pueda recibir golpes, debe sobresalir al menos:",
        "o": [
         "1 cm",
@@ -4787,6 +4854,7 @@ SUBJECTS.push({
        "e": "Si un pasatubos vertical visto puede recibir golpes, debe sobresalir al menos 3 cm del suelo, para proteger la tubería (protecciones mecánicas del HS 4)."
       },
       {
+       "apt": "fonta-2.6",
        "q": "Los soportes de tubos metálicos con agua a 1,5–2 m/s deben ser:",
        "o": [
         "Rígidos",
@@ -4797,6 +4865,7 @@ SUBJECTS.push({
        "e": "Con velocidades de 1,5 a 2 m/s, el agua transmite ruido y vibraciones, así que los soportes de los tubos metálicos deben ser antivibratorios (protección contra ruidos del HS 4)."
       },
       {
+       "apt": "fonta-2.8",
        "q": "Quedan prohibidos expresamente los tubos de:",
        "o": [
         "Acero inoxidable",
@@ -4807,6 +4876,7 @@ SUBJECTS.push({
        "e": "El HS 4 prohíbe los tubos de aluminio y los que contengan plomo, porque pueden alterar la potabilidad del agua."
       },
       {
+       "apt": "fonta-2.8",
        "q": "Las válvulas de cierre por giro de 90º solo pueden usarse como órgano de cierre para:",
        "o": [
         "Trabajos de mantenimiento",
@@ -4817,6 +4887,7 @@ SUBJECTS.push({
        "e": "Las válvulas de giro de 90º (de bola o mariposa) solo se aceptan como cierre para trabajos de mantenimiento, no para regular caudal, y deben resistir 10 bar."
       },
       {
+       "apt": "fonta-2.9",
        "q": "Para los tubos de cobre se consideran agresivas las aguas con pH inferior a:",
        "o": [
         "5,5",
@@ -4827,6 +4898,7 @@ SUBJECTS.push({
        "e": "Para el cobre, el agua es agresiva si su pH es inferior a 6,5; la agresividad se valora con el índice de Lucey."
       },
       {
+       "apt": "fonta-2.9",
        "q": "Para valorar la agresividad del agua en tubos de acero galvanizado se emplea el índice de:",
        "o": [
         "Lucey",
@@ -4837,6 +4909,7 @@ SUBJECTS.push({
        "e": "En el acero galvanizado, la agresividad del agua se valora con el índice de Langelier. También se considera agresiva si tiene más de 250 mg/l de cloruros."
       },
       {
+       "apt": "fonta-2.9",
        "q": "El acero inoxidable AISI 304 puede usarse con cloruros de hasta:",
        "o": [
         "100 mg/l",
@@ -4847,6 +4920,7 @@ SUBJECTS.push({
        "e": "El acero inoxidable AISI 304 admite aguas con hasta 200 mg/l de cloruros. Por encima hay que usar AISI 316, más resistente."
       },
       {
+       "apt": "fonta-2.9",
        "q": "Las tuberías de cobre no deben colocarse antes de las de acero galvanizado según el sentido del agua.",
        "o": [
         "Verdadero",
@@ -4856,6 +4930,7 @@ SUBJECTS.push({
        "e": "Si el cobre está aguas arriba del acero galvanizado, el agua arrastra iones de cobre que forman pares galvánicos y corroen el acero. Por eso el cobre no debe ir antes que el galvanizado en el sentido del flujo."
       },
       {
+       "apt": "fonta-2.9",
        "q": "Se puede acoplar cobre después de acero galvanizado si se monta entre ambos:",
        "o": [
         "Un manguito de cobre",
@@ -4866,6 +4941,7 @@ SUBJECTS.push({
        "e": "Se puede poner cobre después del acero galvanizado si se intercala una válvula de retención, que impide que el agua con iones de cobre retroceda hacia el acero (incompatibilidades del HS 4)."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Las instalaciones que no se ponen en servicio en las 4 semanas siguientes a su terminación se cierran y:",
        "o": [
         "Se vacían",
@@ -4876,6 +4952,7 @@ SUBJECTS.push({
        "e": "Si una instalación no se pone en servicio en las 4 semanas siguientes a terminarla, se cierra y se vacía para evitar el agua estancada. Lo mismo si está más de 6 meses fuera de servicio."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Las acometidas que no se utilizan durante 1 año deben:",
        "o": [
         "Vaciarse cada mes",
@@ -4886,6 +4963,7 @@ SUBJECTS.push({
        "e": "Las acometidas que no se usan durante un año deben taponarse (mantenimiento del HS 4)."
       },
       {
+       "apt": "fonta-3.1",
        "q": "Un intercambiador es un ejemplo de receptor:",
        "o": [
         "Abierto",
@@ -4896,6 +4974,7 @@ SUBJECTS.push({
        "e": "En un receptor cerrado el agua circula por dentro sin salir al exterior, como en un intercambiador. Lo que hay que tener en cuenta en el cálculo es su pérdida de carga."
       },
       {
+       "apt": "fonta-3.3",
        "q": "Los perlizadores o aireadores reducen el caudal en torno al:",
        "o": [
         "10 %",
@@ -4906,6 +4985,7 @@ SUBJECTS.push({
        "e": "Los perlizadores o aireadores mezclan aire con el agua y reducen el caudal en torno a un 20 % sin que se note la diferencia al usarlos (tema 3)."
       },
       {
+       "apt": "fonta-3.3",
        "q": "Los grifos temporizados o electrónicos pueden reducir el consumo de agua en torno al:",
        "o": [
         "10 %",
@@ -4916,6 +4996,7 @@ SUBJECTS.push({
        "e": "Los grifos temporizados o electrónicos cortan el agua solos, y con eso ahorran en torno a un 30 % de consumo (tema 3)."
       },
       {
+       "apt": "fonta-3.3",
        "q": "En los inodoros de doble pulsación, la descarga reducida es aproximadamente del:",
        "o": [
         "25 %",
@@ -4926,6 +5007,7 @@ SUBJECTS.push({
        "e": "La cisterna de doble pulsación tiene una descarga completa (100 %) y otra reducida de aproximadamente la mitad (50 %)."
       },
       {
+       "apt": "fonta-3.2",
        "q": "Las duchas, al no poder llevar sifón propio, suelen conectarse a:",
        "o": [
         "Un bote sifónico",
@@ -4936,6 +5018,7 @@ SUBJECTS.push({
        "e": "Como las duchas no suelen tener sitio para un sifón propio, se conectan a un bote sifónico que hace de cierre hidráulico común del cuarto húmedo (tema 3)."
       },
       {
+       "apt": "fonta-3.4",
        "q": "La reutilización de aguas regeneradas está regulada por el:",
        "o": [
         "RD 1620/2007",
@@ -4946,6 +5029,7 @@ SUBJECTS.push({
        "e": "La reutilización de aguas regeneradas la regula el RD 1620/2007. El RD 487/2022 trata la legionela y el RD 140/2003, el agua de consumo (sustituido por el RD 3/2023). Tema 3."
       },
       {
+       "apt": "fonta-3.4",
        "q": "Está prohibido reutilizar aguas regeneradas en:",
        "o": [
         "Riego de jardines privados",
@@ -4956,6 +5040,7 @@ SUBJECTS.push({
        "e": "El RD 1620/2007 prohíbe usar aguas regeneradas en torres de refrigeración y condensadores evaporativos, por el riesgo de legionela, salvo lo previsto para uso industrial."
       },
       {
+       "apt": "fonta-3.4",
        "q": "Las aguas grises proceden de:",
        "o": [
         "Inodoros",
@@ -4966,6 +5051,7 @@ SUBJECTS.push({
        "e": "Las aguas grises son las de lavabos, duchas y bañeras, poco contaminadas. Las de los inodoros son aguas negras. Recuperar las grises tiene un coste elevado."
       },
       {
+       "apt": "fonta-3.4",
        "q": "El responsable de la calidad del agua regenerada hasta el punto de entrega es:",
        "o": [
         "El titular de la concesión o autorización",
@@ -4976,6 +5062,7 @@ SUBJECTS.push({
        "e": "Hasta el punto de entrega, la calidad del agua regenerada es responsabilidad del titular de la concesión o autorización. A partir de ese punto responde el usuario."
       },
       {
+       "apt": "fonta-4.1",
        "q": "El documento que regula la evacuación de aguas residuales y pluviales es el:",
        "o": [
         "CTE DB HS 4",
@@ -4986,6 +5073,7 @@ SUBJECTS.push({
        "e": "La evacuación de aguas residuales y pluviales se regula en la sección HS 5 del CTE. La HS 4 es el suministro de agua y la HE 4, la contribución renovable al ACS (tema 4)."
       },
       {
+       "apt": "fonta-4.2",
        "q": "La red de pequeña evacuación conduce los residuos desde los cierres hidráulicos hasta las bajantes, excepto los de:",
        "o": [
         "Lavabos",
@@ -4996,6 +5084,7 @@ SUBJECTS.push({
        "e": "Según el HS 5, la red de pequeña evacuación lleva el agua desde los cierres hidráulicos hasta las bajantes, salvo la de los inodoros, que desaguan directamente a la bajante o por un manguetón."
       },
       {
+       "apt": "fonta-4.2",
        "q": "El sistema en el que derivaciones y bajantes son independientes para residuales y pluviales pero se unifican en los colectores es:",
        "o": [
         "Mixto o semiseparativo",
@@ -5006,6 +5095,7 @@ SUBJECTS.push({
        "e": "En el sistema mixto o semiseparativo, derivaciones y bajantes son independientes para residuales y pluviales, pero se juntan en los colectores. En el separativo, los colectores también van separados."
       },
       {
+       "apt": "fonta-4.3",
        "q": "Cuando existe una única red de alcantarillado público, debe disponerse:",
        "o": [
         "Siempre un sistema separativo hasta la red",
@@ -5016,6 +5106,7 @@ SUBJECTS.push({
        "e": "Si el alcantarillado público es una única red unitaria, el edificio puede tener un sistema mixto o separativo, pero la conexión final debe hacerse con un cierre hidráulico, para que los gases de la red no vuelvan al edificio. Tema 4, apartado 3.2."
       },
       {
+       "apt": "fonta-4.3",
        "q": "Cuando no existe red de alcantarillado público, las residuales van a:",
        "o": [
         "El terreno",
@@ -5026,6 +5117,7 @@ SUBJECTS.push({
        "e": "Si no hay alcantarillado público, las aguas residuales deben ir a una estación depuradora particular. Las pluviales sí pueden verterse al terreno."
       },
       {
+       "apt": "fonta-4.2",
        "q": "La ventilación terciaria protege los cierres hidráulicos contra:",
        "o": [
         "Sifonamiento y autosifonamiento",
@@ -5036,6 +5128,7 @@ SUBJECTS.push({
        "e": "La ventilación terciaria conecta los cierres hidráulicos con la red de ventilación para protegerlos del sifonamiento y del autosifonamiento. Un sistema que la tiene incluye también la primaria y la secundaria."
       },
       {
+       "apt": "fonta-4.2",
        "q": "Las válvulas de aireación permiten:",
        "o": [
         "La salida de aire pero no su entrada",
@@ -5046,6 +5139,7 @@ SUBJECTS.push({
        "e": "La válvula de aireación deja entrar aire en la red para equilibrar la presión, pero no deja salir el aire de la red. Por eso puede instalarse en falsos techos sin salir al exterior."
       },
       {
+       "apt": "fonta-4.4",
        "q": "La altura máxima del cierre hidráulico es:",
        "o": [
         "70 mm",
@@ -5056,6 +5150,7 @@ SUBJECTS.push({
        "e": "La altura del cierre hidráulico no debe pasar de 100 mm. La mínima es de 50 mm en usos continuos y de 70 mm en discontinuos."
       },
       {
+       "apt": "fonta-4.4",
        "q": "Un bote sifónico puede dar servicio a aparatos de otro cuarto húmedo.",
        "o": [
         "Verdadero",
@@ -5065,6 +5160,7 @@ SUBJECTS.push({
        "e": "Un bote sifónico solo puede dar servicio a los aparatos del cuarto húmedo donde está instalado, no a los de otro cuarto."
       },
       {
+       "apt": "fonta-4.5",
        "q": "La distancia del bote sifónico a la bajante no debe ser mayor que:",
        "o": [
         "1 m",
@@ -5075,6 +5171,7 @@ SUBJECTS.push({
        "e": "El bote sifónico debe estar a 2 m como máximo de la bajante, y las derivaciones que llegan a él, a 2,5 m como máximo."
       },
       {
+       "apt": "fonta-4.5",
        "q": "En lavabos y bidés con sifón individual, la distancia máxima a la bajante es:",
        "o": [
         "2 m",
@@ -5085,6 +5182,7 @@ SUBJECTS.push({
        "e": "Los lavabos y bidés con sifón individual pueden estar como máximo a 4 m de la bajante, con una pendiente del desagüe del 2,5 al 5 %."
       },
       {
+       "apt": "fonta-4.5",
        "q": "En bañeras y duchas, la pendiente del desagüe debe ser:",
        "o": [
         "Entre 2 y 4 %",
@@ -5095,6 +5193,7 @@ SUBJECTS.push({
        "e": "El HS 5 limita la pendiente del desagüe de bañeras y duchas a un máximo del 10 %."
       },
       {
+       "apt": "fonta-4.4",
        "q": "Los desagües de fregaderos, lavadoras y lavavajillas deben llevar:",
        "o": [
         "Sifón individual",
@@ -5105,6 +5204,7 @@ SUBJECTS.push({
        "e": "El HS 5 exige sifón individual en los desagües de fregaderos, lavadoras y lavavajillas, por la grasa y los restos que arrastran."
       },
       {
+       "apt": "fonta-4.5",
        "q": "La unión de los desagües a las bajantes debe tener una inclinación no menor que:",
        "o": [
         "30º",
@@ -5115,6 +5215,7 @@ SUBJECTS.push({
        "e": "Los desagües deben unirse a la bajante con la mayor inclinación posible y nunca menos de 45º, para que el agua entre sin frenar ni perturbar el flujo."
       },
       {
+       "apt": "fonta-4.5",
        "q": "El rebosadero es obligatorio en lavabos aunque no tengan tapón.",
        "o": [
         "Verdadero",
@@ -5124,6 +5225,7 @@ SUBJECTS.push({
        "e": "El HS 5 exige rebosadero en los lavabos aunque no tengan tapón, para evitar que se desborden."
       },
       {
+       "apt": "fonta-4.6",
        "q": "En redes enterradas, en las arquetas de paso pueden acometer como máximo:",
        "o": [
         "2 colectores",
@@ -5134,6 +5236,7 @@ SUBJECTS.push({
        "e": "En las arquetas de paso de redes enterradas pueden acometer como máximo 3 colectores, uno por cada cara libre de la arqueta."
       },
       {
+       "apt": "fonta-4.6",
        "q": "La arqueta a pie de bajante debe ser sifónica.",
        "o": [
         "Verdadero",
@@ -5143,6 +5246,7 @@ SUBJECTS.push({
        "e": "La arqueta a pie de bajante no debe ser sifónica: la bajante tiene que poder ventilar a través de la red."
       },
       {
+       "apt": "fonta-4.6",
        "q": "Se debe disponer pozo de resalto cuando la diferencia de cota con la acometida sea mayor que:",
        "o": [
         "0,5 m",
@@ -5153,6 +5257,7 @@ SUBJECTS.push({
        "e": "Cuando la diferencia de cota entre el final de la red y la acometida supera 1 m, hay que disponer un pozo de resalto (HS 5)."
       },
       {
+       "apt": "fonta-4.6",
        "q": "El separador de grasas se dispone preferiblemente:",
        "o": [
         "Al principio de la red",
@@ -5163,6 +5268,7 @@ SUBJECTS.push({
        "e": "El separador de grasas se coloca al final de la red horizontal, antes del pozo de resalto y de la acometida, para retener grasas de restaurantes, garajes o talleres antes de verter a la red pública."
       },
       {
+       "apt": "fonta-4.7",
        "q": "El sistema de bombeo y elevación debe tener al menos:",
        "o": [
         "Una bomba",
@@ -5173,6 +5279,7 @@ SUBJECTS.push({
        "e": "El sistema de bombeo y elevación debe tener al menos dos bombas, para que siga funcionando si una se avería."
       },
       {
+       "apt": "fonta-4.7",
        "q": "Sin grupo electrógeno, las bombas de elevación deben tener una batería con autonomía de al menos:",
        "o": [
         "4 h",
@@ -5183,6 +5290,7 @@ SUBJECTS.push({
        "e": "Si no hay grupo electrógeno, las bombas de elevación deben alimentarse con una batería de al menos 24 h de autonomía, o con un grupo exclusivo."
       },
       {
+       "apt": "fonta-4.7",
        "q": "En la conexión del bombeo con el alcantarillado debe disponerse:",
        "o": [
         "Un bucle antirreflujo",
@@ -5193,6 +5301,7 @@ SUBJECTS.push({
        "e": "La impulsión del bombeo se conecta al alcantarillado con un bucle antirreflujo, situado por encima del nivel de salida, para que el agua de la red no vuelva hacia el edificio."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Para desagües continuos (bandejas de condensación), se toma 1 UD por cada:",
        "o": [
         "0,03 dm³/s",
@@ -5203,6 +5312,7 @@ SUBJECTS.push({
        "e": "En los desagües continuos, como las bandejas de condensación, el HS 5 asigna 1 UD por cada 0,03 dm³/s de caudal (apartado 4.1)."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Los diámetros de la tabla 4.1 del HS 5 valen para ramales individuales de longitud:",
        "o": [
         "1,5 m",
@@ -5213,6 +5323,7 @@ SUBJECTS.push({
        "e": "Los diámetros de la tabla 4.1 del HS 5 son válidos para ramales individuales de hasta 1,5 m. Si el ramal es más largo, hay que hacer un cálculo pormenorizado."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Según la tabla 4.2 del HS 5, un desagüe de 50 mm equivale a:",
        "o": [
         "2 UD",
@@ -5223,6 +5334,7 @@ SUBJECTS.push({
        "e": "La tabla 4.2 del HS 5 asigna UD según el diámetro del desagüe: 32 mm → 1, 40 → 2, 50 → 3, 60 → 4, 80 → 5 y 100 → 6."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Las bajantes de residuales se dimensionan para que la variación de presión no supere:",
        "o": [
         "±100 Pa",
@@ -5233,6 +5345,7 @@ SUBJECTS.push({
        "e": "Las bajantes de residuales se dimensionan para que la variación de presión no supere ±250 Pa, para no romper los cierres hidráulicos, y para que el agua no ocupe más de un tercio de la sección."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Si una desviación de la bajante forma más de 45º con la vertical, ese tramo se dimensiona como colector con pendiente del:",
        "o": [
         "1 %",
@@ -5243,6 +5356,7 @@ SUBJECTS.push({
        "e": "Si una desviación forma más de 45º con la vertical, el agua ya no cae: ese tramo se dimensiona como un colector horizontal con pendiente del 4 % (HS 5)."
       },
       {
+       "apt": "fonta-4.8",
        "q": "Los colectores horizontales de residuales se dimensionan para funcionar a:",
        "o": [
         "Sección llena",
@@ -5253,6 +5367,7 @@ SUBJECTS.push({
        "e": "Los colectores de residuales se calculan para funcionar a media sección, hasta un máximo de tres cuartos, para dejar espacio al aire. Los de pluviales se calculan a sección llena."
       },
       {
+       "apt": "fonta-4.9",
        "q": "Una cubierta de 150 m² necesita como mínimo:",
        "o": [
         "2 sumideros",
@@ -5263,6 +5378,7 @@ SUBJECTS.push({
        "e": "Según la tabla 4.6 del HS 5, una cubierta de entre 100 y 200 m² necesita al menos 3 sumideros. 150 m² está en ese tramo."
       },
       {
+       "apt": "fonta-4.9",
        "q": "Para una intensidad pluviométrica de 150 mm/h, el factor de corrección de la superficie es:",
        "o": [
         "0,67",
@@ -5277,6 +5393,7 @@ SUBJECTS.push({
        ]
       },
       {
+       "apt": "fonta-4.9",
        "q": "Un canalón de sección cuadrangular debe ser, respecto al semicircular equivalente:",
        "o": [
         "Un 10 % menor",
@@ -5287,6 +5404,7 @@ SUBJECTS.push({
        "e": "El HS 5 dimensiona los canalones como semicirculares. Si el canalón es de sección cuadrangular, su sección debe ser un 10 % mayor que la del semicircular equivalente."
       },
       {
+       "apt": "fonta-4.9",
        "q": "El área de paso del filtro de una caldereta debe ser entre 1,5 y 2 veces la sección de la tubería.",
        "o": [
         "Verdadero",
@@ -5307,6 +5425,7 @@ SUBJECTS.push({
      "source": "Banco ampliado de verificación de Fontanería y saneamiento (tema 5: verificación del HS 4 y del HS 5, pruebas, puesta en servicio y mantenimiento): 94 preguntas tipo test. Las respuestas son las de las soluciones comentadas del documento. Discrepancias del temario: la presión máxima en los puntos de consumo es de 500 kPa (tema 1 y CTE DB HS 4), aunque una diapositiva del tema 5 pone 550 kPa; para legionela y agua de consumo se usan las normas vigentes que cita el tema 5 (RD 487/2022 y RD 3/2023), aunque los temas 1 y 2 citan el RD 865/2003 y el RD 140/2003; las tuberías metálicas se prueban según la UNE-EN 14336, que sustituye a la UNE 100151:1988; el desagüe del lavabo lleva entre el 2,5 y el 5 % de pendiente (HS 5), aunque el tema 3 habla de un 1 %; y la pregunta 20 del examen real (los sistemas mixtos no son más caros que los separativos) no sale de las diapositivas. Las preguntas afectadas llevan la marca «Sin confirmar».",
      "questions": [
       {
+       "apt": "fonta-5.1",
        "q": "El CTE regula las exigencias básicas de calidad de los edificios en desarrollo de la:",
        "o": [
         "Ley de Industria",
@@ -5317,6 +5436,7 @@ SUBJECTS.push({
        "e": "El CTE desarrolla la Ley 38/1999 de Ordenación de la Edificación (LOE), que establece los requisitos básicos de calidad de los edificios (tema 5, presentación)."
       },
       {
+       "apt": "fonta-5.1",
        "q": "El requisito básico de higiene, salud y protección del medio ambiente se denomina de forma simplificada:",
        "o": [
         "Salubridad",
@@ -5327,6 +5447,7 @@ SUBJECTS.push({
        "e": "El requisito básico de higiene, salud y protección del medio ambiente se resume como «salubridad», y lo desarrolla el Documento Básico HS."
       },
       {
+       "apt": "fonta-5.1",
        "q": "El objetivo del requisito de salubridad es reducir a límites aceptables el riesgo de que los usuarios padezcan molestias o enfermedades y de que el edificio se deteriore o deteriore el medio ambiente.",
        "o": [
         "Verdadero",
@@ -5336,6 +5457,7 @@ SUBJECTS.push({
        "e": "Es la definición del objetivo de salubridad: limitar el riesgo de molestias o enfermedades para los usuarios y el de que el edificio se deteriore o deteriore el medio ambiente (tema 5, apartado 1.1)."
       },
       {
+       "apt": "fonta-5.1",
        "q": "La sección del DB HS dedicada al suministro de agua es la:",
        "o": [
         "HS 3",
@@ -5346,6 +5468,7 @@ SUBJECTS.push({
        "e": "El suministro de agua es la sección HS 4 del DB HS. La HS 3 trata la calidad del aire interior y la HS 5, la evacuación de aguas."
       },
       {
+       "apt": "fonta-1.1",
        "q": "Una reforma de la fontanería existente queda dentro del HS 4 cuando:",
        "o": [
         "Se sustituyen tuberías por otras iguales",
@@ -5356,6 +5479,7 @@ SUBJECTS.push({
        "e": "El HS 4 se aplica a una reforma cuando aumenta el número o la capacidad de los aparatos receptores, porque cambian los caudales. Sustituir tuberías por otras iguales no lo activa. El HS 5 sigue el mismo criterio."
       },
       {
+       "apt": "fonta-5.1",
        "q": "¿Cuál es el orden de la secuencia de verificación del HS 4 y del HS 5?",
        "o": [
         "Ejecución, diseño, productos, mantenimiento, dimensionado",
@@ -5366,6 +5490,7 @@ SUBJECTS.push({
        "e": "El HS 4 y el HS 5 tienen la misma estructura: condiciones de diseño, de dimensionado, de ejecución, de los productos de construcción y de uso y mantenimiento (apartados 3 a 7 de cada sección). La verificación sigue ese orden."
       },
       {
+       "apt": "fonta-5.1",
        "q": "En la secuencia de verificación del HS 4, la puesta en servicio forma parte del cumplimiento de las condiciones de:",
        "o": [
         "Ejecución",
@@ -5376,6 +5501,7 @@ SUBJECTS.push({
        "e": "La puesta en servicio, con sus pruebas, forma parte de las condiciones de ejecución, recogidas en el apartado 5 («Construcción») del HS 4."
       },
       {
+       "apt": "fonta-5.1",
        "q": "En la verificación del HS 5, las pruebas forman parte de las condiciones de:",
        "o": [
         "Dimensionado",
@@ -5386,6 +5512,7 @@ SUBJECTS.push({
        "e": "En el HS 5, las pruebas de estanqueidad forman parte de las condiciones de ejecución, igual que en el HS 4 (tema 5, apartado 2.2)."
       },
       {
+       "apt": "fonta-5.1",
        "q": "Según el tema 5, en la verificación de fontanería y saneamiento es la propia normativa la que determina los criterios de auditoría.",
        "o": [
         "Verdadero",
@@ -5395,6 +5522,7 @@ SUBJECTS.push({
        "e": "El tema 5 subraya («Recuerda») que en fontanería y saneamiento no hace falta un método propio: la normativa (HS 4 y HS 5) fija qué hay que comprobar y cómo."
       },
       {
+       "apt": "fonta-5.1",
        "q": "Los equipos de producción de ACS con acumulación deben tener características que eviten:",
        "o": [
         "El ruido",
@@ -5405,6 +5533,7 @@ SUBJECTS.push({
        "e": "La exigencia básica del HS 4 pide que los equipos de ACS con acumulación eviten el desarrollo de gérmenes patógenos como la legionela, que proliferan en agua templada estancada."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Según el tema 5, el agua de consumo debe cumplir actualmente el:",
        "o": [
         "RD 140/2003",
@@ -5416,6 +5545,7 @@ SUBJECTS.push({
        "d": true
       },
       {
+       "apt": "fonta-1.4",
        "q": "La base del dimensionado (caudal y presión) la facilitan:",
        "o": [
         "Las compañías suministradoras",
@@ -5426,6 +5556,7 @@ SUBJECTS.push({
        "e": "El caudal y la presión de partida para dimensionar los facilita la compañía suministradora, porque dependen de su red (HS 4, apartado 3.1)."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Antes de los aparatos de refrigeración o climatización debe instalarse un sistema antirretorno.",
        "o": [
         "Verdadero",
@@ -5435,6 +5566,7 @@ SUBJECTS.push({
        "e": "El HS 4 exige un sistema antirretorno antes de los aparatos de refrigeración o climatización, para que su agua no pueda volver a la red de consumo."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Al verificar las condiciones mínimas de suministro, la presión en un calentador debe ser al menos:",
        "o": [
         "100 kPa",
@@ -5445,6 +5577,7 @@ SUBJECTS.push({
        "e": "Los calentadores, igual que los fluxores, necesitan al menos 150 kPa para funcionar bien. Los grifos comunes se conforman con 100 kPa."
       },
       {
+       "apt": "fonta-1.4",
        "q": "La temperatura de ACS de 50 a 65 ºC no es exigible en:",
        "o": [
         "Hospitales",
@@ -5455,6 +5588,7 @@ SUBJECTS.push({
        "e": "El rango de 50 a 65 ºC no se exige en edificios de uso exclusivo de vivienda, siempre que no afecten al ambiente exterior. En hospitales y hoteles sí se exige, por el riesgo de legionela."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Excepto en viviendas aisladas y adosadas, el grupo de presión, el tratamiento de agua y los contadores deben instalarse en:",
        "o": [
         "Patinillos no registrables",
@@ -5465,6 +5599,7 @@ SUBJECTS.push({
        "e": "Salvo en viviendas aisladas o adosadas, el grupo de presión, el tratamiento de agua y los contadores deben ir en locales con espacio suficiente para mantenerlos (condiciones de mantenimiento del HS 4)."
       },
       {
+       "apt": "fonta-1.4",
        "q": "Para su mantenimiento, las redes de tuberías deben estar a la vista, en huecos o patinillos registrables, o tener arquetas o registros.",
        "o": [
         "Verdadero",
@@ -5474,6 +5609,7 @@ SUBJECTS.push({
        "e": "Tanto el HS 4 como el HS 5 exigen que las redes se puedan mantener: a la vista, en huecos o patinillos registrables, o con arquetas y registros."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Debe disponerse contabilización de agua fría y caliente para:",
        "o": [
         "Cada unidad de consumo individualizable",
@@ -5484,6 +5620,7 @@ SUBJECTS.push({
        "e": "Por la exigencia de ahorro de agua, cada unidad de consumo individualizable (cada vivienda o local) debe tener contador de agua fría y de agua caliente."
       },
       {
+       "apt": "fonta-5.2",
        "q": "El esquema general de la instalación puede ser de red con contador general único o de red con:",
        "o": [
         "Contadores en cubierta",
@@ -5494,6 +5631,7 @@ SUBJECTS.push({
        "e": "El HS 4 contempla dos esquemas: red con contador general único (figura 3.1) y red con contadores aislados (figura 3.2)."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Un grupo de presión convencional cuenta con depósito auxiliar, al menos dos bombas iguales en paralelo con funcionamiento alterno y:",
        "o": [
         "Válvula de aireación",
@@ -5504,6 +5642,7 @@ SUBJECTS.push({
        "e": "El grupo convencional tiene un depósito auxiliar, al menos dos bombas iguales en paralelo que funcionan alternándose y depósitos de presión con membrana, que evitan arranques continuos (tema 5, apartado 1.5)."
       },
       {
+       "apt": "fonta-5.2",
        "q": "El grupo de presión de caudal variable puede prescindir del depósito auxiliar y lleva:",
        "o": [
         "Un variador de frecuencia que mantiene constante la presión de salida",
@@ -5514,6 +5653,7 @@ SUBJECTS.push({
        "e": "El grupo de caudal variable regula la velocidad de las bombas con un variador de frecuencia para mantener constante la presión de salida, y puede prescindir del depósito auxiliar (tema 5, apartado 1.5)."
       },
       {
+       "apt": "fonta-5.2",
        "q": "El grupo de presión debe permitir abastecer con presión de red las zonas que lo admitan sin poner en marcha el grupo.",
        "o": [
         "Verdadero",
@@ -5523,6 +5663,7 @@ SUBJECTS.push({
        "e": "El grupo de presión debe dejar que las zonas con presión de red suficiente se abastezcan directamente, sin poner en marcha el grupo, para ahorrar energía (tema 5, apartado 1.5)."
       },
       {
+       "apt": "fonta-5.2",
        "q": "Los grupos de presión se instalan en un local de uso exclusivo que puede albergar también:",
        "o": [
         "El cuarto de basuras",
@@ -5533,6 +5674,7 @@ SUBJECTS.push({
        "e": "El grupo de presión va en un local de uso exclusivo, que puede compartir con el sistema de tratamiento de agua porque ambos forman parte de la instalación de agua (tema 5, apartado 1.5)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "La prueba de resistencia mecánica y estanquidad de las instalaciones interiores la efectúa:",
        "o": [
         "La compañía suministradora",
@@ -5543,6 +5685,7 @@ SUBJECTS.push({
        "e": "La prueba de resistencia mecánica y estanquidad de las instalaciones interiores la hace la empresa instaladora (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Durante la prueba de resistencia y estanquidad, los componentes deben estar:",
        "o": [
         "Vistos y accesibles",
@@ -5553,6 +5696,7 @@ SUBJECTS.push({
        "e": "Durante la prueba, todos los componentes deben estar vistos y accesibles, para poder detectar cualquier fuga antes de taparlos."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Para iniciar la prueba se llena la instalación con los grifos terminales:",
        "o": [
         "Cerrados",
@@ -5563,6 +5707,7 @@ SUBJECTS.push({
        "e": "Se llena la instalación con los grifos abiertos hasta que sale todo el aire. Después se cierran los grifos y la alimentación, y se sube a la presión de prueba."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Tras purgar, la presión de prueba se alcanza mediante:",
        "o": [
         "La presión de la red",
@@ -5573,6 +5718,7 @@ SUBJECTS.push({
        "e": "La presión de prueba se alcanza con una bomba conectada a la instalación, no con la presión de la red ni con el grupo del edificio (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "Las tuberías metálicas se prueban según la norma (actualizada en el tema 5):",
        "o": [
         "UNE-EN 14336",
@@ -5584,6 +5730,7 @@ SUBJECTS.push({
        "d": true
       },
       {
+       "apt": "fonta-5.3",
        "q": "Las tuberías termoplásticas y multicapa se prueban según:",
        "o": [
         "El procedimiento A de la UNE-CEN/TR 12108",
@@ -5594,6 +5741,7 @@ SUBJECTS.push({
        "e": "Las tuberías termoplásticas y multicapa se prueban con el procedimiento A de la UNE-CEN/TR 12108. La UNE-EN 14336 es para las metálicas (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "Tras la primera prueba, la instalación se vuelve a probar:",
        "o": [
         "Con aire",
@@ -5604,6 +5752,7 @@ SUBJECTS.push({
        "e": "Tras la primera prueba, la instalación se vuelve a probar con la grifería y los aparatos ya conectados, para comprobar también esas uniones (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-2.7",
        "q": "El manómetro de la prueba debe apreciar como mínimo intervalos de:",
        "o": [
         "0,01 bar",
@@ -5614,6 +5763,7 @@ SUBJECTS.push({
        "e": "El manómetro de la prueba debe apreciar como mínimo variaciones de 0,1 bar, para detectar pequeñas pérdidas de presión (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Las presiones de prueba indicadas se refieren al nivel de:",
        "o": [
         "La cubierta",
@@ -5624,6 +5774,7 @@ SUBJECTS.push({
        "e": "Las presiones de prueba se refieren al nivel de la calzada: en los puntos más altos del edificio la presión será menor por la altura (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-1.3",
        "q": "La purga consiste en:",
        "o": [
         "Eliminar el aire de las tuberías",
@@ -5634,6 +5785,7 @@ SUBJECTS.push({
        "e": "Según la terminología del HS 4, la purga es la eliminación del aire de las tuberías."
       },
       {
+       "apt": "fonta-2.7",
        "q": "La comprobación del tiempo que tarda en salir el agua caliente se hace tras el equilibrado y sin haber abierto ningún grifo en las últimas:",
        "o": [
         "2 horas",
@@ -5644,6 +5796,7 @@ SUBJECTS.push({
        "e": "Para medir cuánto tarda en salir el agua caliente, la red debe estar en reposo: tras el equilibrado y sin abrir ningún grifo en las últimas 24 horas. Se abre uno a uno el grifo más alejado de cada ramal."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Con el acumulador a régimen, las temperaturas se comprueban con:",
        "o": [
         "Cámara termográfica obligatoria",
@@ -5654,6 +5807,7 @@ SUBJECTS.push({
        "e": "Con el acumulador a régimen, las temperaturas se miden con un termómetro de contacto en el acumulador, en su salida y en los grifos."
       },
       {
+       "apt": "fonta-2.7",
        "q": "La temperatura del retorno de ACS no debe ser inferior a la de salida del acumulador en más de:",
        "o": [
         "1 ºC",
@@ -5664,6 +5818,7 @@ SUBJECTS.push({
        "e": "El retorno de ACS no debe llegar más de 3 ºC por debajo de la temperatura de salida del acumulador (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-2.7",
        "q": "Entre las pruebas de ACS está obtener los caudales exigidos a la temperatura fijada abriendo:",
        "o": [
         "Todos los grifos",
@@ -5674,6 +5829,7 @@ SUBJECTS.push({
        "e": "Se abren a la vez los grifos que se han estimado en el cálculo de simultaneidad y se comprueba que dan el caudal exigido a la temperatura fijada (HS 4, apartado 5.2)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "¿Cuál NO es una prueba particular de ACS del HS 4?",
        "o": [
         "Prueba de humo",
@@ -5684,6 +5840,7 @@ SUBJECTS.push({
        "e": "La prueba de humo es de saneamiento (HS 5), no de ACS. Las pruebas de ACS miden caudales y temperaturas."
       },
       {
+       "apt": "fonta-5.3",
        "q": "La red de ACS debe tener retorno, tanto en producción individual como centralizada, cuando la ida al punto más alejado mide:",
        "o": [
         "≥ 10 m",
@@ -5694,6 +5851,7 @@ SUBJECTS.push({
        "e": "Con producción individual o centralizada, la red de ACS debe tener retorno si la ida al punto más alejado mide 15 m o más (tema 5, apartado 1.7)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "Una instalación que permanece fuera de servicio más de 6 meses debe:",
        "o": [
         "Clorarse sin vaciar",
@@ -5704,6 +5862,7 @@ SUBJECTS.push({
        "e": "Si una instalación va a estar más de 6 meses fuera de servicio, debe cerrarse y vaciarse, para que no quede agua estancada. También si no entra en servicio en las 4 semanas siguientes a terminarla."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Las acometidas paradas temporalmente deben cerrarse en:",
        "o": [
         "El contador divisionario",
@@ -5714,6 +5873,7 @@ SUBJECTS.push({
        "e": "Las acometidas paradas temporalmente se cierran en la conducción de abastecimiento, es decir, antes de entrar al edificio (HS 4, apartado 7.1)."
       },
       {
+       "apt": "fonta-2.10",
        "q": "En la nueva puesta en servicio de una instalación con descalcificación hay que iniciar:",
        "o": [
         "Una regeneración por arranque manual",
@@ -5724,6 +5884,7 @@ SUBJECTS.push({
        "e": "Al volver a poner en servicio una instalación con descalcificador, hay que iniciar una regeneración con arranque manual (HS 4, apartado 7.2)."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Para el llenado en una nueva puesta en servicio, las llaves de cierre se abren al principio:",
        "o": [
         "Totalmente",
@@ -5734,6 +5895,7 @@ SUBJECTS.push({
        "e": "Al llenar de nuevo la instalación, las llaves se abren solo un poco, empezando por la principal, para evitar golpes de ariete."
       },
       {
+       "apt": "fonta-2.10",
        "q": "En la nueva puesta en servicio, la purga de las llaves de toma empieza por:",
        "o": [
         "La más cercana",
@@ -5744,6 +5906,7 @@ SUBJECTS.push({
        "e": "La purga empieza por la toma más alejada o la más alta, que es donde se acumula el aire, y se deja abierta hasta que no sale aire."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Tras llenar y lavar, la estanqueidad de la instalación se comprueba:",
        "o": [
         "Por control visual de conducciones accesibles, conexiones y aparatos",
@@ -5754,6 +5917,7 @@ SUBJECTS.push({
        "e": "Tras llenar y lavar, la estanqueidad se comprueba visualmente en las conducciones accesibles, las conexiones y los aparatos (HS 4, apartado 7.2)."
       },
       {
+       "apt": "fonta-5.3",
        "q": "Según el tema 5, las operaciones de mantenimiento de fontanería deben recoger las prescripciones del:",
        "o": [
         "RD 1620/2007",
@@ -5765,6 +5929,7 @@ SUBJECTS.push({
        "d": true
       },
       {
+       "apt": "fonta-2.10",
        "q": "Los elementos de medida, control y maniobra que deban quedar ocultos se situarán en espacios accesibles.",
        "o": [
         "Verdadero",
@@ -5774,6 +5939,7 @@ SUBJECTS.push({
        "e": "Si los elementos de medida, control y maniobra deben quedar ocultos, han de situarse en espacios accesibles para su mantenimiento (HS 4, apartado 7.3)."
       },
       {
+       "apt": "fonta-2.10",
        "q": "Con batería de contadores, los montantes hasta cada derivación particular forman parte, a efectos de mantenimiento, de:",
        "o": [
         "La instalación particular",
@@ -5784,6 +5950,7 @@ SUBJECTS.push({
        "e": "Con batería de contadores, los montantes hasta cada derivación particular discurren por zonas comunes, así que a efectos de mantenimiento forman parte de la instalación general."
       },
       {
+       "apt": "fonta-4.2",
        "q": "El cierre hidráulico impide el paso de aire de la red a los locales:",
        "o": [
         "Sin afectar al flujo del agua",
@@ -5794,6 +5961,7 @@ SUBJECTS.push({
        "e": "Según el HS 5, el cierre hidráulico deja una capa de agua que impide que los gases de la red entren en los locales, sin frenar el desagüe."
       },
       {
+       "apt": "fonta-4.4",
        "q": "¿Cuál de estas características NO es exigible a un cierre hidráulico?",
        "o": [
         "Ser autolimpiable",
@@ -5804,6 +5972,7 @@ SUBJECTS.push({
        "e": "El cierre hidráulico debe ser autolimpiable, no tener partes móviles y tener un registro de limpieza accesible. Una válvula de retención interior sería una parte móvil, así que no se exige."
       },
       {
+       "apt": "fonta-4.4",
        "q": "Los cierres hidráulicos pueden instalarse en serie.",
        "o": [
         "Verdadero",
@@ -5813,6 +5982,7 @@ SUBJECTS.push({
        "e": "No se pueden poner dos cierres hidráulicos en serie. Por ejemplo, si hay bote sifónico, los aparatos que desaguan en él no llevan sifón individual."
       },
       {
+       "apt": "fonta-4.4",
        "q": "La corona del sifón debe estar a una distancia de la válvula de desagüe:",
        "o": [
         "≤ 60 cm",
@@ -5823,6 +5993,7 @@ SUBJECTS.push({
        "e": "El HS 5 limita a 60 cm la distancia entre la válvula de desagüe y la corona del sifón."
       },
       {
+       "apt": "fonta-4.4",
        "q": "El diámetro del sifón debe ser:",
        "o": [
         "Igual al de la bajante",
@@ -5833,6 +6004,7 @@ SUBJECTS.push({
        "e": "El diámetro del sifón debe ser igual o mayor que el de la válvula de desagüe e igual o menor que el del ramal, para que el diámetro vaya aumentando en el sentido del flujo."
       },
       {
+       "apt": "fonta-4.5",
        "q": "Si la red de pequeña evacuación no puede conectarse a la bajante, se permite conectarla:",
        "o": [
         "Al manguetón del inodoro",
@@ -5843,6 +6015,7 @@ SUBJECTS.push({
        "e": "Si la red de pequeña evacuación no puede llegar a la bajante, el HS 5 permite conectarla al manguetón del inodoro."
       },
       {
+       "apt": "fonta-4.5",
        "q": "Pueden disponerse desagües enfrentados acometiendo a una tubería común.",
        "o": [
         "Verdadero",
@@ -5852,6 +6025,7 @@ SUBJECTS.push({
        "e": "El HS 5 prohíbe que dos desagües enfrentados acometan a una tubería común, porque el agua de uno entraría en el otro."
       },
       {
+       "apt": "fonta-4.5",
        "q": "Con sifones individuales, los ramales se unen a un tubo de derivación con cabecera:",
        "o": [
         "Soldada",
@@ -5862,6 +6036,7 @@ SUBJECTS.push({
        "e": "Con sifones individuales, los ramales se unen a un tubo de derivación cuya cabecera debe ser registrable con tapón roscado, para poder limpiarla (HS 5)."
       },
       {
+       "apt": "fonta-4.6",
        "q": "El diámetro de una bajante puede disminuir en el sentido de la corriente.",
        "o": [
         "Verdadero",
@@ -5871,6 +6046,7 @@ SUBJECTS.push({
        "e": "Una bajante nunca puede reducir su diámetro en el sentido de la corriente. Sí puede aumentarlo si acometen caudales mucho mayores."
       },
       {
+       "apt": "fonta-4.6",
        "q": "En colectores colgados, las bajantes se conectan mediante:",
        "o": [
         "Bridas",
@@ -5881,6 +6057,7 @@ SUBJECTS.push({
        "e": "En los colectores colgados, las bajantes se conectan con piezas especiales, no con simples codos, para no frenar el agua ni provocar atascos (tema 5, apartado 2.3)."
       },
       {
+       "apt": "fonta-4.6",
        "q": "La conexión de una bajante de pluviales a un colector colgado debe separarse de la de residuales al menos:",
        "o": [
         "1 m",
@@ -5891,6 +6068,7 @@ SUBJECTS.push({
        "e": "En un colector colgado, la conexión de una bajante de pluviales debe estar al menos a 3 m de la de residuales (tema 5, apartado 2.3)."
       },
       {
+       "apt": "fonta-4.6",
        "q": "En un mismo punto de un colector colgado no deben acometer más de:",
        "o": [
         "Dos colectores",
@@ -5901,6 +6079,7 @@ SUBJECTS.push({
        "e": "En un mismo punto de un colector colgado no pueden acometer más de dos colectores. En las arquetas de paso de redes enterradas se admiten tres."
       },
       {
+       "apt": "fonta-5.4",
        "q": "En los tramos rectos de colectores, la distancia máxima entre registros es:",
        "o": [
         "10 m",
@@ -5911,6 +6090,7 @@ SUBJECTS.push({
        "e": "En los tramos rectos de colectores, colgados o enterrados, debe haber un registro al menos cada 15 m."
       },
       {
+       "apt": "fonta-4.6",
        "q": "Los colectores enterrados se sitúan en zanjas:",
        "o": [
         "Por encima de la red de agua potable",
@@ -5921,6 +6101,7 @@ SUBJECTS.push({
        "e": "Los colectores enterrados van por debajo de la red de agua potable, para que una fuga de aguas residuales no pueda contaminarla (tema 5, apartado 2.3)."
       },
       {
+       "apt": "fonta-4.6",
        "q": "La acometida de las bajantes a una red enterrada se hace con interposición de:",
        "o": [
         "Una válvula de aireación",
@@ -5931,6 +6112,7 @@ SUBJECTS.push({
        "e": "Las bajantes acometen a la red enterrada a través de una arqueta, que permite registrar y limpiar la unión (tema 5, apartado 2.3)."
       },
       {
+       "apt": "fonta-5.4",
        "q": "La pendiente mínima de un colector enterrado es del:",
        "o": [
         "1 %",
@@ -5941,6 +6123,7 @@ SUBJECTS.push({
        "e": "Los colectores enterrados necesitan una pendiente mínima del 2 %. Los colgados, del 1 %."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Las pruebas de estanqueidad parcial se realizan con:",
        "o": [
         "Agua",
@@ -5951,6 +6134,7 @@ SUBJECTS.push({
        "e": "Las pruebas de estanqueidad parcial se hacen con agua, sobre los aparatos, las redes horizontales y las arquetas."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba de aparatos no se admite que quede en el sifón una altura de cierre hidráulico inferior a:",
        "o": [
         "10 mm",
@@ -5961,6 +6145,7 @@ SUBJECTS.push({
        "e": "En la prueba de aparatos, después de descargar, el sifón debe conservar al menos 25 mm de cierre hidráulico (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba de aparatos se verifican tiempos de desagüe, sifonamientos, ruidos y:",
        "o": [
         "Resistencia al fuego",
@@ -5971,6 +6156,7 @@ SUBJECTS.push({
        "e": "En la prueba de aparatos se comprueban los tiempos de desagüe, los sifonamientos, los ruidos y que se mantienen los cierres hidráulicos, descargando cada aparato solo o varios a la vez."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba de vaciado, con los grifos al caudal mínimo y la válvula de desagüe abierta, no debe acumularse agua en el aparato durante:",
        "o": [
         "30 segundos",
@@ -5981,6 +6167,7 @@ SUBJECTS.push({
        "e": "En la prueba de vaciado, con los grifos al caudal mínimo y el desagüe abierto, el aparato no debe acumular agua durante 1 minuto (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba de la red horizontal se introduce agua a presión de:",
        "o": [
         "0,1 a 0,2 bar",
@@ -5991,6 +6178,7 @@ SUBJECTS.push({
        "e": "La red horizontal se prueba introduciendo agua a una presión de 0,3 a 0,6 bar durante 10 minutos."
       },
       {
+       "apt": "fonta-5.5",
        "q": "La prueba de cada tramo de red horizontal dura:",
        "o": [
         "2 minutos",
@@ -6001,6 +6189,7 @@ SUBJECTS.push({
        "e": "Cada tramo de red horizontal se prueba durante 10 minutos a 0,3–0,6 bar (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Las arquetas y pozos de registro se prueban llenándolos de agua y observando si:",
        "o": [
         "Cambia el color",
@@ -6011,6 +6200,7 @@ SUBJECTS.push({
        "e": "Las arquetas y pozos se llenan de agua y se comprueba que el nivel no baja, lo que indicaría una fuga (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En las pruebas parciales se controlan las uniones, entronques y derivaciones en un:",
        "o": [
         "10 %",
@@ -6021,6 +6211,7 @@ SUBJECTS.push({
        "e": "En las pruebas parciales se revisan todas, el 100 %, de las uniones, entronques y derivaciones (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Las pruebas de estanqueidad total se hacen sobre el sistema completo:",
        "o": [
         "De una sola vez o por partes",
@@ -6031,6 +6222,7 @@ SUBJECTS.push({
        "e": "Las pruebas de estanqueidad total se hacen sobre el sistema completo, de una vez o por partes, con agua, aire o humo."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba total con agua se taponan todos los terminales excepto los de:",
        "o": [
         "La planta baja",
@@ -6041,6 +6233,7 @@ SUBJECTS.push({
        "e": "En la prueba total con agua se taponan todos los terminales salvo los de cubierta, y se llena la red hasta que rebosa por ellos."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba total con agua, la presión en cualquier punto debe estar entre:",
        "o": [
         "0,1 y 0,3 bar",
@@ -6051,6 +6244,7 @@ SUBJECTS.push({
        "e": "En la prueba total con agua, la presión en cualquier punto debe estar entre 0,3 y 1 bar (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Si la altura equivalente del sistema supera 1 bar, la prueba con agua se hace:",
        "o": [
         "Con aire",
@@ -6061,6 +6255,7 @@ SUBJECTS.push({
        "e": "Si la columna de agua de todo el sistema daría más de 1 bar, la prueba se hace por fases, dividiendo la red en tramos verticales (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Si la red se prueba con agua por partes, la presión será de:",
        "o": [
         "0,3 a 0,6 bar",
@@ -6071,6 +6266,7 @@ SUBJECTS.push({
        "e": "Si la red se prueba con agua por partes, la presión es de 0,3 a 0,6 bar, suficiente para detectar fugas sin forzar las uniones."
       },
       {
+       "apt": "fonta-5.5",
        "q": "Si la red de ventilación ya está hecha, en la prueba con agua:",
        "o": [
         "Se somete al mismo régimen que el resto",
@@ -6081,6 +6277,7 @@ SUBJECTS.push({
        "e": "Si la red de ventilación ya está ejecutada, se prueba con agua igual que el resto de la red (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "La prueba con agua termina cuando:",
        "o": [
         "Han pasado 10 minutos",
@@ -6091,6 +6288,7 @@ SUBJECTS.push({
        "e": "La prueba con agua se da por buena cuando ninguna unión pierde agua (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba con aire, la presión de la red será de:",
        "o": [
         "0,3 a 0,6 bar",
@@ -6101,6 +6299,7 @@ SUBJECTS.push({
        "e": "En la prueba con aire, la presión de la red se lleva a entre 0,5 y 1 bar como máximo (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "La prueba con aire es satisfactoria si la presión se mantiene constante durante:",
        "o": [
         "1 minuto",
@@ -6111,6 +6310,7 @@ SUBJECTS.push({
        "e": "La prueba con aire es satisfactoria si la presión se mantiene constante durante 3 minutos (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "La prueba con humo se efectúa sobre la red de:",
        "o": [
         "Aguas pluviales",
@@ -6121,6 +6321,7 @@ SUBJECTS.push({
        "e": "La prueba con humo se hace sobre la red de aguas residuales y su ventilación, que es por donde podrían escapar gases al interior. La prueba con agua se hace sobre residuales y pluviales."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba con humo, el producto se introduce:",
        "o": [
         "Por la parte baja del sistema",
@@ -6131,6 +6332,7 @@ SUBJECTS.push({
        "e": "El humo se introduce por la parte baja del sistema, después de llenar de agua todos los cierres hidráulicos, y sube por la red."
       },
       {
+       "apt": "fonta-5.5",
        "q": "En la prueba con humo, cuando aparece humo por los terminales de cubierta se taponan para mantener una presión de:",
        "o": [
         "25 Pa",
@@ -6141,6 +6343,7 @@ SUBJECTS.push({
        "e": "Cuando el humo sale por los terminales de cubierta, se taponan para mantener una presión de 250 Pa, la misma variación que deben aguantar los cierres hidráulicos."
       },
       {
+       "apt": "fonta-5.5",
        "q": "La prueba con humo es satisfactoria cuando:",
        "o": [
         "El humo sale por todos los aparatos",
@@ -6151,6 +6354,7 @@ SUBJECTS.push({
        "e": "La prueba con humo es satisfactoria si no se nota humo ni olor dentro del edificio (HS 5, apartado 5.6)."
       },
       {
+       "apt": "fonta-5.5",
        "q": "El humo de la prueba debe ser espeso y de olor fuerte.",
        "o": [
         "Verdadero",
@@ -6160,6 +6364,7 @@ SUBJECTS.push({
        "e": "El humo de prueba debe ser espeso y de olor fuerte, para poder detectar las fugas a la vista y por el olfato."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Los sumideros de locales húmedos, cubiertas transitables y los botes sifónicos se limpian cada:",
        "o": [
         "3 meses",
@@ -6170,6 +6375,7 @@ SUBJECTS.push({
        "e": "Los sumideros de locales húmedos y de cubiertas transitables y los botes sifónicos se limpian cada 6 meses (HS 5, apartado 7)."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Los sumideros y calderetas de cubiertas no transitables se limpian al menos:",
        "o": [
         "Una vez al año",
@@ -6180,6 +6386,7 @@ SUBJECTS.push({
        "e": "Los sumideros y calderetas de cubiertas no transitables se limpian al menos una vez al año (HS 5, apartado 7)."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Los colectores suspendidos se revisan:",
        "o": [
         "Cada 6 meses",
@@ -6190,6 +6397,7 @@ SUBJECTS.push({
        "e": "Los colectores suspendidos se revisan una vez al año, igual que las arquetas sumidero, los pozos y las bombas."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Las arquetas de pie de bajante, de paso y sifónicas se limpian cada:",
        "o": [
         "Año",
@@ -6200,6 +6408,7 @@ SUBJECTS.push({
        "e": "Las arquetas de pie de bajante, de paso y sifónicas se limpian cada 10 años, o antes si aparecen olores."
       },
       {
+       "apt": "fonta-5.6",
        "q": "El separador de grasas y fangos se limpia cada:",
        "o": [
         "6 meses",
@@ -6210,6 +6419,7 @@ SUBJECTS.push({
        "e": "El separador de grasas y fangos se limpia cada 6 meses, porque se llena con rapidez (HS 5, apartado 7)."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Los sifones y válvulas se revisan y desatascan:",
        "o": [
         "Cada año",
@@ -6220,6 +6430,7 @@ SUBJECTS.push({
        "e": "Los sifones y válvulas no tienen una periodicidad fija: se revisan y desatascan cuando el caudal de evacuación baja de forma apreciable (HS 5, apartado 7)."
       },
       {
+       "apt": "fonta-5.6",
        "q": "Para evitar malos olores, en sumideros, botes sifónicos y sifones debe mantenerse:",
        "o": [
         "Desinfectante",
@@ -6230,6 +6441,7 @@ SUBJECTS.push({
        "e": "Para que no haya malos olores, sumideros, botes sifónicos y sifones deben tener siempre agua, que es lo que forma el cierre hidráulico (HS 5, apartado 7)."
       },
       {
+       "apt": "fonta-5.6",
        "q": "En el mantenimiento de saneamiento se comprueba periódicamente la estanqueidad de la red y la existencia de olores.",
        "o": [
         "Verdadero",
