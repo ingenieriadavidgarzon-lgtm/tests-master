@@ -4041,6 +4041,261 @@ SUBJECTS.push({
        "e": "Los sistemas de presión diferencial siguen la UNE-EN 12101-6 y la UNE 23584 (instalación, puesta en marcha y mantenimiento). La UNE 23585 es la de diseño de control de humo y la UNE 23500, la de abastecimiento. Tema 4, apartado 2.1."
       }
      ]
+    },
+    {
+     "id": "pci-examen-2026",
+     "name": "Examen 2026",
+     "short": "PCI · Examen 2026",
+     "examSize": 20,
+     "examPen": 0.5,
+     "examTime": 20,
+     "source": "Examen real de PCI del 21-02-2026: 20 preguntas con la solución oficial definitiva. Se puntuaba +0,5 por acierto, −0,25 por fallo y 0 en blanco, con 20 minutos. Las preguntas están en el orden y con las opciones del examen (solo se ha corregido la ortografía); también están en el Temario, y el progreso se comparte.",
+     "presets": [
+      {
+       "id": "real-2026",
+       "name": "Examen real del 21-02-2026",
+       "idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+       ],
+       "t": 20,
+       "pen": 0.5
+      }
+     ],
+     "questions": [
+      {
+       "apt": "pci-1.1",
+       "q": "La combustión es cuando la velocidad de propagación es:",
+       "o": [
+        "Inferior a 1 m/s",
+        "Superior a 1 m/s y menor a la velocidad del sonido",
+        "Mayor que la velocidad del sonido"
+       ],
+       "c": 0,
+       "e": "Combustión: menos de 1 m/s. Entre 1 m/s y la velocidad del sonido es deflagración, y por encima, detonación."
+      },
+      {
+       "apt": "pci-1.2",
+       "q": "La sectorización es una medida de protección contra incendios:",
+       "o": [
+        "Pasiva",
+        "Activa",
+        "Pasiva y activa"
+       ],
+       "c": 0,
+       "e": "Es arquitectónica: elementos constructivos resistentes al fuego."
+      },
+      {
+       "apt": "pci-1.4",
+       "q": "El estudio de la carga de fuego:",
+       "o": [
+        "Sirve para categorizar el riesgo de los sectores de incendio",
+        "Nos indica el tipo de detectores que se deben instalar",
+        "Clasifica los sectores en función de los tipos de fuego que se pueden generar"
+       ],
+       "c": 0,
+       "e": "La carga de fuego (MJ/m²) es lo que fija el nivel de riesgo intrínseco de cada sector. Fuente: tema 1, 1.2."
+      },
+      {
+       "apt": "pci-4.3",
+       "q": "El control del humo del incendio se aplica a:",
+       "o": [
+        "Zonas de uso aparcamiento que no tengan la consideración de aparcamiento abierto",
+        "Establecimientos de uso comercial o pública concurrencia cuya ocupación exceda de 500 personas",
+        "Atrios cuya ocupación en el mismo sector exceda de 1.000 personas"
+       ],
+       "c": 0,
+       "e": "Las cifras de las otras dos opciones están intercambiadas: comercial o pública concurrencia es con más de 1.000 personas, y atrios con más de 500."
+      },
+      {
+       "apt": "pci-2.2",
+       "q": "Un sistema de detección de incendios analógico es:",
+       "o": [
+        "Aquel cuyos componentes trabajan por zonas, áreas o grupos",
+        "Aquel en el que cada equipo del sistema tiene su propia dirección",
+        "A y B son incorrectas"
+       ],
+       "c": 1,
+       "e": "Trabajar por zonas, áreas o grupos es lo que define al sistema convencional."
+      },
+      {
+       "apt": "pci-2.4",
+       "q": "Los detectores iónicos son detectores puntuales.",
+       "o": [
+        "Falso",
+        "Verdadero"
+       ],
+       "c": 1,
+       "e": "Son detectores puntuales de cámara ionizada."
+      },
+      {
+       "apt": "pci-2.4",
+       "q": "Los detectores ópticos se determinan en función de:",
+       "o": [
+        "Área y altura del local donde se instala",
+        "Forma del techo o cubierta",
+        "A y B son correctas"
+       ],
+       "c": 2,
+       "e": "UNE 23007-14: sistema, área y altura, forma del techo y uso."
+      },
+      {
+       "apt": "pci-2.5",
+       "q": "Los pulsadores de alarma se situarán de modo que la distancia máxima a recorrer desde cualquier origen de evacuación hasta un pulsador:",
+       "o": [
+        "No supere los 25 m",
+        "No supere los 15 m",
+        "No supere los 50 m"
+       ],
+       "c": 0,
+       "e": "15 m es el extintor y 50 m la separación entre BIE."
+      },
+      {
+       "apt": "pci-3.1",
+       "q": "Un extintor de polvo polivalente se puede utilizar para fuegos tipo E.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Clase E = eléctricos; el polvo no conduce."
+      },
+      {
+       "apt": "pci-3.3",
+       "q": "Para seleccionar los sistemas de abastecimiento se necesita determinar para su dimensionamiento:",
+       "o": [
+        "Caudal nominal, presión nominal y tiempo de autonomía",
+        "Categorización del abastecimiento y la altura del edificio",
+        "Ambas son correctas"
+       ],
+       "c": 0,
+       "e": "Datos nominales, categoría y clase; la altura del edificio no es un dato de la UNE 23500."
+      },
+      {
+       "apt": "pci-3.5",
+       "q": "Las BIE de 45 mm:",
+       "o": [
+        "Se deben utilizar por una sola persona y no es necesaria formación previa",
+        "Se deben utilizar por una sola persona y es necesaria la formación previa",
+        "Se deben utilizar por 2 personas y es necesaria la formación previa"
+       ],
+       "c": 2,
+       "e": "Manguera flexible de mayor caudal (200 l/min)."
+      },
+      {
+       "apt": "pci-3.6",
+       "q": "La columna seca está normativamente constituida por:",
+       "o": [
+        "Tubería ascendente de acero galvanizado de 80 mm de diámetro interior",
+        "Tubería ascendente de acero galvanizado de 100 mm de diámetro interior",
+        "Tubería ascendente de acero galvanizado de 200 mm de diámetro interior"
+       ],
+       "c": 0,
+       "e": "DN 80 (3\") en acero galvanizado."
+      },
+      {
+       "apt": "pci-3.7",
+       "q": "Los rociadores automáticos de agua permiten detectar el incendio y apagarlo.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "O controlarlo para que se apague por otros medios."
+      },
+      {
+       "apt": "pci-3.8",
+       "q": "El tamaño de la señalética fotoluminiscente depende de la distancia de observación.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 0,
+       "e": "Una señal de 210 × 210 mm sirve hasta 10 m; para más distancia la señal tiene que ser mayor."
+      },
+      {
+       "apt": "pci-4.2",
+       "q": "Los exutorios son sistemas de control de humo que se instalan en los puntos más bajos del edificio.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Se instalan en los puntos altos: el humo caliente sube."
+      },
+      {
+       "apt": "pci-4.2",
+       "q": "Los sistemas por impulsos (jet fan) son sistemas alternativos del control de humo que:",
+       "o": [
+        "Se instalan exclusivamente en túneles",
+        "Requieren de un análisis prestacional y cálculo CFD",
+        "A y B son incorrectas"
+       ],
+       "c": 1,
+       "e": "También en aparcamientos; no hay norma UNE-EN."
+      },
+      {
+       "apt": "pci-4.3",
+       "q": "El control de humo se debe instalar en establecimientos de uso comercial o pública concurrencia cuya ocupación exceda de 500 personas.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Son 1.000 personas; 500 es para atrios."
+      },
+      {
+       "apt": "pci-4.4",
+       "q": "En las escaleras protegidas la ventilación se puede hacer:",
+       "o": [
+        "Ventana o hueco directo al exterior de al menos 0,5 m² por planta",
+        "Conductos de entrada y salida de aire que pueden ser compartidos con la ventilación general",
+        "Sistema de presión diferencial"
+       ],
+       "c": 2,
+       "e": "El hueco es de 1 m² y los conductos deben ser exclusivos."
+      },
+      {
+       "apt": "pci-1.6",
+       "q": "El RD 2267/2004 y el RD 164/2025 se aplican a:",
+       "o": [
+        "Exclusivamente establecimientos industriales",
+        "Uso comercial y pública concurrencia",
+        "Establecimientos industriales así como cuando lo requiera el CTE DB SI"
+       ],
+       "c": 2,
+       "e": "El RSCIEI (RD 2267/2004, actualizado por el RD 164/2025) se aplica a los establecimientos industriales y también cuando el CTE DB SI remite a él, por ejemplo en zonas de uso industrial dentro de edificios no industriales."
+      },
+      {
+       "apt": "pci-1.5",
+       "q": "El CTE DB SI establece las necesidades normativas de:",
+       "o": [
+        "Medidas pasivas",
+        "Medidas activas",
+        "A y B son correctas"
+       ],
+       "c": 2,
+       "e": "SI 1, 2, 3, 6 pasivas; SI 4 activas."
+      }
+     ]
     }
    ]
   },
@@ -7016,6 +7271,260 @@ SUBJECTS.push({
        ],
        "c": 1,
        "e": "En las redes de agua los tratamientos son químicos, pero en el ACS pueden ser químicos o térmicos (tema 6, resumen)."
+      }
+     ]
+    },
+    {
+     "id": "font-examen-2026",
+     "name": "Examen 2026",
+     "short": "FONT · Examen 2026",
+     "examSize": 20,
+     "examPen": 0.5,
+     "examTime": 20,
+     "source": "Examen real de Fontanería del 21-02-2026: 20 preguntas con la solución oficial definitiva. Se puntuaba +0,5 por acierto, −0,25 por fallo y 0 en blanco, con 20 minutos. Las preguntas están en el orden y con las opciones del examen (solo se ha corregido la ortografía); también están en el Temario, y el progreso se comparte.",
+     "presets": [
+      {
+       "id": "real-2026",
+       "name": "Examen real del 21-02-2026",
+       "idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+       ],
+       "t": 20,
+       "pen": 0.5
+      }
+     ],
+     "questions": [
+      {
+       "apt": "fonta-1.3",
+       "q": "La acometida es la tubería que enlaza:",
+       "o": [
+        "La instalación general del edificio con la red exterior de suministro",
+        "La instalación general del edificio con el cuarto de contadores divisionarios",
+        "La instalación general del edificio con el grupo de presión"
+       ],
+       "c": 0,
+       "e": "Según la terminología del HS 4, la acometida es el tramo que une la red exterior de suministro (la de la compañía) con la instalación general del edificio. El cuarto de contadores y el grupo de presión ya forman parte de la instalación interior."
+      },
+      {
+       "apt": "fonta-1.3",
+       "q": "La suma de los caudales instantáneos mínimos de un grupo de aparatos sanitarios:",
+       "o": [
+        "Es siempre menor que el caudal simultáneo",
+        "Es siempre mayor que el caudal simultáneo",
+        "Puede ser igual o mayor que el caudal simultáneo"
+       ],
+       "c": 2,
+       "e": "El caudal simultáneo es la suma de los caudales instantáneos multiplicada por un coeficiente de simultaneidad menor o igual que 1. Por eso la suma es mayor que el simultáneo, o igual cuando solo hay un aparato."
+      },
+      {
+       "apt": "fonta-1.4",
+       "q": "Los caudales instantáneos mínimos según el CTE DB HS 4:",
+       "o": [
+        "Son siempre mayores en AFS que en ACS",
+        "Son siempre menores en AFS que en ACS",
+        "Son siempre iguales en AFS que en ACS"
+       ],
+       "c": 0,
+       "e": "En la tabla 2.1 del HS 4, el caudal instantáneo mínimo de agua fría es siempre mayor que el de agua caliente para el mismo aparato. Por ejemplo, en un lavabo son 0,10 dm³/s en AFS frente a 0,065 dm³/s en ACS."
+      },
+      {
+       "apt": "fonta-1.4",
+       "q": "La presión mínima de un punto de consumo tipo fluxor debe ser:",
+       "o": [
+        "100 kPa",
+        "150 kPa",
+        "200 kPa"
+       ],
+       "c": 1,
+       "e": "El HS 4 exige 150 kPa en fluxores y calentadores, porque necesitan más presión para funcionar bien. Para los grifos comunes basta con 100 kPa."
+      },
+      {
+       "apt": "fonta-1.4",
+       "q": "La temperatura en los puntos de consumo de ACS debe estar comprendida entre:",
+       "o": [
+        "45 ºC y 65 ºC",
+        "50 ºC y 60 ºC",
+        "50 ºC y 65 ºC"
+       ],
+       "c": 2,
+       "e": "El HS 4 fija que el ACS llegue a los puntos de consumo entre 50 y 65 ºC, un rango que limita el riesgo de legionela sin llegar a quemar. No es exigible en edificios de uso exclusivo de vivienda."
+      },
+      {
+       "apt": "fonta-2.2",
+       "q": "Las velocidades de cálculo en tuberías termoplásticas deben estar comprendidas entre:",
+       "o": [
+        "0,5 m/s y 2 m/s",
+        "0,5 m/s y 3,5 m/s",
+        "0,5 m/s y 3 m/s"
+       ],
+       "c": 1,
+       "e": "Las tuberías termoplásticas y multicapa admiten velocidades de cálculo de 0,5 a 3,5 m/s. En las metálicas el máximo es más bajo, de 2 m/s, para limitar ruidos y erosión."
+      },
+      {
+       "apt": "fonta-2.4",
+       "q": "En ACS, la pérdida de temperatura al grifo más alejado debe ser como máximo:",
+       "o": [
+        "3 ºC",
+        "2 ºC",
+        "3,5 ºC"
+       ],
+       "c": 0,
+       "e": "El caudal de retorno de ACS se calcula para que el agua no pierda más de 3 ºC hasta el grifo más alejado de la red."
+      },
+      {
+       "apt": "fonta-2.6",
+       "q": "Las protecciones contra la corrosión cuando los tubos de cobre discurren enterrados o empotrados deben ser:",
+       "o": [
+        "Con revestimiento de plástico",
+        "Con revestimiento bituminoso",
+        "Con revestimiento de película continua de polietileno"
+       ],
+       "c": 0,
+       "e": "Los tubos de cobre enterrados o empotrados se protegen con un revestimiento de plástico. El revestimiento bituminoso es para tubos de acero y la película continua de polietileno, para fundición."
+      },
+      {
+       "apt": "fonta-3.1",
+       "q": "En los receptores abiertos:",
+       "o": [
+        "El cálculo de la caída de presión debe tener en cuenta la presión mínima de descarga",
+        "El retorno debe tener la misma pérdida de carga que el circuito de impulsión",
+        "El intercambiador genera una pérdida de carga que se debe tener en cuenta"
+       ],
+       "c": 0,
+       "e": "En un receptor abierto el agua sale al exterior (un grifo o un inodoro), así que hay que garantizar una presión mínima de descarga en ese punto. La pérdida de carga del intercambiador es lo que se tiene en cuenta en los receptores cerrados, por los que el agua circula sin salir."
+      },
+      {
+       "apt": "fonta-4.4",
+       "q": "El sellado hidráulico debe realizarse siempre con un sifón individual.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "El cierre hidráulico no tiene por qué ser un sifón individual: también vale un bote sifónico, un sumidero sifónico o una arqueta sifónica."
+      },
+      {
+       "apt": "fonta-3.4",
+       "q": "Las aguas pluviales se pueden utilizar para consumo humano.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "El RD 1620/2007 sobre reutilización de aguas prohíbe usar aguas regeneradas para consumo humano, salvo en situaciones de catástrofe declarada."
+      },
+      {
+       "apt": "fonta-4.3",
+       "q": "El tratamiento de las aguas pluviales y residuales se realiza en una primera etapa en el propio edificio de viviendas antes de enviarlas al saneamiento general público.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Las aguas del edificio se vierten directamente a la red pública, que las lleva a la depuradora. Solo cuando no existe red de alcantarillado se exige una estación depuradora particular."
+      },
+      {
+       "apt": "fonta-4.2",
+       "q": "El reflujo en una instalación de saneamiento se evita instalando:",
+       "o": [
+        "Una clapeta antirretorno",
+        "Una válvula de corte",
+        "No es necesario, nunca se produce"
+       ],
+       "c": 0,
+       "e": "El reflujo (que el agua vuelva desde la red hacia el edificio) se evita con válvulas antirretorno de seguridad, es decir, con una clapeta antirretorno. Una válvula de corte no lo impide de forma automática."
+      },
+      {
+       "apt": "fonta-4.2",
+       "q": "En saneamiento, la ventilación primaria discurre paralela a la bajante y se conecta a esta.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "La ventilación que discurre paralela a la bajante y se conecta a ella es la secundaria. La primaria es la prolongación de la propia bajante hasta la cubierta."
+      },
+      {
+       "apt": "fonta-4.2",
+       "q": "En saneamiento, una unidad de desagüe equivale a:",
+       "o": [
+        "0,47 l/s",
+        "0,03 l/s",
+        "Ambas son incorrectas"
+       ],
+       "c": 0,
+       "e": "En el HS 5, una unidad de desagüe (UD) equivale a 0,47 l/s. El valor de 0,03 l/s es el caudal que se asigna a cada UD en los desagües continuos, como las bandejas de condensación."
+      },
+      {
+       "apt": "fonta-4.4",
+       "q": "La altura mínima de cierre hidráulico debe ser 70 mm para usos continuos.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "La altura mínima del cierre hidráulico es de 50 mm en usos continuos y de 70 mm en usos discontinuos, donde el agua del sifón tiene más tiempo para evaporarse."
+      },
+      {
+       "apt": "fonta-4.5",
+       "q": "Las derivaciones que acometen al bote sifónico deben tener una pendiente comprendida entre:",
+       "o": [
+        "1-2 %",
+        "2-4 %",
+        "1-3 %"
+       ],
+       "c": 1,
+       "e": "Las derivaciones que llegan a un bote sifónico deben tener una pendiente de entre el 2 y el 4 % y una longitud no mayor de 2,5 m."
+      },
+      {
+       "apt": "fonta-4.5",
+       "q": "El desagüe de los inodoros a las bajantes debe realizarse directamente o por medio de un manguetón de longitud igual o menor que 2 m.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "El inodoro debe desaguar a la bajante directamente o mediante un manguetón de 1 m como máximo, no de 2 m."
+      },
+      {
+       "apt": "fonta-4.6",
+       "q": "Los colectores colgados deben tener una pendiente mínima del:",
+       "o": [
+        "1 %",
+        "2 %",
+        "4 %"
+       ],
+       "c": 0,
+       "e": "Los colectores colgados deben tener al menos un 1 % de pendiente. Los enterrados necesitan un mínimo del 2 %."
+      },
+      {
+       "apt": "fonta-4.2",
+       "q": "Los sistemas de saneamiento mixtos son más caros de implantar que los separativos.",
+       "o": [
+        "Verdadero",
+        "Falso"
+       ],
+       "c": 1,
+       "e": "Falso según la solución oficial del examen: el sistema mixto, con una sola red para pluviales y residuales, es más sencillo y barato de implantar que el separativo, que duplica las redes. Este dato no sale de las diapositivas del temario."
       }
      ]
     }

@@ -50,11 +50,13 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 │   └── Verificación    clim-verif    101 preguntas
 ├── Protección contra incendios
 │   ├── Temario         pci-temario    88 preguntas (las 20 primeras son el examen real del 21-02-2026)
-│   └── Verificación    pci-verif      87 preguntas
+│   ├── Verificación    pci-verif      87 preguntas
+│   └── Examen 2026     pci-examen-2026  20 preguntas (examen real del 21-02-2026, solución oficial)
 ├── Fontanería y saneamiento
 │   ├── Temario         font-temario  118 preguntas (las 20 primeras son el examen real del 21-02-2026)
 │   ├── Verificación    font-verif     94 preguntas
-│   └── Legionela       font-legionela 55 preguntas (tema 6, RD 487/2022; chuleta propia)
+│   ├── Legionela       font-legionela 55 preguntas (tema 6, RD 487/2022; chuleta propia)
+│   └── Examen 2026     font-examen-2026 20 preguntas (examen real del 21-02-2026, solución oficial)
 └── Comunicaciones                                 (sin examen real)
     ├── Temario         com-temario   111 preguntas (69 del banco del temario + 42 del test de teoría)
     └── Verificación    com-verif      56 preguntas (40 del banco de verificación + 16 del test de verificaciones)
@@ -63,6 +65,8 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI, Fontanería y Comunicaciones usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
 
 En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo.
+
+«Examen 2026» (en PCI y en Fontanería) es el examen real del 21-02-2026 tal cual: 20 preguntas en su orden, con las opciones del examen y la clave definitiva de la solución oficial. En «Modo examen» tiene el botón «Examen real del 21-02-2026» (las 20 en el orden original, −1/2, 20 minutos) y el examen al azar, que por defecto también son las 20 con −1/2 y 20 minutos. Los enunciados son los mismos que las 20 primeras del Temario, así que comparten el progreso por pregunta y no suman preguntas nuevas al Dominio. En el de Fontanería la pregunta 20 (los sistemas mixtos no son más caros) no lleva «Sin confirmar»: la solución oficial definitiva confirma «Falso».
 
 El test de Legionela (tema 6 de Fontanería, RD 487/2022) sale del banco FONTA_TEST_LEGIONELA: 55 preguntas, sin las preguntas cortas. Las explicaciones indican de qué pregunta del test de clase vienen. Tiene su propia chuleta («Cifras clave» de legionela), que sustituye a la del tema solo en ese test. La purga del fondo de los acumuladores es semanal según la diapositiva del tema 6 (el test de clase decía mensual), y esa pregunta lleva la marca «Sin confirmar». El tema 6 no tiene temario en PDF, así que no hay lecciones de Aprender; solo tres preguntas encajan en lecciones existentes y llevan `apt`.
 
@@ -324,7 +328,7 @@ Mientras siga fuera de la UE, la transferencia internacional se ampara en el acu
 
 ### Reglas del ranking
 
-- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los nueve tests (Temario y Verificación de Climatización, PCI, Fontanería y Comunicaciones, más Legionela de Fontanería). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
+- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los once tests (Temario y Verificación de Climatización, PCI, Fontanería y Comunicaciones, más Legionela de Fontanería y el Examen 2026 de PCI y de Fontanería). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
 - **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI, Fontanería y Comunicaciones: −1/2). Los **exámenes reales** de PCI y de Fontanería también cuentan para Instalaciones. La pantalla de configuración del examen indica si cuenta.
 - El servidor vuelve a calcular la nota y **rechaza** resultados imposibles: nota fuera de 0–10, aciertos + fallos + en blanco distinto del número de preguntas, nota que no corresponde a aciertos y fallos, o duración menor de 1 minuto.
 - **Exámenes:** media de tus 5 últimos exámenes que cuentan dentro de la asignatura; hacen falta 3 para aparecer.
