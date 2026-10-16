@@ -56,8 +56,8 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 │   ├── Verificación    font-verif     94 preguntas
 │   └── Legionela       font-legionela 55 preguntas (tema 6, RD 487/2022; chuleta propia)
 └── Comunicaciones                                 (sin examen real)
-    ├── Temario         com-temario    71 preguntas
-    └── Verificación    com-verif      41 preguntas
+    ├── Temario         com-temario   111 preguntas (69 del banco del temario + 42 del test de teoría)
+    └── Verificación    com-verif      56 preguntas (40 del banco de verificación + 16 del test de verificaciones)
 ```
 
 Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI, Fontanería y Comunicaciones usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
@@ -65,6 +65,8 @@ Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al 
 En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo.
 
 El test de Legionela (tema 6 de Fontanería, RD 487/2022) sale del banco FONTA_TEST_LEGIONELA: 55 preguntas, sin las preguntas cortas. Las explicaciones indican de qué pregunta del test de clase vienen. Tiene su propia chuleta («Cifras clave» de legionela), que sustituye a la del tema solo en ese test. La purga del fondo de los acumuladores es semanal según la diapositiva del tema 6 (el test de clase decía mensual), y esa pregunta lleva la marca «Sin confirmar». El tema 6 no tiene temario en PDF, así que no hay lecciones de Aprender; solo tres preguntas encajan en lecciones existentes y llevan `apt`.
+
+En Comunicaciones se han quitado las preguntas cuya respuesta era una norma UNE (con todas las opciones UNE) y se han añadido las 58 del test de teoría y verificaciones (cuatro opciones; la explicación es breve porque el documento solo marca la respuesta).
 
 En Comunicaciones pasa lo mismo con sus discrepancias: títulos de diapositivas copiados de otra asignatura, ISO/IEC 11081 por 11801, wifi 802.11b/g frente a a/b/g/n/ac, la errata «hora digital», los requisitos particulares de la ITC-BT-51 puestos bajo la ITC-BT-36 y la videovigilancia según la LOPD 15/1999 y la Instrucción 1/2006 de la AEPD. Las respuestas siguen lo que dicen las diapositivas. Una pregunta puede estar en dos tests: comparte id y su progreso cuenta en cada test.
 
