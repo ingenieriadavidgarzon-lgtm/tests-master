@@ -59,12 +59,15 @@ Instalaciones Industriales                         (asignatura con temas: lleva 
 │   └── Examen 2026     font-examen-2026 20 preguntas (examen real del 21-02-2026, solución oficial)
 └── Comunicaciones                                 (sin examen real)
     ├── Temario         com-temario   111 preguntas (69 del banco del temario + 42 del test de teoría)
-    └── Verificación    com-verif      56 preguntas (40 del banco de verificación + 16 del test de verificaciones)
+    ├── Verificación    com-verif      56 preguntas (40 del banco de verificación + 16 del test de verificaciones)
+    └── Transcripción de clase  com-clase  58 preguntas (el test de teoría y verificaciones completo, en su orden)
 ```
 
 Dentro de un test las preguntas van todas juntas, sin bloques. Los exámenes al azar de PCI, Fontanería y Comunicaciones usan por defecto 20 preguntas, −1/2 y 20 minutos; los de Climatización y SIF, 20 preguntas sin penalizar y sin límite de tiempo.
 
 En Fontanería y saneamiento, «Sobre las respuestas» resume las discrepancias del temario (presión máxima de 500 o 550 kPa, reales decretos de legionela y de agua de consumo, norma de prueba de tuberías metálicas, pendiente del desagüe del lavabo y la pregunta 20 del examen real). Las preguntas que dependen de ellas llevan la marca «Sin confirmar» y su explicación dice qué dato se usa y cuál es el alternativo.
+
+«Transcripción de clase» (Comunicaciones) es el documento Comunicaciones_Test_Teoria_y_Verificaciones, sacado de la transcripción de las clases, como test propio: sus 58 preguntas en el orden del documento (42 de teoría y 16 de auditorías y verificaciones). Son las mismas que se añadieron al final del Temario y de Verificación, así que comparten el progreso y no suman preguntas nuevas al Dominio.
 
 «Examen 2026» (en PCI y en Fontanería) es el examen real del 21-02-2026 tal cual: 20 preguntas en su orden, con las opciones del examen y la clave definitiva de la solución oficial. En «Modo examen» tiene el botón «Examen real del 21-02-2026» (las 20 en el orden original, −1/2, 20 minutos) y el examen al azar, que por defecto también son las 20 con −1/2 y 20 minutos. Los enunciados son los mismos que las 20 primeras del Temario, así que comparten el progreso por pregunta y no suman preguntas nuevas al Dominio. En el de Fontanería la pregunta 20 (los sistemas mixtos no son más caros) no lleva «Sin confirmar»: la solución oficial definitiva confirma «Falso».
 
@@ -328,7 +331,7 @@ Mientras siga fuera de la UE, la transferencia internacional se ampara en el acu
 
 ### Reglas del ranking
 
-- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los once tests (Temario y Verificación de Climatización, PCI, Fontanería y Comunicaciones, más Legionela de Fontanería y el Examen 2026 de PCI y de Fontanería). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
+- **Dos clasificaciones, una por asignatura:** Sistemas Integrados de Fabricación e Instalaciones Industriales. Instalaciones combina los doce tests (Temario y Verificación de Climatización, PCI, Fontanería y Comunicaciones, más Legionela de Fontanería, el Examen 2026 de PCI y de Fontanería y la Transcripción de clase de Comunicaciones). Un test nuevo entra solo en la clasificación de su asignatura: la app lo registra en la tabla `boards` la primera vez que sincroniza, sin migración.
 - **Cuenta para el ranking** un examen con al menos 20 preguntas y la penalización por defecto de su test (Climatización y SIF: sin penalizar; PCI, Fontanería y Comunicaciones: −1/2). Los **exámenes reales** de PCI y de Fontanería también cuentan para Instalaciones. La pantalla de configuración del examen indica si cuenta.
 - El servidor vuelve a calcular la nota y **rechaza** resultados imposibles: nota fuera de 0–10, aciertos + fallos + en blanco distinto del número de preguntas, nota que no corresponde a aciertos y fallos, o duración menor de 1 minuto.
 - **Exámenes:** media de tus 5 últimos exámenes que cuentan dentro de la asignatura; hacen falta 3 para aparecer.
